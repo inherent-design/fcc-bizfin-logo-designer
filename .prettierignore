@@ -10,6 +10,7 @@ node_modules/
 dist/
 build/
 .cache/
+.vite/
 
 # Generated files
 *.min.js
@@ -38,5 +39,5 @@ yarn.lock
 .DS_Store
 
 # SVG assets (keep original formatting)
-src/assets/svg/*.svg
-public/svg/*.svg
+apps/web/src/assets/svg/*.svg
+apps/web/public/svg/*.svg
