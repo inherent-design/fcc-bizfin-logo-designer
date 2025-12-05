@@ -1,0 +1,78 @@
+{
+  "availableElements": ["briefcase", "mountains", "leaf", "dollar"],
+  "baseColor": {
+    "h": 39,
+    "l": 69,
+    "s": 57
+  },
+  "baseDesign": {
+    "elementColorOverBase": {
+      "h": 0,
+      "l": 100,
+      "s": 0
+    },
+    "elementColorOverFilledQuadrants": {
+      "h": 39,
+      "l": 69,
+      "s": 57
+    },
+    "fillColorForFilledQuadrants": {
+      "h": 239,
+      "l": 31,
+      "s": 44
+    }
+  },
+  "name": "Default Design",
+  "quadrants": [
+    {
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "elementId": "briefcase",
+      "elementScale": 1,
+      "isFilled": true
+    },
+    {
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "elementId": "mountains",
+      "elementScale": 1,
+      "isFilled": false
+    },
+    {
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "elementId": "leaf",
+      "elementScale": 1,
+      "isFilled": false
+    },
+    {
+      "centerOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "elementId": "dollar",
+      "elementScale": 1,
+      "isFilled": true
+    }
+  ],
+  "twoToneDesign": {
+    "fillColorQuadrant0": {
+      "h": 239,
+      "l": 31,
+      "s": 44
+    },
+    "fillColorQuadrant3": {
+      "h": 358,
+      "l": 30,
+      "s": 51
+    },
+    "uniqueElementColors": null
+  },
+  "version": "1.0.0"
+}

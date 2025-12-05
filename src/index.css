@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+@plugin 'daisyui';
+
+@source './**/*.{js,jsx,ts,tsx}';
+
+/* SF Pro font stack with fallbacks */
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Set theme based on system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
