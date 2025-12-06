@@ -12,7 +12,7 @@ COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY apps/api/package.json ./apps/api/
 
 # Install dependencies (workspace aware)
-RUN pnpm install --frozen-lockfile --filter @logo-designer/api...
+RUN pnpm install --frozen-lockfile --filter @fcc-bizfin-logo-designer/api...
 
 # Copy API source (volumes will override in dev)
 COPY apps/api ./apps/api

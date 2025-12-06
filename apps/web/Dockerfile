@@ -13,7 +13,7 @@ COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY apps/web/package.json ./apps/web/
 
 # Install dependencies (workspace aware)
-RUN pnpm install --frozen-lockfile --filter @logo-designer/web...
+RUN pnpm install --frozen-lockfile --filter @fcc-bizfin-logo-designer/web...
 
 # Copy web app source
 COPY apps/web ./apps/web
