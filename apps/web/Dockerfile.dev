@@ -1,0 +1,27 @@
+FROM node:20-alpine
+
+# Enable pnpm
+RUN corepack enable pnpm
+
+WORKDIR /app
+
+# Copy workspace files
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+
+# Copy web package.json
+COPY apps/web/package.json ./apps/web/
+
+# Install dependencies (workspace aware)
+RUN pnpm install --frozen-lockfile --filter @logo-designer/web...
+
+# Copy web source (volumes will override in dev)
+COPY apps/web ./apps/web
+
+# Set working directory to web
+WORKDIR /app/apps/web
+
+# Expose Vite dev server port
+EXPOSE 3000
+
+# Development server with hot reload
+CMD ["pnpm", "dev", "--host", "0.0.0.0", "--port", "3000"]

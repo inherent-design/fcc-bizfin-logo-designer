@@ -1,0 +1,84 @@
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16-alpine
+    container_name: logo-designer-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-logouser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-logopass}
+      POSTGRES_DB: ${DB_NAME:-logodb}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-logouser}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache (commented out for later)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: logo-designer-redis
+  #   restart: unless-stopped
+  #   ports:
+  #     - "${REDIS_PORT:-6379}:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "ping"]
+  #     interval: 10s
+  #     timeout: 3s
+  #     retries: 5
+
+  # API Backend
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile.dev
+    container_name: logo-designer-api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      HOST: 0.0.0.0
+      CORS_ORIGIN: http://localhost:3000
+      DATABASE_URL: postgresql://${DB_USER:-logouser}:${DB_PASSWORD:-logopass}@db:5432/${DB_NAME:-logodb}
+      # REDIS_URL: redis://redis:6379
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./apps/api/src:/app/apps/api/src
+      - ./apps/api/package.json:/app/apps/api/package.json
+    depends_on:
+      db:
+        condition: service_healthy
+    command: pnpm dev
+
+  # Web Frontend
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile.dev
+    container_name: logo-designer-web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      VITE_API_URL: http://localhost:3001
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/web/src:/app/apps/web/src
+      - ./apps/web/public:/app/apps/web/public
+      - ./apps/web/index.html:/app/apps/web/index.html
+      - ./apps/web/vite.config.ts:/app/apps/web/vite.config.ts
+      - ./apps/web/tailwind.config.ts:/app/apps/web/tailwind.config.ts
+    depends_on:
+      - api
+    command: pnpm dev
+
+volumes:
+  postgres_data:
+  # redis_data:

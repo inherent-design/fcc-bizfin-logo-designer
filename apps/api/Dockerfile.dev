@@ -1,0 +1,27 @@
+FROM node:20-alpine
+
+# Enable pnpm
+RUN corepack enable pnpm
+
+WORKDIR /app
+
+# Copy workspace files
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+
+# Copy API package.json
+COPY apps/api/package.json ./apps/api/
+
+# Install dependencies (workspace aware)
+RUN pnpm install --frozen-lockfile --filter @logo-designer/api...
+
+# Copy API source (volumes will override in dev)
+COPY apps/api ./apps/api
+
+# Set working directory to API
+WORKDIR /app/apps/api
+
+# Expose API port
+EXPOSE 3001
+
+# Development server with hot reload
+CMD ["pnpm", "dev"]
