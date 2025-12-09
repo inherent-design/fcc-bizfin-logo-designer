@@ -18,13 +18,3 @@ spec:
             name: fcc-bizfin-logo-designer-web
             port:
               number: 80
-  - host: business-logo.api.inherent.design
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: fcc-bizfin-logo-designer-api
-            port:
-              number: 3001
