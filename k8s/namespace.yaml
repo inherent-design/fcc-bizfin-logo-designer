@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fcc-bizfin-logo-designer
+  labels:
+    name: fcc-bizfin-logo-designer
+    app.kubernetes.io/name: fcc-bizfin-logo-designer

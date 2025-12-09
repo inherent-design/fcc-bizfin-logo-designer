@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fcc-bizfin-logo-designer
+  namespace: fcc-bizfin-logo-designer
+  labels:
+    app: fcc-bizfin-logo-designer
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+  - host: business-logo.inherent.design
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: fcc-bizfin-logo-designer-web
+            port:
+              number: 80
+  - host: business-logo.api.inherent.design
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: fcc-bizfin-logo-designer-api
+            port:
+              number: 3001

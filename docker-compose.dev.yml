@@ -37,7 +37,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: apps/api/Dockerfile.dev
+      dockerfile: apps/api/Dockerfile
     container_name: logo-designer-api
     restart: unless-stopped
     environment:
@@ -61,7 +61,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: apps/web/Dockerfile.dev
+      dockerfile: apps/web/Dockerfile
     container_name: logo-designer-web
     restart: unless-stopped
     environment:
