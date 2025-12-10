@@ -23,8 +23,13 @@ RUN pnpm install --frozen-lockfile --filter @fcc-bizfin-logo-designer/web...
 # Copy web app source
 COPY apps/web ./apps/web
 
-# Build the app
+# Build the app with version injection
 WORKDIR /app/apps/web
+
+# Set VERSION as environment variable for Vite build
+# This makes import.meta.env.VITE_APP_VERSION available at runtime
+ENV VITE_APP_VERSION=${VERSION}
+
 RUN pnpm build
 
 # Production stage - serve with nginx

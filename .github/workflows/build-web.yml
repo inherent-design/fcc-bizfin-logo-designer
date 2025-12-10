@@ -28,7 +28,11 @@ jobs:
 
     strategy:
       matrix:
-        platform: [linux/amd64, linux/arm64]
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-24.04
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
 
     steps:
       - name: Checkout code
@@ -49,11 +53,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract version from package.json
+      - name: Extract version
         id: version
         run: |
-          VERSION=$(node -p "require('./apps/web/package.json').version")
+          if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+            # Dev branch: use dev-{shortSHA} format
+            VERSION="dev-$(git rev-parse --short=7 HEAD)"
+          else
+            # Main/tagged releases: use package.json version
+            VERSION=$(node -p "require('./apps/web/package.json').version")
+          fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Generated version: $VERSION"
 
       - name: Generate image metadata
         id: meta

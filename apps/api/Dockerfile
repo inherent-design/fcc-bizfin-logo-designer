@@ -30,10 +30,13 @@ RUN pnpm build
 # Production stage
 FROM node:20-alpine
 
-# Re-declare build args for labels
+# Re-declare build args for labels and runtime
 ARG GIT_SHA=unknown
 ARG BUILD_DATE
 ARG VERSION
+
+# Set VERSION as environment variable for runtime access
+ENV APP_VERSION=${VERSION}
 
 # Labels for version tracking
 LABEL org.opencontainers.image.title="FCC Business Finance Logo Designer - API"
