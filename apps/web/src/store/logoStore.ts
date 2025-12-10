@@ -11,6 +11,20 @@ import {
 import { storageLogger, storeLogger } from '../utils/logger'
 
 interface LogoStore extends LogoState {
+  // Copy variables (not exported, preserve state when modes disabled)
+  twoToneDesignCopy: {
+    fillColorQuadrant0: HSLColor
+    fillColorQuadrant3: HSLColor
+    uniqueElementColors: {
+      elementColorOverQuadrant0Fill: HSLColor
+      elementColorOverQuadrant3Fill: HSLColor
+    } | null
+  } | null
+  uniqueElementColorsCopy: {
+    elementColorOverQuadrant0Fill: HSLColor
+    elementColorOverQuadrant3Fill: HSLColor
+  } | null
+
   // Actions for updating state
   setBaseColor: (color: HSLColor) => void
 
@@ -44,6 +58,10 @@ export const useLogoStore = create<LogoStore>()(
     (set, get) => ({
       // Initialize with default design
       ...(defaultDesign as LogoState),
+
+      // Copy variables start null (no previous state to restore)
+      twoToneDesignCopy: null,
+      uniqueElementColorsCopy: null,
 
       // Base color actions
       setBaseColor: (color) => {
@@ -117,18 +135,42 @@ export const useLogoStore = create<LogoStore>()(
       // Two-tone mode actions
       enableTwoTone: () => {
         storeLogger.debug('Enabling two-tone mode')
-        set((state) => ({
-          twoToneDesign: {
-            fillColorQuadrant0: state.baseDesign.fillColorForFilledQuadrants,
-            fillColorQuadrant3: state.baseDesign.fillColorForFilledQuadrants,
-            uniqueElementColors: null,
-          },
-        }))
+        set((state) => {
+          // Restore from copy if it exists, otherwise initialize from base
+          if (state.twoToneDesignCopy) {
+            storeLogger.debug('Restoring two-tone design from copy')
+            return {
+              twoToneDesign: state.twoToneDesignCopy,
+            }
+          }
+
+          storeLogger.debug('Initializing new two-tone design from base')
+          return {
+            twoToneDesign: {
+              fillColorQuadrant0: state.baseDesign.fillColorForFilledQuadrants,
+              fillColorQuadrant3: state.baseDesign.fillColorForFilledQuadrants,
+              uniqueElementColors: null,
+            },
+          }
+        })
       },
 
       disableTwoTone: () => {
         storeLogger.debug('Disabling two-tone mode')
-        set({ twoToneDesign: null })
+        set((state) => {
+          // Save current two-tone design to copy before disabling
+          if (state.twoToneDesign) {
+            storeLogger.debug('Saving two-tone design to copy')
+            // Also save uniqueElementColors separately for nested toggle restore
+            const uniqueColorsCopy = state.twoToneDesign.uniqueElementColors
+            return {
+              twoToneDesign: null,
+              twoToneDesignCopy: state.twoToneDesign,
+              uniqueElementColorsCopy: uniqueColorsCopy,
+            }
+          }
+          return { twoToneDesign: null }
+        })
       },
 
       setTwoToneFillColor: (quadrant, color) => {
@@ -157,6 +199,19 @@ export const useLogoStore = create<LogoStore>()(
             )
             return state
           }
+
+          // Restore from copy if it exists, otherwise initialize from base
+          if (state.uniqueElementColorsCopy) {
+            storeLogger.debug('Restoring unique element colors from copy')
+            return {
+              twoToneDesign: {
+                ...state.twoToneDesign,
+                uniqueElementColors: state.uniqueElementColorsCopy,
+              },
+            }
+          }
+
+          storeLogger.debug('Initializing new unique element colors from base')
           return {
             twoToneDesign: {
               ...state.twoToneDesign,
@@ -178,6 +233,19 @@ export const useLogoStore = create<LogoStore>()(
             )
             return state
           }
+
+          // Save current unique element colors to copy before disabling
+          if (state.twoToneDesign.uniqueElementColors) {
+            storeLogger.debug('Saving unique element colors to copy')
+            return {
+              twoToneDesign: {
+                ...state.twoToneDesign,
+                uniqueElementColors: null,
+              },
+              uniqueElementColorsCopy: state.twoToneDesign.uniqueElementColors,
+            }
+          }
+
           return {
             twoToneDesign: {
               ...state.twoToneDesign,
@@ -308,7 +376,11 @@ export const useLogoStore = create<LogoStore>()(
             'Importing state (will trigger localStorage write)'
           )
 
-          set(imported)
+          set({
+            ...imported,
+            twoToneDesignCopy: null, // Clear copies on import
+            uniqueElementColorsCopy: null,
+          })
           storageLogger.info('State imported successfully')
         } catch (error) {
           storageLogger.error({ error }, 'Failed to import state')
@@ -318,7 +390,11 @@ export const useLogoStore = create<LogoStore>()(
 
       resetToDefault: () => {
         storageLogger.warn('Resetting to default design (will trigger localStorage write)')
-        set(defaultDesign as LogoState)
+        set({
+          ...(defaultDesign as LogoState),
+          twoToneDesignCopy: null, // Clear copies on reset
+          uniqueElementColorsCopy: null,
+        })
         storageLogger.info('Reset to default design complete')
       },
     }),
