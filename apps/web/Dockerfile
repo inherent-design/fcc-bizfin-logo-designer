@@ -1,6 +1,11 @@
 # Multi-stage build for Vite React app
 FROM node:20-alpine AS builder
 
+# Build arguments for version tracking
+ARG GIT_SHA=unknown
+ARG BUILD_DATE
+ARG VERSION
+
 # Enable pnpm
 RUN corepack enable pnpm
 
@@ -24,6 +29,14 @@ RUN pnpm build
 
 # Production stage - serve with nginx
 FROM nginx:alpine
+
+# Labels for version tracking
+LABEL org.opencontainers.image.title="FCC Business Finance Logo Designer - Web"
+LABEL org.opencontainers.image.description="React SPA for designing FCC Business & Finance Club logo"
+LABEL org.opencontainers.image.source="https://github.com/inherent-design/fcc-bizfin-logo-designer"
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.revision="${GIT_SHA}"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
 
 # Copy built assets
 COPY --from=builder /app/apps/web/dist /usr/share/nginx/html

@@ -1,0 +1,65 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# CI/CD
+.github
+
+# Documentation
+*.md
+docs/
+LICENSE
+
+# Development
+.vscode
+.idea
+*.log
+*.logs
+
+# Dependencies (will be installed in container)
+node_modules
+**/node_modules
+
+# Build outputs (will be built in container)
+dist
+**/dist
+build
+**/build
+.next
+**/.next
+
+# Development files
+.env
+.env.*
+!.env.example
+*.local
+
+# Testing
+coverage
+**/.coverage
+**/__tests__
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+
+# Linting/formatting
+.eslintrc*
+.prettierrc*
+.editorconfig
+
+# Monorepo dev files
+.turbo
+.pnpm-debug.log
+.husky
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
