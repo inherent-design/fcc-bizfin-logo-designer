@@ -30,6 +30,11 @@ RUN pnpm build
 # Production stage
 FROM node:20-alpine
 
+# Re-declare build args for labels
+ARG GIT_SHA=unknown
+ARG BUILD_DATE
+ARG VERSION
+
 # Labels for version tracking
 LABEL org.opencontainers.image.title="FCC Business Finance Logo Designer - API"
 LABEL org.opencontainers.image.description="Fastify API for FCC Business & Finance Club logo designer"
