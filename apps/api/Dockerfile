@@ -17,8 +17,8 @@ COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 # Copy API package.json
 COPY apps/api/package.json apps/api/tsconfig.json ./apps/api/
 
-# Install dependencies (workspace aware, production only)
-RUN pnpm install --frozen-lockfile --filter @fcc-bizfin-logo-designer/api... --prod --ignore-scripts
+# Install dependencies (workspace aware, includes dev deps for build)
+RUN pnpm install --frozen-lockfile --filter @fcc-bizfin-logo-designer/api... --ignore-scripts
 
 # Copy API source
 COPY apps/api/src ./apps/api/src
