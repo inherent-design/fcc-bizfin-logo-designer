@@ -1,21 +1,5 @@
 {
-  "name": "@fcc-bizfin-logo-designer/api",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"src/**/*.{ts,js,json}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,js,json}\""
-  },
-  "keywords": [],
   "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.20.0",
   "dependencies": {
     "@fastify/cors": "^11.1.0",
     "@fastify/helmet": "^13.0.2",
@@ -25,5 +9,21 @@
   },
   "devDependencies": {
     "tsx": "^4.21.0"
-  }
+  },
+  "keywords": [],
+  "license": "UNLICENSED",
+  "name": "@fcc-bizfin-logo-designer/api",
+  "packageManager": "pnpm@10.20.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/server.ts",
+    "format": "prettier --write \"src/**/*.{ts,js,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js,json}\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "start": "node dist/server.js"
+  },
+  "type": "module",
+  "version": "0.0.1"
 }
