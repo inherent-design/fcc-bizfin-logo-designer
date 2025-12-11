@@ -1,24 +1,53 @@
-# Multi-stage build for Vite React app
-FROM node:20-alpine AS builder
+# syntax=docker/dockerfile:1
 
-# Build arguments for version tracking
+# ============================================================================
+# Base environment with pnpm
+# ============================================================================
+FROM node:22-slim AS base
+
+RUN corepack enable
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+# ============================================================================
+# Fetch dependencies (cache-optimized)
+# ============================================================================
+FROM base AS fetch
+
+WORKDIR /app
+
+# Copy only lockfile for maximum cache efficiency
+COPY pnpm-lock.yaml ./
+
+# Fetch packages into pnpm store (BuildKit cache mount)
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm fetch
+
+# ============================================================================
+# Install all dependencies
+# ============================================================================
+FROM base AS install
+
+WORKDIR /app
+
+# Copy workspace configuration
+COPY pnpm-workspace.yaml package.json ./
+COPY apps/web/package.json ./apps/web/
+
+# Install all dependencies (including dev, needed for build)
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile
+
+# ============================================================================
+# Build the application
+# ============================================================================
+FROM install AS build
+
 ARG GIT_SHA=unknown
 ARG BUILD_DATE
 ARG VERSION
 
-# Enable pnpm
-RUN corepack enable pnpm
-
 WORKDIR /app
-
-# Copy workspace files
-COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
-
-# Copy web app package.json
-COPY apps/web/package.json ./apps/web/
-
-# Install dependencies (workspace aware)
-RUN pnpm install --frozen-lockfile --filter @fcc-bizfin-logo-designer/web...
 
 # Copy web app source
 COPY apps/web ./apps/web
@@ -27,13 +56,24 @@ COPY apps/web ./apps/web
 WORKDIR /app/apps/web
 
 # Set VERSION as environment variable for Vite build
-# This makes import.meta.env.VITE_APP_VERSION available at runtime
 ENV VITE_APP_VERSION=${VERSION}
 
 RUN pnpm build
 
-# Production stage - serve with nginx
-FROM nginx:alpine
+# ============================================================================
+# Deploy (creates deployment directory with built assets)
+# ============================================================================
+FROM build AS deploy
+
+WORKDIR /app
+
+# Deploy web app (copies dist/ folder per "files" field)
+RUN pnpm deploy --filter=@fcc-bizfin-logo-designer/web --prod /prod/web
+
+# ============================================================================
+# Production runtime with nginx
+# ============================================================================
+FROM nginx:alpine AS production
 
 # Re-declare build args for labels
 ARG GIT_SHA=unknown
@@ -48,13 +88,13 @@ LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.revision="${GIT_SHA}"
 LABEL org.opencontainers.image.created="${BUILD_DATE}"
 
-# Copy built assets
-COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
+# Copy built static assets from deployed output
+COPY --from=deploy /prod/web/dist /usr/share/nginx/html
 
-# Copy nginx config
+# Copy nginx configuration
 COPY apps/web/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port (Coolify will remap)
+# Expose port
 EXPOSE 80
 
 # Health check

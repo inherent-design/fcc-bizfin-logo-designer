@@ -10,6 +10,9 @@
   "devDependencies": {
     "tsx": "^4.21.0"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [],
   "license": "UNLICENSED",
   "name": "@fcc-bizfin-logo-designer/api",

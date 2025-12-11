@@ -2,6 +2,10 @@ packages:
   - apps/*
   - packages/*
 
+# Use legacy deploy mode to avoid inject-workspace-packages requirement
+# This prevents symlinks from being replaced with hard-links during development
+force-legacy-deploy: true
+
 onlyBuiltDependencies:
   - '@swc/core'
   - esbuild
