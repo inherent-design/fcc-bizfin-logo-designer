@@ -19,12 +19,13 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
       packages: write
 
     strategy:
+      fail-fast: false
       matrix:
         include:
           - platform: linux/amd64
@@ -35,11 +36,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-        with:
-          fetch-depth: 2
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+      - name: Prepare
+        run: |
+          platform=${{ matrix.platform }}
+          echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -54,49 +55,109 @@ jobs:
       - name: Extract version
         id: version
         run: |
-          if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
-            # Dev branch: use dev-{shortSHA} format
+          if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
             VERSION="dev-$(git rev-parse --short=7 HEAD)"
           else
-            # Main/tagged releases: use package.json version
             VERSION=$(node -p "require('./apps/web/package.json').version")
           fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Generated version: $VERSION"
 
-      - name: Generate image metadata
+      - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            # For dev branch: dev-{sha} and dev-latest
-            type=raw,value=dev-{{sha}},enable=${{ github.ref == 'refs/heads/dev' }}
-            type=raw,value=dev-latest,enable=${{ github.ref == 'refs/heads/dev' }}
-            # For tagged releases: web-v{semver}, {sha}, latest
-            type=semver,pattern=web-v{{version}},enable=${{ startsWith(github.ref, 'refs/tags/web-v') }}
-            type=sha,format=short,enable=${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/web-v') }}
-            type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/web-v') }}
           labels: |
             org.opencontainers.image.title=FCC Business Finance Logo Designer - Web
             org.opencontainers.image.description=React SPA for designing FCC Business & Finance Club logo
             org.opencontainers.image.version=${{ steps.version.outputs.version }}
 
-      - name: Build and push Docker image
+      - name: Build and push by digest
+        id: build
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./apps/web/Dockerfile
           platforms: ${{ matrix.platform }}
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             GIT_SHA=${{ github.sha }}
             BUILD_DATE=${{ github.event.head_commit.timestamp }}
             VERSION=${{ steps.version.outputs.version }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          outputs: type=image,name=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ env.PLATFORM_PAIR }}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ env.PLATFORM_PAIR }},mode=max
 
-      - name: Image digest
-        run: echo "Image pushed with digest ${{ steps.build.outputs.digest }}"
+      - name: Export digest
+        run: |
+          mkdir -p /tmp/digests
+          digest="${{ steps.build.outputs.digest }}"
+          touch "/tmp/digests/${digest#sha256:}"
+
+      - name: Upload digest
+        uses: actions/upload-artifact@v4
+        with:
+          name: digests-web-${{ env.PLATFORM_PAIR }}
+          path: /tmp/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    needs:
+      - build
+
+    steps:
+      - name: Download digests
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/digests
+          pattern: digests-web-*
+          merge-multiple: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Extract version
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            VERSION="dev-$(git rev-parse --short=7 HEAD)"
+          else
+            VERSION=$(echo "${{ github.ref }}" | sed 's/refs\/tags\/web-v//')
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Generated version: $VERSION"
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=dev-{{sha}},enable=${{ github.ref == 'refs/heads/dev' }}
+            type=raw,value=dev-latest,enable=${{ github.ref == 'refs/heads/dev' }}
+            type=semver,pattern=web-v{{version}},enable=${{ startsWith(github.ref, 'refs/tags/web-v') }}
+            type=sha,format=short,enable=${{ startsWith(github.ref, 'refs/tags/web-v') }}
+            type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/web-v') }}
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create manifest list and push
+        working-directory: /tmp/digests
+        run: |
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
+
+      - name: Inspect image
+        run: |
+          docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
