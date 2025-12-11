@@ -2,6 +2,7 @@ import { ColorSettings } from './components/ColorSettings'
 import { HistorySettings } from './components/HistorySettings'
 import { LayoutSettings } from './components/LayoutSettings'
 import { LogoPreview } from './components/LogoPreview'
+import { MetaInfo } from './components/MetaInfo'
 import { useLogoStore } from './store/logoStore'
 
 function App() {
@@ -41,8 +42,8 @@ function App() {
   return (
     <div className='min-h-screen bg-base-100 p-4 lg:p-8'>
       <div className='grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8'>
-        {/* Column 1: ColorSettings + HistorySettings */}
-        <div className='lg:col-span-1 space-y-6'>
+        {/* Column 1: ColorSettings + HistorySettings + MetaInfo */}
+        <div className='lg:col-span-2 space-y-6'>
           <div className='bg-base-200 rounded-2xl p-6'>
             <ColorSettings
               baseColor={baseColor}
@@ -73,10 +74,13 @@ function App() {
               }}
             />
           </div>
+          <div className='bg-base-200 rounded-2xl p-6'>
+            <MetaInfo />
+          </div>
         </div>
 
         {/* Columns 2-3: LayoutSettings */}
-        <div className='lg:col-span-2'>
+        <div className='lg:col-span-1'>
           <div className='bg-base-200 rounded-2xl p-6'>
             <LayoutSettings
               quadrants={quadrants}
