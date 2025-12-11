@@ -1,5 +1,11 @@
 # @fcc-bizfin-logo-designer/api
 
+## 0.0.4
+
+### Patch Changes
+
+- a37493a: Fix CI/CD workflow bug triggering builds on main
+
 ## 0.0.3
 
 ### Patch Changes
