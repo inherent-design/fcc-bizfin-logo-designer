@@ -2,16 +2,23 @@ import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import helmet from '@fastify/helmet'
 
+const isDevelopment = process.env.NODE_ENV === 'development'
+
 const fastify = Fastify({
-  logger: {
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        translateTime: 'HH:MM:ss Z',
-        ignore: 'pid,hostname',
+  logger: isDevelopment
+    ? {
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            translateTime: 'HH:MM:ss Z',
+            ignore: 'pid,hostname',
+          },
+        },
+        level: 'trace',
+      }
+    : {
+        level: 'info',
       },
-    },
-  },
 })
 
 // Register plugins
