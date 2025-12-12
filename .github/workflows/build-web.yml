@@ -11,7 +11,7 @@ on:
       - 'pnpm-workspace.yaml'
       - '.github/workflows/build-web.yml'
     tags:
-      - 'web-v*'
+      - '@fcc-bizfin-logo-designer/web*'
 
 env:
   REGISTRY: ghcr.io

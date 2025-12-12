@@ -50,5 +50,5 @@ jobs:
       - name: Output release info
         if: steps.changesets.outputs.published == 'true'
         run: |
-          echo "🚀 Published packages:"
+          echo "Published packages:"
           echo "${{ steps.changesets.outputs.publishedPackages }}"
