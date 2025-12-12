@@ -1,5 +1,16 @@
 # @fcc-bizfin-logo-designer/api
 
+## 0.0.5
+
+### Patch Changes
+
+- 601f053: Configure and use pnpm deploy during workflows for faster builds and safer dependency trees
+- a65ab5d: Fix multi-arch manifest generation steps to no longer override each other
+- 9c18c7e: Add missing repo checkout before manifests are merged
+- a605a35: Copy missing pnpm-lock.yaml in workflows during installation
+- 1d22fd5: Fix incorrect pnpm-workspace.yaml setting: force-legacy-deploy -> forceLegacyDeploy
+- 5fe1e33: Fix NODE_ENV issues in development builds
+
 ## 0.0.4
 
 ### Patch Changes
