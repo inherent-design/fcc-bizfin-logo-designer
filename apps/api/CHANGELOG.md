@@ -1,5 +1,11 @@
 # @fcc-bizfin-logo-designer/api
 
+## 0.0.7
+
+### Patch Changes
+
+- 2fd28d2: Release workflows do not trigger builds, so manually run them after releases
+
 ## 0.0.6
 
 ### Patch Changes
