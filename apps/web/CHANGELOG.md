@@ -1,5 +1,11 @@
 # @fcc-bizfin-logo-designer/web
 
+## 0.1.9
+
+### Patch Changes
+
+- 2f97747: Explicitly use Vite's `--mode` flag to set development build's type to not be production
+
 ## 0.1.8
 
 ### Patch Changes
