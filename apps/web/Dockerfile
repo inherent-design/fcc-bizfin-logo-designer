@@ -46,6 +46,7 @@ FROM install AS build
 ARG GIT_SHA=unknown
 ARG BUILD_DATE
 ARG VERSION
+ARG NODE_ENV=production
 
 WORKDIR /app
 
@@ -57,6 +58,7 @@ WORKDIR /app/apps/web
 
 # Set VERSION as environment variable for Vite build
 ENV VITE_APP_VERSION=${VERSION}
+ENV NODE_ENV=${NODE_ENV}
 
 RUN pnpm build
 

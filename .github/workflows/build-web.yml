@@ -82,6 +82,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
+            NODE_ENV=${{ github.ref == 'refs/heads/dev' && 'development' || 'production' }}
             GIT_SHA=${{ github.sha }}
             BUILD_DATE=${{ github.event.head_commit.timestamp }}
             VERSION=${{ steps.version.outputs.version }}

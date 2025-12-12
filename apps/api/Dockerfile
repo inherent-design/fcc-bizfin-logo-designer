@@ -76,10 +76,11 @@ FROM node:22-slim AS production
 ARG GIT_SHA=unknown
 ARG BUILD_DATE
 ARG VERSION
+ARG NODE_ENV=production
 
 # Set VERSION as environment variable for runtime access
 ENV APP_VERSION=${VERSION}
-ENV NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
 ENV PORT=3001
 
 # Labels for version tracking
