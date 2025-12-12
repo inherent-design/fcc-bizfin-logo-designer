@@ -46,7 +46,7 @@ FROM install AS build
 ARG GIT_SHA=unknown
 ARG BUILD_DATE
 ARG VERSION
-ARG NODE_ENV=production
+ARG BUILD_MODE=production
 
 WORKDIR /app
 
@@ -58,9 +58,9 @@ WORKDIR /app/apps/web
 
 # Set VERSION as environment variable for Vite build
 ENV VITE_APP_VERSION=${VERSION}
-ENV NODE_ENV=${NODE_ENV}
 
-RUN pnpm build
+# Run Vite build with explicit mode flag (development or production)
+RUN pnpm exec vite build --mode ${BUILD_MODE}
 
 # ============================================================================
 # Deploy (creates deployment directory with built assets)
