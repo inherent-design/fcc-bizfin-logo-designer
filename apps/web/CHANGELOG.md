@@ -1,5 +1,11 @@
 # @fcc-bizfin-logo-designer/web
 
+## 0.1.10
+
+### Patch Changes
+
+- b477b45: Add null check to expected value in development workflows
+
 ## 0.1.9
 
 ### Patch Changes
