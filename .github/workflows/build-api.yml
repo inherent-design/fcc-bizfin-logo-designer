@@ -10,8 +10,22 @@ on:
       - 'pnpm-lock.yaml'
       - 'pnpm-workspace.yaml'
       - '.github/workflows/build-api.yml'
-    tags:
-      - '@fcc-bizfin-logo-designer/api*'
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version to tag the image with (e.g., "0.0.5")'
+        required: false
+        type: string
+      node_env:
+        description: 'NODE_ENV for the build (development or production)'
+        required: false
+        type: string
+        default: 'production'
+      is_production:
+        description: 'Whether this is a production build (affects tagging)'
+        required: false
+        type: boolean
+        default: false
 
 env:
   REGISTRY: ghcr.io
@@ -55,9 +69,14 @@ jobs:
       - name: Extract version
         id: version
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+          if [[ -n "${{ inputs.version }}" ]]; then
+            # Use version from workflow_call input
+            VERSION="${{ inputs.version }}"
+          elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            # Dev build - use dev-SHA format
             VERSION="dev-$(git rev-parse --short=7 HEAD)"
           else
+            # Fallback - extract from package.json
             VERSION=$(node -p "require('./apps/api/package.json').version")
           fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
@@ -82,7 +101,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            NODE_ENV=${{ github.ref == 'refs/heads/dev' && 'development' || 'production' }}
+            NODE_ENV=${{ inputs.node_env || (github.ref == 'refs/heads/dev' && 'development' || 'production') }}
             GIT_SHA=${{ github.sha }}
             BUILD_DATE=${{ github.event.head_commit.timestamp }}
             VERSION=${{ steps.version.outputs.version }}
@@ -129,10 +148,15 @@ jobs:
       - name: Extract version
         id: version
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+          if [[ -n "${{ inputs.version }}" ]]; then
+            # Use version from workflow_call input
+            VERSION="${{ inputs.version }}"
+          elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            # Dev build
             VERSION="dev-$(git rev-parse --short=7 HEAD)"
           else
-            VERSION=$(echo "${{ github.ref }}" | sed 's/refs\/tags\/api-v//')
+            # Fallback
+            VERSION=$(node -p "require('./apps/api/package.json').version")
           fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Generated version: $VERSION"
@@ -145,9 +169,8 @@ jobs:
           tags: |
             type=raw,value=dev-{{sha}},enable=${{ github.ref == 'refs/heads/dev' }}
             type=raw,value=dev-latest,enable=${{ github.ref == 'refs/heads/dev' }}
-            type=semver,pattern=api-v{{version}},enable=${{ startsWith(github.ref, 'refs/tags/api-v') }}
-            type=sha,format=short,enable=${{ startsWith(github.ref, 'refs/tags/api-v') }}
-            type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/api-v') }}
+            type=raw,value=${{ steps.version.outputs.version }},enable=${{ inputs.is_production }}
+            type=raw,value=latest,enable=${{ inputs.is_production }}
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3

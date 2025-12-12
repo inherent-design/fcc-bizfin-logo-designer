@@ -52,3 +52,44 @@ jobs:
         run: |
           echo "Published packages:"
           echo "${{ steps.changesets.outputs.publishedPackages }}"
+
+      - name: Extract versions for builds
+        if: steps.changesets.outputs.published == 'true'
+        id: versions
+        run: |
+          API_VERSION=$(echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -r '.[] | select(.name == "@fcc-bizfin-logo-designer/api") | .version')
+          WEB_VERSION=$(echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -r '.[] | select(.name == "@fcc-bizfin-logo-designer/web") | .version')
+          echo "api_version=$API_VERSION" >> $GITHUB_OUTPUT
+          echo "web_version=$WEB_VERSION" >> $GITHUB_OUTPUT
+          echo "API version: $API_VERSION"
+          echo "Web version: $WEB_VERSION"
+    outputs:
+      published: ${{ steps.changesets.outputs.published }}
+      api_version: ${{ steps.versions.outputs.api_version }}
+      web_version: ${{ steps.versions.outputs.web_version }}
+
+  build-api:
+    name: Build API Production Image
+    needs: release
+    if: needs.release.outputs.published == 'true' && needs.release.outputs.api_version != ''
+    uses: ./.github/workflows/build-api.yml
+    permissions:
+      contents: read
+      packages: write
+    with:
+      version: ${{ needs.release.outputs.api_version }}
+      node_env: 'production'
+      is_production: true
+
+  build-web:
+    name: Build Web Production Image
+    needs: release
+    if: needs.release.outputs.published == 'true' && needs.release.outputs.web_version != ''
+    uses: ./.github/workflows/build-web.yml
+    permissions:
+      contents: read
+      packages: write
+    with:
+      version: ${{ needs.release.outputs.web_version }}
+      node_env: 'production'
+      is_production: true
