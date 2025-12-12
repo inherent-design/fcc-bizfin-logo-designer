@@ -31,11 +31,10 @@ FROM base AS install
 WORKDIR /app
 
 # Copy workspace configuration
-COPY pnpm-workspace.yaml package.json ./
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/api/package.json ./apps/api/
 
 # Install all dependencies (including dev, needed for build)
-# Use offline mode to leverage fetched packages
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm install --frozen-lockfile
 

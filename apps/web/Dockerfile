@@ -31,7 +31,7 @@ FROM base AS install
 WORKDIR /app
 
 # Copy workspace configuration
-COPY pnpm-workspace.yaml package.json ./
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/web/package.json ./apps/web/
 
 # Install all dependencies (including dev, needed for build)
