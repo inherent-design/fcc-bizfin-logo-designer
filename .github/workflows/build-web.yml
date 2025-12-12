@@ -169,8 +169,8 @@ jobs:
           tags: |
             type=raw,value=dev-{{sha}},enable=${{ github.ref == 'refs/heads/dev' }}
             type=raw,value=dev-latest,enable=${{ github.ref == 'refs/heads/dev' }}
-            type=raw,value=${{ steps.version.outputs.version }},enable=${{ inputs.is_production }}
-            type=raw,value=latest,enable=${{ inputs.is_production }}
+            type=raw,value=${{ steps.version.outputs.version }},enable=${{ inputs.is_production == true }}
+            type=raw,value=latest,enable=${{ inputs.is_production == true }}
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
