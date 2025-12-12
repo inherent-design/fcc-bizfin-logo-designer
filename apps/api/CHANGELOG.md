@@ -1,5 +1,11 @@
 # @fcc-bizfin-logo-designer/api
 
+## 0.0.6
+
+### Patch Changes
+
+- a2620f8: Fix tag watched by workflow for release builds
+
 ## 0.0.5
 
 ### Patch Changes
