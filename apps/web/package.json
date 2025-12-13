@@ -13,14 +13,12 @@
     "zustand": "^5.0.9"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.17",
+    "@pandacss/dev": "^1.7.0",
     "@types/color": "^4.2.0",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react-swc": "^4.2.2",
     "csstype": "^3.2.3",
-    "daisyui": "^5.5.8",
-    "tailwindcss": "^4.1.17",
     "vite": "^7.2.4",
     "zod": "^4.1.13"
   },
@@ -36,6 +34,7 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "prepare": "panda codegen",
     "preview": "vite preview"
   },
   "type": "module",
