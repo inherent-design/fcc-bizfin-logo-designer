@@ -1,11 +1,5 @@
 import type { HSLColor } from '../schemas/logoState.schema'
-
-/**
- * Convert HSL color object to CSS string
- */
-export function hslToString(color: HSLColor): string {
-  return `hsl(${color.h}, ${color.s}%, ${color.l}%)`
-}
+import { hslToString } from './colors'
 
 /**
  * Apply fill color to SVG elements

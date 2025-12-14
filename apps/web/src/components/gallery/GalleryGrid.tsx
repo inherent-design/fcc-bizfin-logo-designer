@@ -1,0 +1,59 @@
+import { css } from 'styled-system/css'
+import { usePresetsStore } from '../../store/presetsStore'
+import { useUIStore } from '../../store/uiStore'
+import { DesignThumbnail } from './DesignThumbnail'
+
+export function GalleryGrid() {
+  const designs = usePresetsStore((state) => state.designs)
+  const galleryFilter = useUIStore((state) => state.galleryFilter)
+
+  const filteredDesigns = designs.filter((design) => {
+    if (galleryFilter === 'favorites') return design.isFavorite
+    if (galleryFilter === 'recent') {
+      // Show designs from last 7 days
+      const weekAgo = new Date()
+      weekAgo.setDate(weekAgo.getDate() - 7)
+      return new Date(design.timestamp) > weekAgo
+    }
+    return true
+  })
+
+  if (filteredDesigns.length === 0) {
+    return (
+      <div
+        className={css({
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '200px',
+          fontFamily: 'brutalist',
+          fontSize: 'sm',
+          color: 'panel.fg',
+          opacity: 0.5,
+        })}
+      >
+        No designs found. Save your first design to get started!
+      </div>
+    )
+  }
+
+  return (
+    <div
+      className={css({
+        display: 'grid',
+        gap: 4,
+
+        // Responsive grid
+        gridTemplateColumns: {
+          base: 'repeat(2, 1fr)',
+          tablet: 'repeat(3, 1fr)',
+          desktop: 'repeat(auto-fill, minmax(150px, 1fr))',
+        },
+      })}
+    >
+      {filteredDesigns.map((design) => (
+        <DesignThumbnail key={design.id} design={design} />
+      ))}
+    </div>
+  )
+}
