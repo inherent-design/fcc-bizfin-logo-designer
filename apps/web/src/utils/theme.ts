@@ -1,14 +1,12 @@
 /**
- * Initialize theme based on system preference
+ * Initialize theme placeholder
+ *
+ * NOTE: Theme initialization moved to uiStore.ts (getInitialTheme)
+ * Theme syncing happens in WorldSpace.tsx via useEffect
+ * This function is kept for backwards compatibility but does nothing
  */
 export function initTheme(): void {
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  const theme = prefersDark ? 'dark' : 'light'
-  document.documentElement.setAttribute('data-theme', theme)
-
-  // Listen for system theme changes
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    const newTheme = e.matches ? 'dark' : 'light'
-    document.documentElement.setAttribute('data-theme', newTheme)
-  })
+  // No-op: Theme is now managed by uiStore + WorldSpace
+  // uiStore detects system preference on initialization
+  // WorldSpace syncs uiStore.worldTheme to document.documentElement.data-theme
 }

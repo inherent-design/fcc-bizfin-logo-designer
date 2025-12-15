@@ -1,4 +1,5 @@
-import type { CompositionStyleObject } from './system-types'
+ 
+import type {  CompositionStyleObject  } from './system-types';
 
 interface Token<T> {
   value: T

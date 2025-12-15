@@ -1,45 +1,162 @@
+// ============================================================================
+// IMPORTS
+// ============================================================================
+
+// External dependencies
+import type { ReactNode } from 'react'
+
+// Panda CSS
+import { css } from 'styled-system/css'
+
+// Types
 import type { Vec2 } from '../schemas/logoState.schema'
+
+// Utils
 import { componentLogger } from '../utils/logger'
 
-// Section Header Component
-function SectionHeader({ title, children }: { title: string; children?: React.ReactNode }) {
+// Components
+import { Button } from './ui/Button'
+
+// ============================================================================
+// TYPES & INTERFACES
+// ============================================================================
+
+/**
+ * LayoutSettings component props
+ */
+interface LayoutSettingsProps {
+  /** Array of quadrant configurations */
+  quadrants: Array<{
+    centerOffset: Vec2
+    elementScale: number
+  }>
+  /** Actions for updating quadrant settings */
+  actions: {
+    setCenterOffset: (position: number, offset: Vec2) => void
+    setElementScale: (position: number, scale: number) => void
+  }
+}
+
+/**
+ * SectionHeader component props
+ */
+interface SectionHeaderProps {
+  /** Section title */
+  title: string
+  /** Optional header actions (e.g., reset button) */
+  children?: ReactNode
+}
+
+/**
+ * SliderControl component props
+ */
+interface SliderControlProps {
+  /** Slider label text */
+  label: string
+  /** Current slider value */
+  value: number
+  /** Minimum value */
+  min: number
+  /** Maximum value */
+  max: number
+  /** Step increment */
+  step: number
+  /** Value change handler */
+  onChange: (value: number) => void
+  /** Reset button handler */
+  onReset: () => void
+}
+
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+/**
+ * Quadrant display labels
+ * Order: [TL, TR, BL, BR]
+ */
+const QUADRANT_LABELS = ['Top-Left', 'Top-Right', 'Bottom-Left', 'Bottom-Right']
+
+// ============================================================================
+// STYLES
+// ============================================================================
+
+const sectionHeaderStyles = css({
+  fontSize: 'xs',
+  fontFamily: 'brutalist',
+  fontWeight: 'bold',
+  textTransform: 'uppercase',
+  letterSpacing: 'wider',
+  color: 'panel.fg',
+  opacity: 'subtle',
+})
+
+const sliderContainerStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 2,
+})
+
+const sliderHeaderStyles = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+})
+
+const sliderLabelStyles = css({
+  fontSize: 'sm',
+  fontFamily: 'brutalist',
+  color: 'panel.fg',
+  opacity: 'medium',
+})
+
+const sliderValueContainerStyles = css({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 2,
+})
+
+const sliderValueStyles = css({
+  fontSize: 'xs',
+  fontFamily: 'mono',
+  color: 'panel.fg',
+  opacity: 'muted',
+})
+
+const sliderInputStyles = css({
+  width: '100%',
+  cursor: 'pointer',
+})
+
+// ============================================================================
+// SUB-COMPONENTS
+// ============================================================================
+
+/**
+ * SectionHeader - Quadrant section header with optional actions
+ */
+function SectionHeader({ title, children }: SectionHeaderProps) {
   return (
     <div>
-      <h3 className='text-xs font-semibold uppercase tracking-wider text-base-content/60'>
-        {title}
-      </h3>
+      <h3 className={sectionHeaderStyles}>{title}</h3>
       {children}
     </div>
   )
 }
 
-// Slider Component
-function SliderControl({
-  label,
-  value,
-  min,
-  max,
-  step,
-  onChange,
-  onReset,
-}: {
-  label: string
-  value: number
-  min: number
-  max: number
-  step: number
-  onChange: (value: number) => void
-  onReset: () => void
-}) {
+/**
+ * SliderControl - Reusable slider with label, value display, and reset
+ */
+function SliderControl({ label, value, min, max, step, onChange, onReset }: SliderControlProps) {
   return (
-    <div>
-      <div>
-        <label className='text-sm text-base-content/70'>{label}</label>
-        <div>
-          <span className='text-xs font-mono text-base-content/50'>{value.toFixed(1)}</span>
-          <button onClick={onReset} className='btn btn-xs btn-ghost' aria-label={`Reset ${label}`}>
+    <div className={sliderContainerStyles}>
+      <div className={sliderHeaderStyles}>
+        <label className={sliderLabelStyles}>{label}</label>
+        <div className={sliderValueContainerStyles}>
+          <span className={sliderValueStyles}>{value.toFixed(1)}</span>
+          <Button onClick={onReset} variant='ghost' size='sm' aria-label={`Reset ${label}`}>
             ↺
-          </button>
+          </Button>
         </div>
       </div>
       <input
@@ -49,27 +166,43 @@ function SliderControl({
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className='range range-xs'
+        className={sliderInputStyles}
       />
     </div>
   )
 }
 
-// Props interface
-interface LayoutSettingsProps {
-  quadrants: Array<{
-    centerOffset: Vec2
-    elementScale: number
-  }>
-  actions: {
-    setCenterOffset: (position: number, offset: Vec2) => void
-    setElementScale: (position: number, scale: number) => void
-  }
-}
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
 
+/**
+ * LayoutSettings - Quadrant-based layout adjustment controls
+ *
+ * Features:
+ * - Per-quadrant offset controls (X/Y)
+ * - Per-quadrant scale controls
+ * - Individual reset buttons
+ * - Reset all button per quadrant
+ *
+ * Quadrants:
+ * - 0: Top-Left
+ * - 1: Top-Right
+ * - 2: Bottom-Left
+ * - 3: Bottom-Right
+ *
+ * @example
+ * ```tsx
+ * <LayoutSettings
+ *   quadrants={quadrants}
+ *   actions={{
+ *     setCenterOffset,
+ *     setElementScale
+ *   }}
+ * />
+ * ```
+ */
 export function LayoutSettings({ quadrants, actions }: LayoutSettingsProps) {
-  const quadrantLabels = ['Top-Left', 'Top-Right', 'Bottom-Left', 'Bottom-Right']
-
   const handleOffsetChange = (position: number, axis: 'x' | 'y', value: number) => {
     componentLogger.debug({ position, axis, value }, 'Offset changed')
     const currentOffset = quadrants[position].centerOffset
@@ -111,14 +244,15 @@ export function LayoutSettings({ quadrants, actions }: LayoutSettingsProps) {
 
         return (
           <div key={i}>
-            <SectionHeader title={`Quadrant ${i + 1} (${quadrantLabels[i]})`}>
-              <button
+            <SectionHeader title={`Quadrant ${i + 1} (${QUADRANT_LABELS[i]})`}>
+              <Button
                 onClick={() => handleResetAllForQuadrant(i)}
-                className='btn btn-xs btn-ghost'
-                aria-label={`Reset all for ${quadrantLabels[i]}`}
+                variant='ghost'
+                size='sm'
+                aria-label={`Reset all for ${QUADRANT_LABELS[i]}`}
               >
                 Reset All
-              </button>
+              </Button>
             </SectionHeader>
 
             <div>

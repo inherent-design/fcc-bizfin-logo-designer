@@ -1,12 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { useWorldStore } from '../store/worldStore'
 import { calculateTiltFromMouse, smoothDamp } from '../utils/animations'
+import { MAX_LOGO_ROTATION, ROTATION_DAMPING } from '../constants/world'
 
 /**
  * Hook to calculate and apply logo tilt based on mouse position
  * Uses smooth damping for natural movement
  */
-export function useLogoTilt(maxRotation: number = 10) {
+export function useLogoTilt(maxRotation: number = MAX_LOGO_ROTATION) {
   const mousePosition = useWorldStore((state) => state.mousePosition)
   const setLogoRotation = useWorldStore((state) => state.setLogoRotation)
 
@@ -20,8 +21,16 @@ export function useLogoTilt(maxRotation: number = 10) {
       const targetRotation = calculateTiltFromMouse(mousePosition.x, mousePosition.y, maxRotation)
 
       // Smooth damp towards target
-      currentRotation.current.x = smoothDamp(currentRotation.current.x, targetRotation.x, 0.1)
-      currentRotation.current.y = smoothDamp(currentRotation.current.y, targetRotation.y, 0.1)
+      currentRotation.current.x = smoothDamp(
+        currentRotation.current.x,
+        targetRotation.x,
+        ROTATION_DAMPING
+      )
+      currentRotation.current.y = smoothDamp(
+        currentRotation.current.y,
+        targetRotation.y,
+        ROTATION_DAMPING
+      )
 
       // Update store
       setLogoRotation(currentRotation.current.x, currentRotation.current.y)

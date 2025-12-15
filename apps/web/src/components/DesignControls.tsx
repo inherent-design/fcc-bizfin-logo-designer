@@ -1,17 +1,34 @@
+// ============================================================================
+// IMPORTS
+// ============================================================================
+
+// Panda CSS
+
+// Types
 import type { HSLColor, Vec2 } from '../schemas/logoState.schema'
+
+// Components
 import { ColorSettings } from './ColorSettings'
 import { HistorySettings } from './HistorySettings'
 import { LayoutSettings } from './LayoutSettings'
 
-// Props interface using hybrid pattern
+// ============================================================================
+// TYPES & INTERFACES
+// ============================================================================
+
+/**
+ * DesignControls props
+ */
 interface DesignControlsProps {
-  // State values (read-only)
+  /** Base color for the logo */
   baseColor: HSLColor
+  /** Base design configuration */
   baseDesign: {
     fillColorForFilledQuadrants: HSLColor
     elementColorOverBase: HSLColor
     elementColorOverFilledQuadrants: HSLColor
   }
+  /** Two-tone design configuration (optional) */
   twoToneDesign: {
     fillColorQuadrant0: HSLColor
     fillColorQuadrant3: HSLColor
@@ -20,14 +37,15 @@ interface DesignControlsProps {
       elementColorOverQuadrant3Fill: HSLColor
     } | null
   } | null
+  /** Quadrant layout configuration */
   quadrants: Array<{
     position: number
     centerOffset: Vec2
     elementScale: number
   }>
+  /** Current design name */
   currentDesignName: string
-
-  // Actions (grouped)
+  /** Actions for managing design state */
   actions: {
     // Color actions
     setBaseColor: (color: HSLColor) => void
@@ -52,6 +70,35 @@ interface DesignControlsProps {
   }
 }
 
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+/**
+ * DesignControls - Main design control container
+ *
+ * Features:
+ * - Color settings management
+ * - Layout settings management
+ * - History and state management
+ * - Responsive panel styling
+ *
+ * Layout:
+ * - Mobile: No border/background (transparent)
+ * - Desktop: Panel with border and background
+ *
+ * @example
+ * ```tsx
+ * <DesignControls
+ *   baseColor={{ h: 210, s: 100, l: 50 }}
+ *   baseDesign={baseDesign}
+ *   twoToneDesign={twoToneDesign}
+ *   quadrants={quadrants}
+ *   currentDesignName="My Design"
+ *   actions={actions}
+ * />
+ * ```
+ */
 export function DesignControls({
   baseColor,
   baseDesign,
@@ -61,7 +108,7 @@ export function DesignControls({
   actions,
 }: DesignControlsProps) {
   return (
-    <div className='lg:bg-base-200 lg:rounded-2xl lg:p-6 space-y-8'>
+    <>
       <ColorSettings
         baseColor={baseColor}
         baseDesign={baseDesign}
@@ -96,6 +143,6 @@ export function DesignControls({
           resetToDefault: actions.resetToDefault,
         }}
       />
-    </div>
+    </>
   )
 }

@@ -1,38 +1,53 @@
-import type { HSLColor } from '../schemas/logoState.schema'
-import { componentLogger } from '../utils/logger'
-import { AdvancedColorPicker } from './AdvancedColorPicker'
+// ============================================================================
+// IMPORTS
+// ============================================================================
 
-// Section Header Component
-function SectionHeader({ title, children }: { title: string; children?: React.ReactNode }) {
-  return (
-    <div>
-      <h3 className='text-xs font-semibold uppercase tracking-wider text-base-content/60'>
-        {title}
-      </h3>
-      {children}
-    </div>
-  )
-}
+// Panda CSS
+import { css } from 'styled-system/css'
 
-// Props interface using hybrid pattern
+// Types
+import type { HSLColor } from '@/schemas/logoState.schema'
+
+// Utils
+import { componentLogger } from '@/utils/logger'
+
+// Components
+import { AdvancedColorPicker } from '@/components/AdvancedColorPicker'
+
+// ============================================================================
+// TYPES & INTERFACES
+// ============================================================================
+
+/**
+ * ColorSettings component props using hybrid pattern
+ */
 interface ColorSettingsProps {
-  // State values (read-only)
+  /** Current base color value */
   baseColor: HSLColor
+  /** Base design color configuration */
   baseDesign: {
+    /** Fill color for filled quadrants */
     fillColorForFilledQuadrants: HSLColor
+    /** Element color displayed over base */
     elementColorOverBase: HSLColor
+    /** Element color displayed over filled quadrants */
     elementColorOverFilledQuadrants: HSLColor
   }
+  /** Two-tone design configuration (null if disabled) */
   twoToneDesign: {
+    /** Fill color for quadrant 0 (top-left) */
     fillColorQuadrant0: HSLColor
+    /** Fill color for quadrant 3 (bottom-right) */
     fillColorQuadrant3: HSLColor
+    /** Unique element colors per quadrant (null if shared) */
     uniqueElementColors: {
+      /** Element color over quadrant 0 fill */
       elementColorOverQuadrant0Fill: HSLColor
+      /** Element color over quadrant 3 fill */
       elementColorOverQuadrant3Fill: HSLColor
     } | null
   } | null
-
-  // Actions (grouped)
+  /** Color manipulation actions */
   actions: {
     setBaseColor: (color: HSLColor) => void
     setBaseFillColor: (color: HSLColor) => void
@@ -47,6 +62,85 @@ interface ColorSettingsProps {
   }
 }
 
+/**
+ * Section header props
+ */
+interface SectionHeaderProps {
+  title: string
+  children?: React.ReactNode
+}
+
+// ============================================================================
+// STYLES
+// ============================================================================
+
+const sectionHeaderTitleStyles = css({
+  fontSize: 'xs',
+  fontFamily: 'brutalist',
+  fontWeight: 'bold',
+  textTransform: 'uppercase',
+  letterSpacing: 'wider',
+  color: 'panel.fg',
+  opacity: 'subtle',
+})
+
+const checkboxStyles = css({
+  cursor: 'pointer',
+})
+
+const colorPickerGroupStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 4,
+})
+
+// ============================================================================
+// SUB-COMPONENTS
+// ============================================================================
+
+/**
+ * Section header with optional child content (e.g., toggle checkbox)
+ */
+function SectionHeader({ title, children }: SectionHeaderProps) {
+  return (
+    <div>
+      <h3 className={sectionHeaderTitleStyles}>{title}</h3>
+      {children}
+    </div>
+  )
+}
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+/**
+ * ColorSettings - Color configuration panel for logo design
+ *
+ * Features:
+ * - Base color control (shield & laurel)
+ * - Quadrant fill colors (1-tone or 2-tone modes)
+ * - Element colors (over base and over filled areas)
+ * - Unique element colors per quadrant (2-tone mode only)
+ *
+ * Modes:
+ * - 1-tone: Single fill color, 2 element colors
+ * - 2-tone: Two fill colors (TL/BR quadrants), 2-3 element colors
+ * - 2-tone + unique: Two fill colors, 3 element colors (per quadrant)
+ *
+ * @example
+ * ```tsx
+ * <ColorSettings
+ *   baseColor={{ h: 210, s: 100, l: 50 }}
+ *   baseDesign={...}
+ *   twoToneDesign={null}
+ *   actions={{
+ *     setBaseColor: (color) => setState({ baseColor: color }),
+ *     // ... other actions
+ *   }}
+ * />
+ * ```
+ */
 export function ColorSettings({
   baseColor,
   baseDesign,
@@ -60,7 +154,7 @@ export function ColorSettings({
     <div>
       {/* Base Color */}
       <div>
-        <SectionHeader title='Base' />
+        <SectionHeader title='Base // Shield + Laurel + Handshake' />
         <AdvancedColorPicker
           label='Shield & Laurel'
           color={baseColor}
@@ -76,7 +170,6 @@ export function ColorSettings({
         <SectionHeader title='Quadrant'>
           <input
             type='checkbox'
-            className='toggle toggle-sm'
             checked={isTwoTone}
             onChange={(e) => {
               componentLogger.debug(
@@ -92,6 +185,7 @@ export function ColorSettings({
               }
             }}
             aria-label='Enable 2-tone mode'
+            className={checkboxStyles}
           />
         </SectionHeader>
 
@@ -107,7 +201,7 @@ export function ColorSettings({
           />
         ) : (
           // 2-tone mode: two separate fill colors
-          <div className='space-y-4'>
+          <div className={colorPickerGroupStyles}>
             <AdvancedColorPicker
               label='Quad 1 (TL)'
               color={twoToneDesign!.fillColorQuadrant0}
@@ -134,7 +228,6 @@ export function ColorSettings({
           {isTwoTone && (
             <input
               type='checkbox'
-              className='toggle toggle-sm'
               checked={hasUniqueElementColors}
               onChange={(e) => {
                 componentLogger.debug(
@@ -150,13 +243,14 @@ export function ColorSettings({
                 }
               }}
               aria-label='Enable unique element colors'
+              className={checkboxStyles}
             />
           )}
         </SectionHeader>
 
         {!isTwoTone ? (
           // 1-tone mode: 2 element colors
-          <div className='space-y-4'>
+          <div className={colorPickerGroupStyles}>
             <AdvancedColorPicker
               label='Over Base'
               color={baseDesign.elementColorOverBase}
@@ -176,7 +270,7 @@ export function ColorSettings({
           </div>
         ) : !hasUniqueElementColors ? (
           // 2-tone without unique colors: 2 element colors (shared for filled quadrants)
-          <div className='space-y-4'>
+          <div className={colorPickerGroupStyles}>
             <AdvancedColorPicker
               label='Over Base'
               color={baseDesign.elementColorOverBase}
@@ -196,7 +290,7 @@ export function ColorSettings({
           </div>
         ) : (
           // 2-tone with unique colors: 3 colors (separate for each filled quadrant)
-          <div className='space-y-4'>
+          <div className={colorPickerGroupStyles}>
             <AdvancedColorPicker
               label='Over Base'
               color={baseDesign.elementColorOverBase}

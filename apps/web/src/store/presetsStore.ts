@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { LogoState } from '../schemas/logoState.schema'
+import { storeLogger } from '../utils/logger'
 
 export interface SavedDesign {
   id: string
@@ -34,8 +35,18 @@ export const usePresetsStore = create<PresetsStore>()(
       designs: [],
       activeDesignId: null,
 
+      /**
+       * Save a new design to the gallery
+       *
+       * @param name - Display name for the design
+       * @param state - Full LogoState snapshot
+       *
+       * @note Thumbnail generation is stubbed (uses placeholder)
+       * @see useThumbnailGenerator.ts for stub details
+       */
       saveDesign: (name, state) => {
-        // Generate simple thumbnail (base64 SVG data URL)
+        // STUB: Generate simple thumbnail (base64 SVG data URL)
+        // Will be replaced with actual logo rendering
         const thumbnail = `data:image/svg+xml;base64,${btoa('<svg></svg>')}`
 
         const newDesign: SavedDesign = {
@@ -116,6 +127,7 @@ export const usePresetsStore = create<PresetsStore>()(
             name: state.name || 'Imported Design',
             timestamp: new Date(),
             state,
+            // STUB: Generate simple thumbnail (base64 SVG data URL)
             thumbnail: `data:image/svg+xml;base64,${btoa('<svg></svg>')}`,
             isFavorite: false,
             isSystemPreset: false,
@@ -126,7 +138,7 @@ export const usePresetsStore = create<PresetsStore>()(
             activeDesignId: imported.id,
           }))
         } catch (error) {
-          console.error('Failed to import design:', error)
+          storeLogger.error({ error }, 'Failed to import design')
           throw error
         }
       },

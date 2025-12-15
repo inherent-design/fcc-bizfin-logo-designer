@@ -1,48 +1,174 @@
+// ============================================================================
+// IMPORTS
+// ============================================================================
+
+// Panda CSS
+import { css } from 'styled-system/css'
+
+// Utils
 import { componentLogger } from '../utils/logger'
 
-// Section Header Component
-function SectionHeader({ title }: { title: string }) {
-  return (
-    <div>
-      <h3 className='text-xs font-semibold uppercase tracking-wider text-base-content/60'>
-        {title}
-      </h3>
-    </div>
-  )
+// Components
+import { Button } from './ui/Button'
+
+// ============================================================================
+// TYPES & INTERFACES
+// ============================================================================
+
+/**
+ * Section header component props
+ */
+interface SectionHeaderProps {
+  /** Section title text */
+  title: string
 }
 
-// Props interface using hybrid pattern
+/**
+ * History settings component props - uses hybrid pattern
+ */
 interface HistorySettingsProps {
-  // State values (read-only)
+  /** Current design name (read-only) */
   currentDesignName: string
 
-  // Actions (grouped)
+  /** Action handlers grouped together */
   actions: {
+    /** Export current state to JSON string */
     exportState: () => string
+    /** Import state from JSON string */
     importState: (json: string) => void
+    /** Reset to default design */
     resetToDefault: () => void
   }
 }
 
+// ============================================================================
+// STYLES
+// ============================================================================
+
+const containerStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 4,
+})
+
+const sectionContainerStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 2,
+})
+
+const sectionHeaderStyles = css({
+  fontSize: 'xs',
+  fontFamily: 'brutalist',
+  fontWeight: 'bold',
+  textTransform: 'uppercase',
+  letterSpacing: 'wider',
+  color: 'panel.fg',
+  opacity: 'subtle',
+})
+
+const buttonListStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 1,
+})
+
+const activeDesignButtonStyles = css({
+  color: 'panel.primary',
+})
+
+const iconStyles = css({
+  mr: 2,
+})
+
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
+/**
+ * Copy text to clipboard with fallback to prompt
+ *
+ * @param text - Text to copy to clipboard
+ * @param successMessage - Message to show on success
+ */
+function copyToClipboardWithFallback(text: string, successMessage: string): void {
+  navigator.clipboard.writeText(text).then(
+    () => {
+      componentLogger.debug('Text copied to clipboard')
+      alert(successMessage)
+    },
+    (err) => {
+      componentLogger.error({ error: err }, 'Failed to copy to clipboard')
+      prompt('Copy this design JSON:', text)
+    }
+  )
+}
+
+/**
+ * Validate JSON string
+ *
+ * @param json - JSON string to validate
+ * @returns True if valid JSON, false otherwise
+ */
+function isValidJSON(json: string): boolean {
+  try {
+    JSON.parse(json)
+    return true
+  } catch {
+    return false
+  }
+}
+
+// ============================================================================
+// SUB-COMPONENTS
+// ============================================================================
+
+/**
+ * SectionHeader - Reusable section label component
+ */
+function SectionHeader({ title }: SectionHeaderProps) {
+  return (
+    <div>
+      <h3 className={sectionHeaderStyles}>{title}</h3>
+    </div>
+  )
+}
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+/**
+ * HistorySettings - Manage design history and state
+ *
+ * Features:
+ * - View saved designs (currently showing placeholder designs)
+ * - Export current design to JSON (clipboard)
+ * - Import design from JSON (prompt)
+ * - Reset to default design (with confirmation)
+ *
+ * Layout:
+ * - Saved Designs section: List of available designs
+ * - Actions section: Export, Import, Reset buttons
+ *
+ * @example
+ * ```tsx
+ * <HistorySettings
+ *   currentDesignName="Default"
+ *   actions={{
+ *     exportState: () => JSON.stringify(state),
+ *     importState: (json) => setState(JSON.parse(json)),
+ *     resetToDefault: () => setState(defaultState)
+ *   }}
+ * />
+ * ```
+ */
 export function HistorySettings({ currentDesignName, actions }: HistorySettingsProps) {
   const handleExport = () => {
     try {
       const json = actions.exportState()
       componentLogger.info({ length: json.length }, 'State exported')
-
-      // Copy to clipboard
-      navigator.clipboard.writeText(json).then(
-        () => {
-          componentLogger.debug('State copied to clipboard')
-          // TODO: Add toast notification
-          alert('Design exported to clipboard!')
-        },
-        (err) => {
-          componentLogger.error({ error: err }, 'Failed to copy to clipboard')
-          // Fallback: show in prompt
-          prompt('Copy this design JSON:', json)
-        }
-      )
+      copyToClipboardWithFallback(json, 'Design exported to clipboard!')
     } catch (error) {
       componentLogger.error({ error }, 'Export failed')
     }
@@ -56,22 +182,15 @@ export function HistorySettings({ currentDesignName, actions }: HistorySettingsP
         return
       }
 
-      // Validate JSON before importing
-      try {
-        JSON.parse(json)
-        actions.importState(json)
-        componentLogger.info(
-          {
-            length: json.length,
-          },
-          'State imported successfully'
-        )
-        // TODO: Add toast notification
-        alert('Design imported successfully!')
-      } catch (parseError) {
-        componentLogger.error({ error: parseError }, 'Invalid JSON provided')
+      if (!isValidJSON(json)) {
+        componentLogger.error('Invalid JSON provided')
         alert('Invalid JSON format. Please check and try again.')
+        return
       }
+
+      actions.importState(json)
+      componentLogger.info({ length: json.length }, 'State imported successfully')
+      alert('Design imported successfully!')
     } catch (error) {
       componentLogger.error({ error }, 'Import failed')
     }
@@ -81,7 +200,6 @@ export function HistorySettings({ currentDesignName, actions }: HistorySettingsP
     if (confirm('Reset to default design? This cannot be undone.')) {
       componentLogger.warn('Resetting to default design')
       actions.resetToDefault()
-      // TODO: Add toast notification
       alert('Design reset to default!')
     } else {
       componentLogger.debug('Reset cancelled by user')
@@ -89,61 +207,52 @@ export function HistorySettings({ currentDesignName, actions }: HistorySettingsP
   }
 
   return (
-    <div>
-      {/* Saved Designs */}
-      <div>
+    <div className={containerStyles}>
+      {/* Saved Designs Section */}
+      <div className={sectionContainerStyles}>
         <SectionHeader title='Saved Designs' />
-        <div>
-          <button
+        <div className={buttonListStyles}>
+          <Button
             onClick={() => componentLogger.debug({ name: 'Default' }, 'Saved design clicked')}
-            className='btn btn-ghost btn-sm text-primary'
+            variant='ghost'
+            size='sm'
+            className={activeDesignButtonStyles}
           >
-            → {currentDesignName}
-          </button>
-          <button
-            onClick={() =>
-              componentLogger.debug(
-                {
-                  name: 'High Contrast',
-                },
-                'Saved design clicked'
-              )
-            }
-            className='btn btn-ghost btn-sm'
+            <span className={iconStyles}>→</span>
+            {currentDesignName}
+          </Button>
+          <Button
+            onClick={() => componentLogger.debug({ name: 'High Contrast' }, 'Saved design clicked')}
+            variant='ghost'
+            size='sm'
             disabled
           >
             High Contrast
-          </button>
-          <button
-            onClick={() =>
-              componentLogger.debug(
-                {
-                  name: 'Minimalist',
-                },
-                'Saved design clicked'
-              )
-            }
-            className='btn btn-ghost btn-sm'
+          </Button>
+          <Button
+            onClick={() => componentLogger.debug({ name: 'Minimalist' }, 'Saved design clicked')}
+            variant='ghost'
+            size='sm'
             disabled
           >
             Minimalist
-          </button>
+          </Button>
         </div>
       </div>
 
-      {/* Actions */}
-      <div>
+      {/* Actions Section */}
+      <div className={sectionContainerStyles}>
         <SectionHeader title='Actions' />
-        <div>
-          <button onClick={handleExport} className='btn btn-sm btn-outline'>
+        <div className={buttonListStyles}>
+          <Button onClick={handleExport} variant='secondary' size='sm'>
             Export Design
-          </button>
-          <button onClick={handleImport} className='btn btn-sm btn-outline'>
+          </Button>
+          <Button onClick={handleImport} variant='secondary' size='sm'>
             Import Design
-          </button>
-          <button onClick={handleReset} className='btn btn-sm btn-outline btn-error'>
+          </Button>
+          <Button onClick={handleReset} variant='danger' size='sm'>
             Reset to Default
-          </button>
+          </Button>
         </div>
       </div>
     </div>

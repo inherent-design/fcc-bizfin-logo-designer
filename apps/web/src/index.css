@@ -4,10 +4,3 @@
 * {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', 'Segoe UI', system-ui, sans-serif;
 }
-
-/* Set theme based on system preference */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-  }
-}

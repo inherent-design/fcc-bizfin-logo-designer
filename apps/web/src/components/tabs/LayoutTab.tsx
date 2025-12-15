@@ -1,208 +1,293 @@
+// ============================================================================
+// IMPORTS
+// ============================================================================
+
+// Panda CSS
 import { css } from 'styled-system/css'
+
+// Store
 import { useLogoStore } from '../../store/logoStore'
+
+// Components
+import { FormLabel } from '../ui/FormLabel'
 import { Input } from '../ui/Input'
 
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+/**
+ * Quadrant display labels
+ * Order: [TL, TR, BR, BL]
+ */
 const QUADRANT_LABELS = ['Top-Left', 'Top-Right', 'Bottom-Right', 'Bottom-Left']
 
+// ============================================================================
+// STYLES
+// ============================================================================
+
+const containerStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 6,
+  pt: 4,
+})
+
+const quadrantCardStyles = css({
+  p: 4,
+  border: '{borderWidths.brutal.inset} solid',
+  borderColor: 'panel.border',
+  bg: 'component.tab.bgActive',
+})
+
+const headerStyles = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  mb: 3,
+})
+
+const titleStyles = css({
+  fontFamily: 'brutalist',
+  fontWeight: 'brutal',
+  fontSize: 'sm',
+  textTransform: 'uppercase',
+  color: 'panel.fg',
+})
+
+const badgeStyles = css({
+  px: 2,
+  py: 1,
+  border: '{borderWidths.brutal.inset} solid',
+  borderColor: 'panel.border',
+  fontFamily: 'brutalist',
+  fontWeight: 'bold',
+  fontSize: '2xs',
+  textTransform: 'uppercase',
+})
+
+const elementLabelStyles = css({
+  fontFamily: 'brutalist',
+  fontSize: 'xs',
+  mb: 3,
+  color: 'panel.fg',
+  opacity: 'medium',
+  textTransform: 'capitalize',
+})
+
+const sliderSectionStyles = css({
+  mb: 3,
+})
+
+const sliderHeaderStyles = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  mb: 2,
+})
+
+const sliderLabelStyles = css({
+  fontFamily: 'brutalist',
+  fontWeight: 'bold',
+  fontSize: 'xs',
+  textTransform: 'uppercase',
+  color: 'panel.fg',
+})
+
+const sliderValueStyles = css({
+  fontFamily: 'brutalist',
+  fontWeight: 'brutal',
+  fontSize: 'xs',
+  color: 'panel.primary',
+})
+
+const sliderInputStyles = css({
+  width: '100%',
+  height: 2,
+  bg: 'panel.border',
+  outline: 'none',
+  cursor: 'pointer',
+
+  '&::-webkit-slider-thumb': {
+    appearance: 'none',
+    width: 5,
+    height: 5,
+    bg: 'panel.primary',
+    border: '{borderWidths.brutal.inset} solid',
+    borderColor: 'panel.border',
+    cursor: 'pointer',
+  },
+
+  '&::-moz-range-thumb': {
+    width: 5,
+    height: 5,
+    bg: 'panel.primary',
+    border: '{borderWidths.brutal.inset} solid',
+    borderColor: 'panel.border',
+    cursor: 'pointer',
+  },
+})
+
+const offsetGridStyles = css({
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: 2,
+})
+
+const fullWidthStyles = css({
+  width: '100%',
+})
+
+// ============================================================================
+// SUB-COMPONENTS
+// ============================================================================
+
+/**
+ * QuadrantFillBadge - Shows whether quadrant is filled or unfilled
+ */
+function QuadrantFillBadge({ isFilled }: { isFilled: boolean }) {
+  return (
+    <div
+      className={badgeStyles}
+      style={{
+        backgroundColor: isFilled ? 'var(--colors-panel-primary)' : 'transparent',
+        color: isFilled ? 'var(--colors-component-tab-text-active)' : 'var(--colors-panel-fg)',
+      }}
+    >
+      {isFilled ? 'Filled' : 'Unfilled'}
+    </div>
+  )
+}
+
+/**
+ * ScaleSlider - Element scale control with label and value display
+ */
+function ScaleSlider({ value, onChange }: { value: number; onChange: (value: number) => void }) {
+  return (
+    <div className={sliderSectionStyles}>
+      <div className={sliderHeaderStyles}>
+        <label className={sliderLabelStyles}>Scale</label>
+        <span className={sliderValueStyles}>{value.toFixed(2)}</span>
+      </div>
+
+      <input
+        type='range'
+        min={0.5}
+        max={2}
+        step={0.1}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className={sliderInputStyles}
+      />
+    </div>
+  )
+}
+
+/**
+ * OffsetInputs - X and Y position offset controls
+ */
+function OffsetInputs({
+  offsetX,
+  offsetY,
+  onChangeX,
+  onChangeY,
+}: {
+  offsetX: number
+  offsetY: number
+  onChangeX: (value: number) => void
+  onChangeY: (value: number) => void
+}) {
+  return (
+    <div className={offsetGridStyles}>
+      <div>
+        <FormLabel htmlFor='offset-x'>X Offset</FormLabel>
+        <Input
+          id='offset-x'
+          type='number'
+          value={offsetX}
+          onChange={(e) => onChangeX(Number(e.target.value))}
+          className={fullWidthStyles}
+        />
+      </div>
+
+      <div>
+        <FormLabel htmlFor='offset-y'>Y Offset</FormLabel>
+        <Input
+          id='offset-y'
+          type='number'
+          value={offsetY}
+          onChange={(e) => onChangeY(Number(e.target.value))}
+          className={fullWidthStyles}
+        />
+      </div>
+    </div>
+  )
+}
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+/**
+ * LayoutTab - Quadrant-based layout control panel
+ *
+ * Features:
+ * - Individual quadrant scale controls
+ * - X/Y offset inputs for element positioning
+ * - Fill status indicators
+ * - Element type display
+ *
+ * Quadrants:
+ * - 0: Top-Left
+ * - 1: Top-Right
+ * - 2: Bottom-Right
+ * - 3: Bottom-Left
+ *
+ * @example
+ * ```tsx
+ * <LayoutTab />
+ * ```
+ */
 export function LayoutTab() {
   const quadrants = useLogoStore((state) => state.quadrants)
   const setElementScale = useLogoStore((state) => state.setElementScale)
   const setCenterOffset = useLogoStore((state) => state.setCenterOffset)
 
   return (
-    <div
-      className={css({
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 6,
-        pt: 4,
-      })}
-    >
+    <div className={containerStyles}>
       {quadrants.map((quadrant, index) => (
-        <div
-          key={index}
-          className={css({
-            p: 4,
-            border: '2px solid',
-            borderColor: 'panel.border',
-            bg: 'white',
-          })}
-        >
-          <div
-            className={css({
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              mb: 3,
-            })}
-          >
-            <h3
-              className={css({
-                fontFamily: 'brutalist',
-                fontWeight: 'brutal',
-                fontSize: 'sm',
-                textTransform: 'uppercase',
-                color: 'panel.fg',
-              })}
-            >
-              {QUADRANT_LABELS[index]}
-            </h3>
-
-            <div
-              className={css({
-                px: 2,
-                py: 1,
-                bg: quadrant.isFilled ? 'panel.primary' : 'transparent',
-                border: '2px solid',
-                borderColor: 'panel.border',
-                fontFamily: 'brutalist',
-                fontWeight: 'bold',
-                fontSize: '2xs',
-                textTransform: 'uppercase',
-                color: quadrant.isFilled ? 'white' : 'panel.fg',
-              })}
-            >
-              {quadrant.isFilled ? 'Filled' : 'Unfilled'}
-            </div>
+        <div key={index} className={quadrantCardStyles}>
+          {/* Header with label and fill status */}
+          <div className={headerStyles}>
+            <h3 className={titleStyles}>{QUADRANT_LABELS[index]}</h3>
+            <QuadrantFillBadge isFilled={quadrant.isFilled} />
           </div>
 
-          <div
-            className={css({
-              fontFamily: 'brutalist',
-              fontSize: 'xs',
-              mb: 3,
-              color: 'panel.fg',
-              opacity: 0.7,
-              textTransform: 'capitalize',
-            })}
-          >
-            Element: {quadrant.elementId}
-          </div>
+          {/* Element type */}
+          <div className={elementLabelStyles}>Element: {quadrant.elementId}</div>
 
-          {/* Scale Slider */}
-          <div className={css({ mb: 3 })}>
-            <div
-              className={css({
-                display: 'flex',
-                justifyContent: 'space-between',
-                mb: 2,
-              })}
-            >
-              <label
-                className={css({
-                  fontFamily: 'brutalist',
-                  fontWeight: 'bold',
-                  fontSize: 'xs',
-                  textTransform: 'uppercase',
-                  color: 'panel.fg',
-                })}
-              >
-                Scale
-              </label>
-              <span
-                className={css({
-                  fontFamily: 'brutalist',
-                  fontWeight: 'brutal',
-                  fontSize: 'xs',
-                  color: 'panel.primary',
-                })}
-              >
-                {quadrant.elementScale.toFixed(2)}
-              </span>
-            </div>
+          {/* Scale slider */}
+          <ScaleSlider
+            value={quadrant.elementScale}
+            onChange={(value) => setElementScale(index, value)}
+          />
 
-            <input
-              type='range'
-              min={0.5}
-              max={2}
-              step={0.1}
-              value={quadrant.elementScale}
-              onChange={(e) => setElementScale(index, Number(e.target.value))}
-              className={css({
-                width: '100%',
-                height: '8px',
-                bg: 'panel.border',
-                outline: 'none',
-                cursor: 'pointer',
-
-                '&::-webkit-slider-thumb': {
-                  appearance: 'none',
-                  width: '20px',
-                  height: '20px',
-                  bg: 'panel.primary',
-                  border: '2px solid',
-                  borderColor: 'panel.border',
-                  cursor: 'pointer',
-                },
-
-                '&::-moz-range-thumb': {
-                  width: '20px',
-                  height: '20px',
-                  bg: 'panel.primary',
-                  border: '2px solid',
-                  borderColor: 'panel.border',
-                  cursor: 'pointer',
-                },
-              })}
-            />
-          </div>
-
-          {/* Position Offsets */}
-          <div className={css({ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 })}>
-            <div>
-              <label
-                className={css({
-                  fontFamily: 'brutalist',
-                  fontWeight: 'bold',
-                  fontSize: 'xs',
-                  textTransform: 'uppercase',
-                  color: 'panel.fg',
-                  mb: 1,
-                  display: 'block',
-                })}
-              >
-                X Offset
-              </label>
-              <Input
-                type='number'
-                value={quadrant.centerOffset.x}
-                onChange={(e) =>
-                  setCenterOffset(index, {
-                    ...quadrant.centerOffset,
-                    x: Number(e.target.value),
-                  })
-                }
-                className={css({ width: '100%' })}
-              />
-            </div>
-
-            <div>
-              <label
-                className={css({
-                  fontFamily: 'brutalist',
-                  fontWeight: 'bold',
-                  fontSize: 'xs',
-                  textTransform: 'uppercase',
-                  color: 'panel.fg',
-                  mb: 1,
-                  display: 'block',
-                })}
-              >
-                Y Offset
-              </label>
-              <Input
-                type='number'
-                value={quadrant.centerOffset.y}
-                onChange={(e) =>
-                  setCenterOffset(index, {
-                    ...quadrant.centerOffset,
-                    y: Number(e.target.value),
-                  })
-                }
-                className={css({ width: '100%' })}
-              />
-            </div>
-          </div>
+          {/* Position offsets */}
+          <OffsetInputs
+            offsetX={quadrant.centerOffset.x}
+            offsetY={quadrant.centerOffset.y}
+            onChangeX={(x) =>
+              setCenterOffset(index, {
+                ...quadrant.centerOffset,
+                x,
+              })
+            }
+            onChangeY={(y) =>
+              setCenterOffset(index, {
+                ...quadrant.centerOffset,
+                y,
+              })
+            }
+          />
         </div>
       ))}
     </div>

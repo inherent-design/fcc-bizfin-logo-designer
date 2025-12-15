@@ -1,8 +1,49 @@
-import { css } from 'styled-system/css'
-import { useLogoStore } from '../../store/logoStore'
-import { Button } from '../ui/Button'
-import type { HSLColor } from '../../schemas/logoState.schema'
+// ============================================================================
+// IMPORTS
+// ============================================================================
 
+// Panda CSS
+import { css } from 'styled-system/css'
+
+// Store
+import { useLogoStore } from '../../store/logoStore'
+
+// Components
+import { AdvancedColorPicker } from '../AdvancedColorPicker'
+import { Button } from '../ui/Button'
+
+// ============================================================================
+// STYLES
+// ============================================================================
+
+const containerStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 6,
+  pt: 4,
+})
+
+const buttonStyles = css({
+  width: '100%',
+})
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+/**
+ * ColorTab - Tab content for color controls
+ *
+ * Features:
+ * - Base color picker
+ * - Two-tone mode toggle
+ * - Quadrant-specific color pickers (when two-tone enabled)
+ *
+ * @example
+ * ```tsx
+ * <ColorTab />
+ * ```
+ */
 export function ColorTab() {
   const baseColor = useLogoStore((state) => state.baseColor)
   const setBaseColor = useLogoStore((state) => state.setBaseColor)
@@ -19,60 +60,10 @@ export function ColorTab() {
       state.twoToneDesign?.fillColorQuadrant3 || state.baseDesign.fillColorForFilledQuadrants
   )
 
-  const handleBaseColorChange = (channel: keyof HSLColor, value: number) => {
-    setBaseColor({ ...baseColor, [channel]: value })
-  }
-
-  const handleFillColorChange = (quadrant: 0 | 3, channel: keyof HSLColor, value: number) => {
-    const currentColor = quadrant === 0 ? fillColorQ0 : fillColorQ3
-    setTwoToneFillColor(quadrant, { ...currentColor, [channel]: value })
-  }
-
   return (
-    <div
-      className={css({
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 6,
-        pt: 4,
-      })}
-    >
+    <div className={containerStyles}>
       {/* Base Color */}
-      <div>
-        <h3
-          className={css({
-            fontFamily: 'brutalist',
-            fontWeight: 'brutal',
-            fontSize: 'sm',
-            textTransform: 'uppercase',
-            mb: 3,
-            color: 'panel.fg',
-          })}
-        >
-          Base Color
-        </h3>
-
-        <div className={css({ display: 'flex', flexDirection: 'column', gap: 3 })}>
-          <ColorSlider
-            label='Hue'
-            value={baseColor.h}
-            max={360}
-            onChange={(v) => handleBaseColorChange('h', v)}
-          />
-          <ColorSlider
-            label='Saturation'
-            value={baseColor.s}
-            max={100}
-            onChange={(v) => handleBaseColorChange('s', v)}
-          />
-          <ColorSlider
-            label='Lightness'
-            value={baseColor.l}
-            max={100}
-            onChange={(v) => handleBaseColorChange('l', v)}
-          />
-        </div>
-      </div>
+      <AdvancedColorPicker label='Base Color' color={baseColor} onChange={setBaseColor} />
 
       {/* Two-Tone Toggle */}
       <div>
@@ -80,7 +71,7 @@ export function ColorTab() {
           variant={isTwoTone ? 'primary' : 'secondary'}
           size='sm'
           onClick={() => (isTwoTone ? disableTwoTone() : enableTwoTone())}
-          className={css({ width: '100%' })}
+          className={buttonStyles}
         >
           {isTwoTone ? 'Disable' : 'Enable'} Two-Tone
         </Button>
@@ -89,156 +80,18 @@ export function ColorTab() {
       {/* Two-Tone Colors */}
       {isTwoTone && (
         <>
-          <div>
-            <h3
-              className={css({
-                fontFamily: 'brutalist',
-                fontWeight: 'brutal',
-                fontSize: 'sm',
-                textTransform: 'uppercase',
-                mb: 3,
-                color: 'panel.fg',
-              })}
-            >
-              Fill Color (Top-Left)
-            </h3>
-
-            <div className={css({ display: 'flex', flexDirection: 'column', gap: 3 })}>
-              <ColorSlider
-                label='Hue'
-                value={fillColorQ0.h}
-                max={360}
-                onChange={(v) => handleFillColorChange(0, 'h', v)}
-              />
-              <ColorSlider
-                label='Saturation'
-                value={fillColorQ0.s}
-                max={100}
-                onChange={(v) => handleFillColorChange(0, 's', v)}
-              />
-              <ColorSlider
-                label='Lightness'
-                value={fillColorQ0.l}
-                max={100}
-                onChange={(v) => handleFillColorChange(0, 'l', v)}
-              />
-            </div>
-          </div>
-
-          <div>
-            <h3
-              className={css({
-                fontFamily: 'brutalist',
-                fontWeight: 'brutal',
-                fontSize: 'sm',
-                textTransform: 'uppercase',
-                mb: 3,
-                color: 'panel.fg',
-              })}
-            >
-              Fill Color (Bottom-Right)
-            </h3>
-
-            <div className={css({ display: 'flex', flexDirection: 'column', gap: 3 })}>
-              <ColorSlider
-                label='Hue'
-                value={fillColorQ3.h}
-                max={360}
-                onChange={(v) => handleFillColorChange(3, 'h', v)}
-              />
-              <ColorSlider
-                label='Saturation'
-                value={fillColorQ3.s}
-                max={100}
-                onChange={(v) => handleFillColorChange(3, 's', v)}
-              />
-              <ColorSlider
-                label='Lightness'
-                value={fillColorQ3.l}
-                max={100}
-                onChange={(v) => handleFillColorChange(3, 'l', v)}
-              />
-            </div>
-          </div>
+          <AdvancedColorPicker
+            label='Fill Color (Top-Left)'
+            color={fillColorQ0}
+            onChange={(color) => setTwoToneFillColor(0, color)}
+          />
+          <AdvancedColorPicker
+            label='Fill Color (Bottom-Right)'
+            color={fillColorQ3}
+            onChange={(color) => setTwoToneFillColor(3, color)}
+          />
         </>
       )}
-    </div>
-  )
-}
-
-interface ColorSliderProps {
-  label: string
-  value: number
-  max: number
-  onChange: (value: number) => void
-}
-
-function ColorSlider({ label, value, max, onChange }: ColorSliderProps) {
-  return (
-    <div>
-      <div
-        className={css({
-          display: 'flex',
-          justifyContent: 'space-between',
-          mb: 2,
-        })}
-      >
-        <label
-          className={css({
-            fontFamily: 'brutalist',
-            fontWeight: 'bold',
-            fontSize: 'xs',
-            textTransform: 'uppercase',
-            color: 'panel.fg',
-          })}
-        >
-          {label}
-        </label>
-        <span
-          className={css({
-            fontFamily: 'brutalist',
-            fontWeight: 'brutal',
-            fontSize: 'xs',
-            color: 'panel.primary',
-          })}
-        >
-          {Math.round(value)}
-        </span>
-      </div>
-
-      <input
-        type='range'
-        min={0}
-        max={max}
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
-        className={css({
-          width: '100%',
-          height: '8px',
-          bg: 'panel.border',
-          outline: 'none',
-          cursor: 'pointer',
-
-          '&::-webkit-slider-thumb': {
-            appearance: 'none',
-            width: '20px',
-            height: '20px',
-            bg: 'panel.primary',
-            border: '2px solid',
-            borderColor: 'panel.border',
-            cursor: 'pointer',
-          },
-
-          '&::-moz-range-thumb': {
-            width: '20px',
-            height: '20px',
-            bg: 'panel.primary',
-            border: '2px solid',
-            borderColor: 'panel.border',
-            cursor: 'pointer',
-          },
-        })}
-      />
     </div>
   )
 }

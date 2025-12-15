@@ -2,119 +2,21 @@
 
 **Stack**: Vite + React + TypeScript + Panda CSS
 
-**Purpose**: Setup, tooling, component development, testing, and debugging guide.
+**Purpose**: Tooling, component development, testing, and debugging guide for daily workflows.
 
 ---
 
-## Setup (Vite + React + TypeScript)
+## Before You Begin
 
-### Install Panda CSS
+**New to the project?** This guide assumes you have already set up your development environment (Node.js, pnpm, Git, etc.). If you haven't done this yet, please follow the **[Development Environment Setup Guide](../SETUP.md)** first.
 
-```bash
-pnpm add -D @pandacss/dev
-pnpm panda init --postcss
-```
+**What this guide covers**:
 
-### package.json Scripts
-
-```json
-{
-  "scripts": {
-    "prepare": "panda codegen",
-    "dev": "vite",
-    "build": "tsc -b && vite build"
-  }
-}
-```
-
-**Why `prepare`**: Ensures `styled-system/` generation before `pnpm install` completes.
-
-### panda.config.ts
-
-```typescript
-import { defineConfig } from '@pandacss/dev'
-
-export default defineConfig({
-  preflight: true,
-  include: ['./src/**/*.{ts,tsx}'],
-  jsxFramework: 'react',
-  outdir: 'styled-system',
-
-  theme: {
-    extend: {
-      tokens: {
-        colors: { brand: { value: '#0FEE0F' } },
-        spacing: { sm: { value: '8px' } },
-      },
-      semanticTokens: {
-        colors: {
-          primary: { value: { base: '{colors.brand}', _dark: '{colors.purple.500}' } },
-        },
-      },
-    },
-  },
-})
-```
-
-### src/index.css
-
-```css
-@layer reset, base, tokens, recipes, utilities;
-
-/* Custom global styles go here */
-* {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', 'Segoe UI', system-ui, sans-serif;
-}
-```
-
-### src/main.tsx
-
-```typescript
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'  // Import Panda cascade layers
-import App from './App.tsx'
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-)
-```
-
-### vite.config.ts
-
-```typescript
-import react from '@vitejs/plugin-react-swc'
-import { defineConfig } from 'vite'
-
-export default defineConfig({
-  plugins: [react()],
-  css: {
-    postcss: {
-      plugins: [require('@pandacss/dev/postcss')],
-    },
-  },
-})
-```
-
-**Alternative (CLI Mode)**: Run `panda --watch` in separate terminal for 2-4x faster HMR than PostCSS plugin.
-
-### tsconfig.json
-
-Ensure `styled-system` is included for autocomplete:
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES2020", // Minimum ES6+ (Panda doesn't support ES5)
-    "paths": {
-      "styled-system/*": ["./styled-system/*"]
-    }
-  },
-  "include": ["src", "styled-system"]
-}
-```
+- Performance optimization techniques
+- Debugging Panda CSS
+- Component development workflows
+- Testing strategies
+- CI/CD integration
 
 ---
 
@@ -356,21 +258,6 @@ css: {
 ---
 
 ## Component Development with Storybook
-
-### Storybook v8 Setup
-
-**Install**:
-
-```bash
-pnpm dlx storybook@latest init
-pnpm add -D @storybook/addon-themes
-```
-
-**Verify versions**:
-
-- Storybook v8 (Vite 5 support, React 19 components)
-- Vite 5+
-- React 19
 
 ### Configure Storybook
 
@@ -651,63 +538,13 @@ export const Desktop: Story = {
 
 ## CI/CD Integration
 
-### GitHub Actions Workflow
+The project uses GitHub Actions for continuous integration and Husky for pre-commit hooks. These are already configured in the repository.
 
-**`.github/workflows/ci.yml`**:
+**GitHub Actions** (`.github/workflows/ci.yml`): Runs linting, Panda CSS codegen, and builds on every push and PR.
 
-```yaml
-name: CI
-on: [push, pull_request]
+**Pre-commit Hooks** (`.husky/pre-commit`): Automatically runs `lint-staged` to format and lint changed files before commits.
 
-jobs:
-  lint-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v2
-
-      - uses: actions/setup-node@v4
-        with:
-          cache: 'pnpm'
-
-      - run: pnpm install
-
-      - run: pnpm lint
-
-      - run: pnpm panda codegen
-
-      - run: pnpm build
-
-      - run: pnpm test # If you have unit tests
-```
-
-### Pre-commit Hooks
-
-**Install Husky**:
-
-```bash
-pnpm add -D husky lint-staged
-pnpm exec husky init
-```
-
-**`.husky/pre-commit`**:
-
-```bash
-#!/usr/bin/env sh
-pnpm lint-staged
-```
-
-**package.json**:
-
-```json
-{
-  "lint-staged": {
-    "*.{ts,tsx}": ["eslint --fix", "pnpm panda codegen"],
-    "*.{ts,tsx,css,md}": ["prettier --write"]
-  }
-}
-```
+**Configuration details**: See [GITOPS.md](GITOPS.md) for the complete CI/CD setup and Docker build processes.
 
 ---
 
@@ -722,21 +559,7 @@ pnpm lint-staged
 
 ### IDE Setup
 
-**VSCode Extensions**:
-
-- Panda CSS (official) - Token autocomplete, color preview
-- Atomic CSS DevTools - Decode hashed classnames in browser
-
-**Settings** (`.vscode/settings.json`):
-
-```json
-{
-  "editor.quickSuggestions": {
-    "strings": true // Enable autocomplete in template strings
-  },
-  "typescript.tsdk": "node_modules/typescript/lib"
-}
-```
+**VS Code extensions and configuration**: See [SETUP.md](../SETUP.md) for recommended extensions and settings.
 
 ### Monorepo Considerations
 

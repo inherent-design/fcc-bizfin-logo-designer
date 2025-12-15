@@ -1,5 +1,9 @@
 import type { HSLColor } from '../schemas/logoState.schema'
 import { hslToString } from './colors'
+import { componentLogger } from './logger'
+
+// Module-specific logger
+const svgLogger = componentLogger.child({ module: 'svg' })
 
 /**
  * Apply fill color to SVG elements
@@ -10,7 +14,7 @@ export function applySVGFill(svgString: string, color: HSLColor): string {
 
   const parseError = doc.querySelector('parsererror')
   if (parseError) {
-    console.error('SVG parsing error:', parseError.textContent)
+    svgLogger.error({ error: parseError.textContent }, 'SVG parsing error')
     return svgString
   }
 
@@ -35,7 +39,7 @@ export function applySVGStroke(svgString: string, color: HSLColor): string {
 
   const parseError = doc.querySelector('parsererror')
   if (parseError) {
-    console.error('SVG parsing error:', parseError.textContent)
+    svgLogger.error({ error: parseError.textContent }, 'SVG parsing error')
     return svgString
   }
 
@@ -60,7 +64,7 @@ export function applySVGTextFill(svgString: string, color: HSLColor): string {
 
   const parseError = doc.querySelector('parsererror')
   if (parseError) {
-    console.error('SVG parsing error:', parseError.textContent)
+    svgLogger.error({ error: parseError.textContent }, 'SVG parsing error')
     return svgString
   }
 
@@ -94,7 +98,7 @@ export function applyElementColors(
 
   const parseError = doc.querySelector('parsererror')
   if (parseError) {
-    console.error('SVG parsing error:', parseError.textContent)
+    svgLogger.error({ error: parseError.textContent }, 'SVG parsing error')
     return svgString
   }
 
@@ -273,56 +277,58 @@ export function extractSVGContent(svgString: string): string {
  * This removes both "fcc-biz-fin-logo" and "elements" wrappers.
  */
 export function unwrapSVG(svgString: string): string {
-  console.log('[unwrapSVG] Input (first 200 chars):', svgString.substring(0, 200))
+  svgLogger.trace({ preview: svgString.substring(0, 200) }, '[unwrapSVG] Input SVG preview')
 
   const parser = new DOMParser()
   const doc = parser.parseFromString(svgString, 'image/svg+xml')
 
   const parseError = doc.querySelector('parsererror')
   if (parseError) {
-    console.error('[unwrapSVG] SVG parsing error:', parseError.textContent)
+    svgLogger.error({ error: parseError.textContent }, '[unwrapSVG] SVG parsing error')
     return svgString
   }
 
   const svgRoot = doc.querySelector('svg')
   if (!svgRoot) {
-    console.warn('[unwrapSVG] No <svg> root found')
+    svgLogger.warn('[unwrapSVG] No <svg> root found')
     return svgString
   }
-  console.log('[unwrapSVG] Found <svg> root, id:', svgRoot.getAttribute('id'))
+  svgLogger.debug({ id: svgRoot.getAttribute('id') }, '[unwrapSVG] Found <svg> root')
 
   // Find the outer wrapper <g> (typically id="fcc-biz-fin-logo")
   const outerG = svgRoot.querySelector('g#fcc-biz-fin-logo, g[id="fcc-biz-fin-logo"]')
   if (!outerG) {
-    console.log('[unwrapSVG] No fcc-biz-fin-logo wrapper found, extracting content as-is')
+    svgLogger.debug('[unwrapSVG] No fcc-biz-fin-logo wrapper, extracting content as-is')
     return extractSVGContent(svgString)
   }
-  console.log('[unwrapSVG] Found outer wrapper: #fcc-biz-fin-logo')
+  svgLogger.debug('[unwrapSVG] Found outer wrapper: #fcc-biz-fin-logo')
 
   // Check for #elements wrapper (used in element assets)
   const elementsWrapper = outerG.querySelector('g#elements, g[id="elements"]')
   if (elementsWrapper) {
-    console.log('[unwrapSVG] Found #elements wrapper, looking for inner <g>')
+    svgLogger.debug('[unwrapSVG] Found #elements wrapper')
     const innerG = elementsWrapper.querySelector('g')
     if (innerG) {
       // Case 1: Nested <g> exists (e.g., dollar-sign.svg)
       const result = new XMLSerializer().serializeToString(innerG)
-      console.log(
-        '[unwrapSVG] Output (element nested g): root=<g>, id=',
-        innerG.getAttribute('id'),
-        ', first 200 chars:',
-        result.substring(0, 200)
+      svgLogger.trace(
+        {
+          type: 'element-nested-g',
+          id: innerG.getAttribute('id'),
+          preview: result.substring(0, 200),
+        },
+        '[unwrapSVG] Output'
       )
       return result
     }
 
     // Case 2: No nested <g>, direct path children (e.g., briefcase.svg)
-    console.log('[unwrapSVG] No nested <g> in #elements, creating wrapper from child ID')
+    svgLogger.debug('[unwrapSVG] No nested <g> in #elements, creating wrapper')
     const firstChildWithId = Array.from(elementsWrapper.children).find((child) =>
       child.hasAttribute('id')
     )
     const elementId = firstChildWithId?.getAttribute('id') || 'element'
-    console.log('[unwrapSVG] Using element id:', elementId)
+    svgLogger.debug({ elementId }, '[unwrapSVG] Using element id')
 
     const newG = doc.createElementNS('http://www.w3.org/2000/svg', 'g')
     newG.setAttribute('id', elementId)
@@ -331,11 +337,13 @@ export function unwrapSVG(svgString: string): string {
     })
 
     const result = new XMLSerializer().serializeToString(newG)
-    console.log(
-      '[unwrapSVG] Output (element direct children): root=<g>, id=',
-      elementId,
-      ', first 200 chars:',
-      result.substring(0, 200)
+    svgLogger.trace(
+      {
+        type: 'element-direct-children',
+        id: elementId,
+        preview: result.substring(0, 200),
+      },
+      '[unwrapSVG] Output'
     )
     return result
   }
@@ -344,20 +352,22 @@ export function unwrapSVG(svgString: string): string {
   const innerG = outerG.querySelector('g')
   if (innerG) {
     const result = new XMLSerializer().serializeToString(innerG)
-    console.log(
-      '[unwrapSVG] Output (nested g path): root=<g>, id=',
-      innerG.getAttribute('id'),
-      ', first 200 chars:',
-      result.substring(0, 200)
+    svgLogger.trace(
+      {
+        type: 'nested-g',
+        id: innerG.getAttribute('id'),
+        preview: result.substring(0, 200),
+      },
+      '[unwrapSVG] Output'
     )
     return result
   }
 
   // No nested <g>, so we have direct children (like <path id="quadrant-tl">)
-  console.log('[unwrapSVG] No nested <g>, creating wrapper for direct children')
+  svgLogger.debug('[unwrapSVG] No nested <g>, creating wrapper for direct children')
   const firstChildWithId = Array.from(outerG.children).find((child) => child.hasAttribute('id'))
   const groupId = firstChildWithId?.getAttribute('id') || 'unwrapped'
-  console.log('[unwrapSVG] Using group id:', groupId)
+  svgLogger.debug({ groupId }, '[unwrapSVG] Using group id')
 
   // Create a new <g> with the element's ID and move all children into it
   const newG = doc.createElementNS('http://www.w3.org/2000/svg', 'g')
@@ -369,11 +379,13 @@ export function unwrapSVG(svgString: string): string {
   })
 
   const result = new XMLSerializer().serializeToString(newG)
-  console.log(
-    '[unwrapSVG] Output (created wrapper): root=<g>, id=',
-    groupId,
-    ', first 200 chars:',
-    result.substring(0, 200)
+  svgLogger.trace(
+    {
+      type: 'created-wrapper',
+      id: groupId,
+      preview: result.substring(0, 200),
+    },
+    '[unwrapSVG] Output'
   )
   return result
 }
@@ -395,13 +407,13 @@ export function extractGroupContent(svgString: string): {
 
   const parseError = doc.querySelector('parsererror')
   if (parseError) {
-    console.error('[extractGroupContent] SVG parsing error:', parseError.textContent)
+    svgLogger.error({ error: parseError.textContent }, '[extractGroupContent] SVG parsing error')
     return null
   }
 
   const rootG = doc.querySelector('g')
   if (!rootG) {
-    console.warn('[extractGroupContent] No <g> element found')
+    svgLogger.warn('[extractGroupContent] No <g> element found')
     return null
   }
 

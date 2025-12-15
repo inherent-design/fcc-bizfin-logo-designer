@@ -1,12 +1,17 @@
 import { useEffect, useRef } from 'react'
 import { useWorldStore } from '../store/worldStore'
 import { clamp, smoothDamp } from '../utils/animations'
+import { componentLogger } from '../utils/logger'
+import { MAX_LOGO_ROTATION, ROTATION_DAMPING } from '../constants/world'
+
+// Module-specific logger
+const gyroLogger = componentLogger.child({ module: 'gyroscope' })
 
 /**
  * Hook to apply logo tilt based on device orientation (gyroscope)
  * For mobile devices
  */
-export function useGyroscopeTilt(maxRotation: number = 10) {
+export function useGyroscopeTilt(maxRotation: number = MAX_LOGO_ROTATION) {
   const setLogoRotation = useWorldStore((state) => state.setLogoRotation)
   const currentRotation = useRef({ x: 0, y: 0 })
   const rafId = useRef<number | undefined>(undefined)
@@ -35,12 +40,12 @@ export function useGyroscopeTilt(maxRotation: number = 10) {
       currentRotation.current.x = smoothDamp(
         currentRotation.current.x,
         targetRotation.current.x,
-        0.1
+        ROTATION_DAMPING
       )
       currentRotation.current.y = smoothDamp(
         currentRotation.current.y,
         targetRotation.current.y,
-        0.1
+        ROTATION_DAMPING
       )
 
       setLogoRotation(currentRotation.current.x, currentRotation.current.y)
@@ -62,7 +67,7 @@ export function useGyroscopeTilt(maxRotation: number = 10) {
             rafId.current = requestAnimationFrame(animate)
           }
         } catch (error) {
-          console.error('Error requesting device orientation permission:', error)
+          gyroLogger.error({ error }, 'Failed to request device orientation permission')
         }
       } else {
         // Non-iOS devices

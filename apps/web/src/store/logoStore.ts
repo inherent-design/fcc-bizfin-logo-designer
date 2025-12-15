@@ -498,14 +498,15 @@ export const useLogoStore = create<LogoStore>()(
         storageLogger.info('Beginning to rehydrate state from localStorage')
         return (state, error) => {
           if (error) {
-            storageLogger.error('Failed to rehydrate state from localStorage')
-            console.error(error)
+            storageLogger.error({ error }, 'Failed to rehydrate state from localStorage')
           } else {
-            storageLogger.info('Successfully rehydrated state from localStorage')
-            console.log({
-              designName: state?.name,
-              version: state?.version,
-            })
+            storageLogger.info(
+              {
+                designName: state?.name,
+                version: state?.version,
+              },
+              'Successfully rehydrated state from localStorage'
+            )
           }
         }
       },

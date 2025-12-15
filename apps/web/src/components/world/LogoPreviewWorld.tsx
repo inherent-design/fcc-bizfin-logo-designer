@@ -1,14 +1,54 @@
+// ============================================================================
+// IMPORTS
+// ============================================================================
+
+// External dependencies
+import { type ReactNode } from 'react'
+
+// Panda CSS
 import { css } from 'styled-system/css'
+
+// Types
+import type { Vec2 } from '../../schemas/logoState.schema'
+
+// Utils
+import { applyElementColors, extractGroupContent } from '../../utils'
+
+// Store
 import { useLogoStore } from '../../store/logoStore'
 import { useWorldStore } from '../../store/worldStore'
-import { applyElementColors, extractGroupContent } from '../../utils'
+
+// Assets
 import baseShieldSvg from '../../assets/svg/base.svg?raw'
-import handshakeSvg from '../../assets/svg/handshake.svg?raw'
 import briefcaseSvg from '../../assets/svg/briefcase.svg?raw'
 import dollarSvg from '../../assets/svg/dollar-sign.svg?raw'
+import handshakeSvg from '../../assets/svg/handshake.svg?raw'
 import leafSvg from '../../assets/svg/grape-leaf.svg?raw'
 import mountainsSvg from '../../assets/svg/sierra-nevada.svg?raw'
+import quadrantBRSvg from '../../assets/svg/quadrant-br.svg?raw'
+import quadrantTLSvg from '../../assets/svg/quadrant-tl.svg?raw'
 
+// ============================================================================
+// TYPES & INTERFACES
+// ============================================================================
+
+/**
+ * ParallaxLayer component props
+ */
+interface LayerProps {
+  /** Depth value for translateZ transform */
+  depth: number
+  /** Layer content */
+  children: ReactNode
+}
+
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+/**
+ * SVG element mapping by element ID
+ */
 const elementSvgs: Record<string, string> = {
   briefcase: briefcaseSvg,
   dollar: dollarSvg,
@@ -16,42 +56,124 @@ const elementSvgs: Record<string, string> = {
   mountains: mountainsSvg,
 }
 
-// Hardcoded positions from original LogoPreview
-const BASE_POS = { x: 80, y: 84 }
-const HANDSHAKE_POS = { x: 80, y: 74.4 }
-const QUADRANT_TL_POS = { x: 64.2348, y: 57 }
-const QUADRANT_BR_POS = { x: 95.7213, y: 97 }
+/**
+ * Base shield position (from original Illustrator export)
+ */
+const BASE_POS: Vec2 = { x: 80, y: 84 }
 
-// Element base positions (precise coordinates from Illustrator export)
-const ELEMENT_BASE_POSITIONS = [
+/**
+ * Handshake overlay position
+ */
+const HANDSHAKE_POS: Vec2 = { x: 80, y: 74.4 }
+
+/**
+ * Top-left quadrant fill position
+ */
+const QUADRANT_TL_POS: Vec2 = { x: 64.2348, y: 57 }
+
+/**
+ * Bottom-right quadrant fill position
+ */
+const QUADRANT_BR_POS: Vec2 = { x: 95.7213, y: 97 }
+
+/**
+ * Element base positions (precise coordinates from Illustrator export)
+ * Order: [TL, TR, BL, BR]
+ */
+const ELEMENT_BASE_POSITIONS: Vec2[] = [
   { x: 64.2348, y: 53.0602 }, // TL (quadrant 0)
   { x: 96.6433, y: 53.9201 }, // TR (quadrant 1)
   { x: 66.3168, y: 92.2365 }, // BL (quadrant 2)
   { x: 94.4771, y: 91.46 }, // BR (quadrant 3)
 ]
 
-interface LayerProps {
-  depth: number
-  children: React.ReactNode
-}
+// ============================================================================
+// STYLES
+// ============================================================================
 
+const containerStyles = css({
+  // Mobile: 60% height (column layout)
+  height: { base: '60%', tablet: '100%' },
+  // Tablet+: 60% width (row layout)
+  width: { base: '100%', tablet: '60%' },
+  // Flex grow to fill remaining space
+  flex: 1,
+  position: 'relative',
+})
+
+const sceneContainerStyles = css({
+  position: 'relative',
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  perspective: '1000px',
+})
+
+const logoContainerStyles = css({
+  position: 'relative',
+  width: '80%',
+  maxWidth: '600px',
+  aspectRatio: '1/1',
+  transformStyle: 'preserve-3d',
+})
+
+const parallaxLayerStyles = css({
+  position: 'absolute',
+  inset: 0,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+})
+
+const svgStyles = css({
+  width: '100%',
+  height: '100%',
+})
+
+// ============================================================================
+// SUB-COMPONENTS
+// ============================================================================
+
+/**
+ * ParallaxLayer - Wrapper for 3D parallax effect
+ *
+ * Applies translateZ transform to create depth layers.
+ */
 function ParallaxLayer({ depth, children }: LayerProps) {
   return (
-    <div
-      className={css({
-        position: 'absolute',
-        inset: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      })}
-      style={{ transform: `translateZ(${depth}px)` }}
-    >
+    <div className={parallaxLayerStyles} style={{ transform: `translateZ(${depth}px)` }}>
       {children}
     </div>
   )
 }
 
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+/**
+ * LogoPreviewWorld - 3D parallax logo preview component
+ *
+ * Features:
+ * - Multi-layer 3D parallax effect
+ * - Dynamic SVG element positioning and scaling
+ * - Responsive layout (mobile column, tablet+ row)
+ * - User-controlled rotation and layer depths
+ * - Quadrant fill support (TL and BR only)
+ *
+ * Layers (front to back):
+ * 1. Base (shield + laurel)
+ * 2. Quadrant fills (if enabled)
+ * 3. Handshake overlay
+ * 4. Elements (briefcase, dollar, leaf, mountains)
+ *
+ * @example
+ * ```tsx
+ * <LogoPreviewWorld />
+ * ```
+ */
 export function LogoPreviewWorld() {
   const logoRotation = useWorldStore((state) => state.logoRotation)
   const layerDepths = useWorldStore((state) => state.layerDepths)
@@ -63,11 +185,7 @@ export function LogoPreviewWorld() {
 
   // Layer 1: Base (shield + laurel combined)
   const baseLayer = (
-    <svg
-      viewBox='0 0 160 160'
-      className={css({ width: '100%', height: '100%' })}
-      preserveAspectRatio='xMidYMid meet'
-    >
+    <svg viewBox='0 0 160 160' className={svgStyles} preserveAspectRatio='xMidYMid meet'>
       <g
         dangerouslySetInnerHTML={{
           __html: applyElementColors(extractGroupContent(baseShieldSvg)?.innerHTML ?? '', 'base', {
@@ -85,18 +203,19 @@ export function LogoPreviewWorld() {
 
   // Layer 2: Quadrant fills (TL and BR only if filled)
   const quadrantFillsLayer = (
-    <svg
-      viewBox='0 0 160 160'
-      className={css({ width: '100%', height: '100%' })}
-      preserveAspectRatio='xMidYMid meet'
-    >
+    <svg viewBox='0 0 160 160' className={svgStyles} preserveAspectRatio='xMidYMid meet'>
       {quadrants[0].isFilled &&
         (() => {
           const color = getFillColor(0)
           return color ? (
-            <circle
-              r='15'
-              fill={`hsl(${color.h}, ${color.s}%, ${color.l}%)`}
+            <g
+              dangerouslySetInnerHTML={{
+                __html: applyElementColors(
+                  extractGroupContent(quadrantTLSvg)?.innerHTML ?? '',
+                  'quadrant',
+                  { fill: color }
+                ),
+              }}
               style={{
                 transformBox: 'fill-box',
                 transform: `translate(calc(-50% + ${QUADRANT_TL_POS.x}px), calc(-50% + ${QUADRANT_TL_POS.y}px))`,
@@ -108,9 +227,14 @@ export function LogoPreviewWorld() {
         (() => {
           const color = getFillColor(2)
           return color ? (
-            <circle
-              r='15'
-              fill={`hsl(${color.h}, ${color.s}%, ${color.l}%)`}
+            <g
+              dangerouslySetInnerHTML={{
+                __html: applyElementColors(
+                  extractGroupContent(quadrantBRSvg)?.innerHTML ?? '',
+                  'quadrant',
+                  { fill: color }
+                ),
+              }}
               style={{
                 transformBox: 'fill-box',
                 transform: `translate(calc(-50% + ${QUADRANT_BR_POS.x}px), calc(-50% + ${QUADRANT_BR_POS.y}px))`,
@@ -123,11 +247,7 @@ export function LogoPreviewWorld() {
 
   // Layer 3: Handshake overlay
   const handshakeLayer = (
-    <svg
-      viewBox='0 0 160 160'
-      className={css({ width: '100%', height: '100%' })}
-      preserveAspectRatio='xMidYMid meet'
-    >
+    <svg viewBox='0 0 160 160' className={svgStyles} preserveAspectRatio='xMidYMid meet'>
       <g
         dangerouslySetInnerHTML={{
           __html: applyElementColors(
@@ -146,11 +266,7 @@ export function LogoPreviewWorld() {
 
   // Layer 4: Elements (with user offsets and scale)
   const elementsLayer = (
-    <svg
-      viewBox='0 0 160 160'
-      className={css({ width: '100%', height: '100%' })}
-      preserveAspectRatio='xMidYMid meet'
-    >
+    <svg viewBox='0 0 160 160' className={svgStyles} preserveAspectRatio='xMidYMid meet'>
       {quadrants.map((quadrant, index) => {
         const basePos = ELEMENT_BASE_POSITIONS[index]
         const elementSvg = elementSvgs[quadrant.elementId]
@@ -181,41 +297,10 @@ export function LogoPreviewWorld() {
   )
 
   return (
-    <div
-      className={css({
-        position: 'absolute',
-
-        // Mobile: bottom 60% height
-        bottom: { base: 0, tablet: 0 },
-        left: { base: 0, tablet: 'auto' },
-        right: { base: 0, tablet: 0 },
-        height: { base: '60%', tablet: 'auto' },
-
-        // Tablet+: right 60% width
-        top: { tablet: 0 },
-        width: { tablet: '60%' },
-        maxWidth: { tablet: '800px' },
-      })}
-    >
-      <div
-        className={css({
-          position: 'relative',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          perspective: '1000px',
-        })}
-      >
+    <div className={containerStyles}>
+      <div className={sceneContainerStyles}>
         <div
-          className={css({
-            position: 'relative',
-            width: '80%',
-            maxWidth: '600px',
-            aspectRatio: '1/1',
-            transformStyle: 'preserve-3d',
-          })}
+          className={logoContainerStyles}
           style={{
             transform: `rotateX(${logoRotation.x}deg) rotateY(${logoRotation.y}deg)`,
           }}

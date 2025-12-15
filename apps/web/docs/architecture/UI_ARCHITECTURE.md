@@ -12,10 +12,10 @@ This document specifies the **redesigned UI/UX architecture** for the logo desig
 
 **Relationship to Other Docs**:
 
-- Core logo design constraints remain as defined in `docs/ARCHITECTURE.md`
-- Styling philosophy documented in `docs/STYLING.md`
-- Panda CSS development patterns in `docs/STYLE_DEV.md`
-- Stack decisions for original design in `docs/DECISIONS.md`
+- Core logo design constraints remain as defined in `ARCHITECTURE.md` (in this folder)
+- Styling philosophy documented in `../design-system/STYLING.md`
+- Panda CSS development patterns in `../development/STYLE_DEV.md`
+- Stack decisions for original design in `DECISIONS.md` (in this folder)
 
 This spec documents **what changed** in the UI redesign and **why**, with references to actual implementation files.
 
@@ -97,7 +97,7 @@ From `@fcc-bizfin-logo-designer/web/src/store/logoStore.ts`:
 
 ### Logo Rendering Constraints
 
-**Color Resolution Logic**: Must follow tier system (base → twoTone → uniqueElementColors) as documented in `docs/ARCHITECTURE.md` section "Color Resolution Logic".
+**Color Resolution Logic**: Must follow tier system (base → twoTone → uniqueElementColors) as documented in `ARCHITECTURE.md` (in this folder) section "Color Resolution Logic".
 
 **SVG Manipulation**: Element colors applied via `applyElementColors()` utility (see `@fcc-bizfin-logo-designer/web/src/utils/svg.ts`), which must preserve shield structure while allowing color customization.
 
@@ -1052,11 +1052,11 @@ export const useXStore = create<XState>()(
 
 ### Internal Documentation
 
-- `docs/ARCHITECTURE.md` - Original design spec (quadrant system, schema)
-- `docs/DECISIONS.md` - Stack decisions (Vite, Zustand, DaisyUI rationale)
-- `docs/STYLING.md` - Panda CSS deep dive + design patterns
-- `docs/STYLE_DEV.md` - Panda development guide
-- `docs/GITOPS.md` - CI/CD and container builds
+- `ARCHITECTURE.md` (in this folder) - Original design spec (quadrant system, schema)
+- `DECISIONS.md` (in this folder) - Stack decisions (Vite, Zustand, DaisyUI rationale)
+- `../design-system/STYLING.md` - Panda CSS deep dive + design patterns
+- `../development/STYLE_DEV.md` - Panda development guide
+- `../development/GITOPS.md` - CI/CD and container builds
 
 ### External Resources
 

@@ -1,13 +1,123 @@
-import { css } from 'styled-system/css'
+// ============================================================================
+// IMPORTS
+// ============================================================================
+
+// External dependencies
 import { useRef } from 'react'
-import { usePresetsStore } from '../../store/presetsStore'
+
+// Panda CSS
+import { css } from 'styled-system/css'
+
+// Utils
+import { componentLogger } from '../../utils/logger'
+
+// Store
 import { useLogoStore } from '../../store/logoStore'
+import { usePresetsStore } from '../../store/presetsStore'
 import { useUIStore } from '../../store/uiStore'
+
+// Components
 import { Button } from '../ui/Button'
 import { Icon } from '../ui/Icon'
 import { Input } from '../ui/Input'
 
+// ============================================================================
+// STYLES
+// ============================================================================
+
+const containerStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 3,
+  mb: 4,
+})
+
+const saveRowStyles = css({
+  display: 'flex',
+  gap: 2,
+})
+
+const nameInputStyles = css({
+  flex: 1,
+})
+
+const exportImportRowStyles = css({
+  display: 'flex',
+  gap: 2,
+})
+
+const actionButtonStyles = css({
+  flex: 1,
+})
+
+const iconStyles = css({
+  width: 4,
+  height: 4,
+})
+
+const hiddenFileInputStyles = css({
+  display: 'none',
+})
+
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
+/**
+ * Download JSON blob as file
+ *
+ * @param json - JSON string to download
+ * @param filename - Name of the downloaded file
+ */
+function downloadJSON(json: string, filename: string): void {
+  const blob = new Blob([json], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+/**
+ * Generate filename for export with timestamp
+ *
+ * @returns Filename with timestamp
+ */
+function generateExportFilename(): string {
+  return `logo-design-${Date.now()}.json`
+}
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+/**
+ * GalleryActions - Save/export/import functionality for logo designs
+ *
+ * Features:
+ * - Save designs with custom names
+ * - Export designs as JSON files
+ * - Import designs from JSON files
+ * - Loading states for async operations
+ *
+ * Note: Thumbnail generation is stubbed (see useThumbnailGenerator.ts)
+ *
+ * Layout:
+ * - Save row: Name input + Save button
+ * - Export/Import row: Export and Import buttons with loading states
+ *
+ * @status Production-ready
+ * @see presetsStore.ts for storage logic
+ * @see useThumbnailGenerator.ts for thumbnail stub
+ *
+ * @example
+ * ```tsx
+ * <GalleryActions />
+ * ```
+ */
 export function GalleryActions() {
+  // Store selectors
   const saveDesign = usePresetsStore((state) => state.saveDesign)
   const exportDesign = usePresetsStore((state) => state.exportDesign)
   const importDesign = usePresetsStore((state) => state.importDesign)
@@ -18,9 +128,11 @@ export function GalleryActions() {
   const setExporting = useUIStore((state) => state.setExporting)
   const setImporting = useUIStore((state) => state.setImporting)
 
+  // Refs
   const fileInputRef = useRef<HTMLInputElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
 
+  // Event handlers
   const handleSave = () => {
     const name = nameInputRef.current?.value.trim()
     if (!name) {
@@ -44,13 +156,7 @@ export function GalleryActions() {
     try {
       const json = exportDesign(activeDesignId)
       if (json) {
-        const blob = new Blob([json], { type: 'application/json' })
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = `logo-design-${Date.now()}.json`
-        a.click()
-        URL.revokeObjectURL(url)
+        downloadJSON(json, generateExportFilename())
       }
     } finally {
       setExporting(false)
@@ -72,7 +178,7 @@ export function GalleryActions() {
       alert('Design imported successfully!')
     } catch (error) {
       alert('Failed to import design. Please check the file format.')
-      console.error(error)
+      componentLogger.error({ error }, 'Failed to import design')
     } finally {
       setImporting(false)
       if (fileInputRef.current) {
@@ -82,38 +188,31 @@ export function GalleryActions() {
   }
 
   return (
-    <div
-      className={css({
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 3,
-        mb: 4,
-      })}
-    >
-      {/* Save New Design */}
-      <div className={css({ display: 'flex', gap: 2 })}>
+    <div className={containerStyles}>
+      {/* Save New Design Row */}
+      <div className={saveRowStyles}>
         <Input
           ref={nameInputRef}
           type='text'
           placeholder='Design name...'
-          className={css({ flex: 1 })}
+          className={nameInputStyles}
         />
         <Button variant='primary' size='sm' onClick={handleSave}>
-          <Icon name='plus' className={css({ width: 4, height: 4 })} />
+          <Icon name='plus' className={iconStyles} />
           Save
         </Button>
       </div>
 
-      {/* Export/Import */}
-      <div className={css({ display: 'flex', gap: 2 })}>
+      {/* Export/Import Row */}
+      <div className={exportImportRowStyles}>
         <Button
           variant='secondary'
           size='sm'
           onClick={handleExport}
           disabled={!activeDesignId || isExporting}
-          className={css({ flex: 1 })}
+          className={actionButtonStyles}
         >
-          <Icon name='download' className={css({ width: 4, height: 4 })} />
+          <Icon name='download' className={iconStyles} />
           {isExporting ? 'Exporting...' : 'Export'}
         </Button>
 
@@ -122,9 +221,9 @@ export function GalleryActions() {
           size='sm'
           onClick={handleImportClick}
           disabled={isImporting}
-          className={css({ flex: 1 })}
+          className={actionButtonStyles}
         >
-          <Icon name='upload' className={css({ width: 4, height: 4 })} />
+          <Icon name='upload' className={iconStyles} />
           {isImporting ? 'Importing...' : 'Import'}
         </Button>
 
@@ -133,7 +232,7 @@ export function GalleryActions() {
           type='file'
           accept='.json'
           onChange={handleFileChange}
-          className={css({ display: 'none' })}
+          className={hiddenFileInputStyles}
         />
       </div>
     </div>

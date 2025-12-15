@@ -1,3 +1,4 @@
+ 
 interface ConditionOptions {
   /**
    * The conditions to generate for the rule.

@@ -3,11 +3,22 @@ import type { LogoState } from '../schemas/logoState.schema'
 /**
  * Generate a thumbnail from logo state
  * Returns base64 data URL of SVG
+ *
+ * @status STUB - Placeholder implementation
+ * @todo Implement actual SVG rendering logic
+ *
+ * Implementation plan:
+ * 1. Extract SVG generation logic from LogoPreview into shared util
+ * 2. Create renderLogoToSVG(state: LogoState): string function
+ * 3. Resize/optimize SVG for thumbnail (120x120px)
+ * 4. Return base64 data URL
+ *
+ * Files to reference:
+ * - apps/web/src/components/LogoPreview.tsx (rendering logic)
+ * - apps/web/src/utils/generateLogoSVG.ts (SVG generation)
  */
 export function generateThumbnail(state: LogoState): string {
   // For now, return a placeholder
-  // TODO: Implement actual SVG rendering logic similar to LogoPreview
-  // This will require extracting SVG generation logic into a reusable function
 
   const placeholder = `
     <svg width="120" height="120" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
