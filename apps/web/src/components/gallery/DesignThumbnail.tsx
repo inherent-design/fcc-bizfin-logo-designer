@@ -6,14 +6,14 @@
 import { css } from 'styled-system/css'
 
 // Types
-import type { SavedDesign } from '@/store/presetsStore'
+import type { SavedDesign } from '@/stores/presetsStore'
 
 // Utils
-import { usePresetsStore } from '@/store/presetsStore'
-import { useUIStore } from '@/store/uiStore'
+import { usePresetsStore } from '@/stores/presetsStore'
+import { useUIStore } from '@/stores/uiStore'
 
 // Components
-import { Icon } from '@/components/ui/Icon'
+import { Icon } from '../ui/Icon/Icon'
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -33,13 +33,16 @@ interface DesignThumbnailProps {
 
 const containerStyles = css({
   position: 'relative',
-  border: '{borderWidths.brutal.DEFAULT} solid',
+  borderWidth: 'brutal',
+  borderStyle: 'solid',
+  borderColor: 'panel.border',
   bg: 'panel.bg',
   overflow: 'hidden',
   cursor: 'pointer',
-  transition: 'fast',
+  transitionDuration: 'fast',
+  transitionProperty: 'all',
   _hover: {
-    transform: 'scaleHover',
+    transform: 'scale(1.02)',
     borderColor: 'panel.primary',
   },
 })
@@ -72,9 +75,10 @@ const noPreviewStyles = css({
 })
 
 const infoSectionStyles = css({
-  p: 2,
+  p: 'inline.tight',
   bg: 'panel.bg',
-  borderTop: '{borderWidths.brutal.inset} solid',
+  borderTopWidth: '1px',
+  borderTopStyle: 'solid',
   borderColor: 'panel.border',
 })
 
@@ -86,7 +90,7 @@ const nameStyles = css({
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
-  mb: 1,
+  mb: 'stack.tight',
 })
 
 const timestampStyles = css({
@@ -98,22 +102,24 @@ const timestampStyles = css({
 
 const actionsContainerStyles = css({
   position: 'absolute',
-  top: 2,
-  right: 2,
+  top: '3xs',
+  right: '3xs',
   display: 'flex',
-  gap: 1,
+  gap: 'inline.tight',
   opacity: 0,
-  transition: 'fast',
+  transitionDuration: 'fast',
+  transitionProperty: 'opacity',
   _groupHover: {
     opacity: 1,
   },
 })
 
 const actionButtonStyles = css({
-  p: 1,
-  bg: 'panel.bg',
-  border: '{borderWidths.brutal.inset} solid',
-  borderColor: 'panel.border',
+  p: 'inline.tight',
+  bg: 'surface.base',
+  borderWidth: 'base',
+  borderStyle: 'solid',
+  borderColor: 'border',
   cursor: 'pointer',
   _hover: {
     bg: 'neo.secondary',
@@ -121,12 +127,13 @@ const actionButtonStyles = css({
 })
 
 const favoriteButtonStyles = css({
-  p: 1,
-  border: '{borderWidths.brutal.inset} solid',
-  borderColor: 'panel.border',
+  p: 'inline.tight',
+  borderWidth: 'base',
+  borderStyle: 'solid',
+  borderColor: 'border',
   cursor: 'pointer',
   _hover: {
-    bg: 'neo.warning',
+    bg: 'accent.solid',
   },
 })
 
@@ -135,13 +142,14 @@ const favoriteButtonActiveStyles = css({
 })
 
 const deleteButtonStyles = css({
-  p: 1,
-  bg: 'panel.bg',
-  border: '{borderWidths.brutal.inset} solid',
-  borderColor: 'panel.border',
+  p: 'inline.tight',
+  bg: 'surface.base',
+  borderWidth: 'base',
+  borderStyle: 'solid',
+  borderColor: 'border',
   cursor: 'pointer',
   _hover: {
-    bg: 'neo.warning',
+    bg: 'accent.solid',
   },
 })
 
@@ -159,12 +167,13 @@ const favoriteIconActiveStyles = css({
 
 const activeBadgeStyles = css({
   position: 'absolute',
-  top: 2,
-  left: 2,
-  px: 2,
-  py: 1,
+  top: '3xs',
+  left: '3xs',
+  px: 'inline.tight',
+  py: 'inline.tight',
   bg: 'panel.primary',
-  border: '{borderWidths.brutal.inset} solid',
+  borderWidth: 'base',
+  borderStyle: 'solid',
   borderColor: 'panel.border',
   fontFamily: 'brutalist',
   fontWeight: 'brutal',
@@ -175,18 +184,19 @@ const activeBadgeStyles = css({
 
 const systemBadgeStyles = css({
   position: 'absolute',
-  bottom: 12,
-  left: 2,
-  px: 2,
-  py: 1,
-  bg: 'neo.accent',
-  border: '{borderWidths.brutal.inset} solid',
-  borderColor: 'panel.border',
+  bottom: 'sm',
+  left: '3xs',
+  px: 'inline.tight',
+  py: 'inline.tight',
+  bg: 'accent.primary',
+  borderWidth: 'base',
+  borderStyle: 'solid',
+  borderColor: 'border',
   fontFamily: 'brutalist',
   fontWeight: 'brutal',
   fontSize: '2xs',
   textTransform: 'uppercase',
-  color: 'panel.fg',
+  color: 'text',
 })
 
 // ============================================================================
@@ -273,7 +283,7 @@ export function DesignThumbnail({ design }: DesignThumbnailProps) {
               className={actionButtonStyles}
               title='Duplicate'
             >
-              <Icon name='copy' className={iconStyles} />
+              <Icon name='documentduplicate' className={iconStyles} />
             </button>
 
             <button

@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# Logo Designer Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application for logo design built with React and TypeScript.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** - Modern React with latest features
+- **Vite** - Fast build tool and dev server
+- **TypeScript** - Type-safe JavaScript
+- **Panda CSS** - Zero-runtime CSS-in-JS styling solution
+- **Zustand** - Lightweight state management
+- **React Router** - Client-side routing
 
-## React Compiler
+## Setup Requirements
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+Before running the project, ensure you have the following:
 
-## Expanding the ESLint configuration
+- **Node.js** (v18 or higher recommended)
+- **pnpm** - Package manager
+- **SOPS** - For secrets management and encryption
+- **Go tooling** - Required for secret encryption/decryption
+- **Age key** - For SOPS encryption (if applicable)
+- **Panda CSS codegen** - Must be run before first build
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Development Commands
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# Install dependencies
+pnpm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Generate Panda CSS styles and types
+pnpm panda codegen
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Clean regenerate Panda CSS from scratch
+pnpm panda codegen --clean
+
+# Start development server
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Run tests
+pnpm test
+
+# Lint code
+pnpm lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Clone the repository
+2. Install dependencies with `pnpm install`
+3. Set up SOPS and age keys for secret management
+4. Run `pnpm panda codegen` to generate CSS styles
+5. Start the dev server with `pnpm dev`
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Project Structure
+
+This is part of a monorepo workspace. For detailed documentation, see the `docs/` directory in the project root.
+
+## Notes
+
+- Always run `pnpm panda codegen` after pulling changes that modify Panda CSS configurations
+- SOPS-encrypted secrets are used for sensitive configuration
+- Ensure Go tooling is properly configured for secret operations

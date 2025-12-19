@@ -54,13 +54,10 @@ Interactive web application for designing and iterating on the FCC Business & Fi
 {
   "dependencies": {
     "zustand": "^5.0.9", // State management (3KB)
-    "@dnd-kit/core": "^6.3.1", // Drag & drop core
-    "@dnd-kit/sortable": "^10.0.0", // Sortable utilities
-    "@dnd-kit/utilities": "^3.2.2", // Helper utils
     "react-colorful": "^5.6.1" // Color picker (2.8KB)
   },
   "devDependencies": {
-    "daisyui": "^5.5.8", // Tailwind UI components
+    "@pandacss/dev": "^1.7.0", // Zero-runtime CSS-in-JS
     "tailwindcss": "^4.1.17",
     "autoprefixer": "^10.4.22",
     "postcss": "^8.5.6"
@@ -68,7 +65,12 @@ Interactive web application for designing and iterating on the FCC Business & Fi
 }
 ```
 
-**Bundle Size Estimate**: ~70KB gzipped
+**Rationale**:
+- **Panda CSS**: Zero-runtime CSS-in-JS with type-safe design tokens, build-time optimization, and generated atomic CSS
+- **Removed DaisyUI**: Replaced with custom Panda CSS recipe system for neomorphic design patterns
+- **Removed @dnd-kit**: Drag-and-drop feature not implemented in current scope
+
+**Bundle Size Estimate**: ~40KB gzipped
 
 ---
 
@@ -123,6 +125,51 @@ twoToneDesign (nullable, tier 1)
 ```
 
 This preserves user intent: disabling a mode restores the state before that mode was enabled.
+
+---
+
+## Styling Architecture
+
+### Overview
+
+The application uses **Panda CSS** for zero-runtime, type-safe styling with a neomorphic design system. All styles are generated at build-time, resulting in atomic CSS with no runtime overhead.
+
+### Token Hierarchy
+
+```
+Base Tokens (panda.config.ts)
+├─ colors.* (primitives: neutral, brand, etc.)
+├─ spacing.* (0-96 scale)
+├─ radii.* (border radius values)
+└─ shadows.* (elevation levels)
+    ↓
+Semantic Tokens
+├─ colors.bg.* (background contexts)
+├─ colors.text.* (text contexts)
+└─ colors.border.* (border contexts)
+    ↓
+Component Usage (via recipes & patterns)
+```
+
+### Pattern System
+
+- **textStyles**: Typography presets (heading.lg, body.md, etc.)
+- **layerStyles**: Common layer compositions (card, panel, floating)
+- **animationStyles**: Reusable animations (fadeIn, slideUp, pulse)
+
+### Recipe System
+
+Pre-configured component variants with staticCss pre-generation:
+
+- **neoButton**: Neomorphic button with size/variant options
+- **neoPanel**: Card-style panels with elevation levels
+- **neoInput**: Form inputs with consistent styling
+
+**staticCss Generation**: All recipe variants are pre-generated at build time to ensure zero-runtime cost and consistent bundle size.
+
+### Reference
+
+For detailed styling patterns, token definitions, and usage examples, see **STYLING.md**.
 
 ---
 
@@ -332,12 +379,14 @@ function getElementColor(position: number, state: LogoState): HSLColor {
 - [ ] Wire Zustand store to components
 - [ ] Verify color resolution logic
 
-### Phase 5: Drag & Drop
+### Phase 5: Element Swapping (Deferred)
 
-- [ ] Integrate @dnd-kit/sortable
+- [ ] Design swap mechanism (manual selection vs drag-drop)
 - [ ] Implement swap logic
-- [ ] Add visual feedback (ghost overlay)
+- [ ] Add visual feedback
 - [ ] Test all 4-element permutations
+
+**Note**: Drag-and-drop feature deferred from initial scope.
 
 ### Phase 6: Color Controls
 
@@ -362,7 +411,7 @@ function getElementColor(position: number, state: LogoState): HSLColor {
 
 ### Phase 9: Polish
 
-- [ ] Add Tailwind + DaisyUI styling
+- [ ] Add Panda CSS styling with neomorphic design
 - [ ] Smooth animations (CSS transitions)
 - [ ] Responsive layout for projector
 - [ ] Keyboard shortcuts (Ctrl+S, etc.)

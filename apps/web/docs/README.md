@@ -1,514 +1,273 @@
-# Component Template Documentation
+# Logo Designer Documentation
 
-Opinionated file structure for React + TypeScript + Panda CSS components with neo-brutalist design principles.
-
----
-
-## Quick Links
-
-| Document                                            | Purpose                         | Read Time |
-| --------------------------------------------------- | ------------------------------- | --------- |
-| [Quick Reference](./COMPONENT_QUICK_REFERENCE.md)   | One-page cheat sheet            | 2 min     |
-| [Full Template Guide](./COMPONENT_TEMPLATE.md)      | Complete template with examples | 15 min    |
-| [Refactor Example](./COMPONENT_REFACTOR_EXAMPLE.md) | Before/after comparison         | 10 min    |
-| [ESLint Rules](./ESLINT_COMPONENT_RULES.md)         | Automated enforcement           | 5 min     |
+**Project**: FCC Business & Finance Club Logo Designer
+**Status**: Active Development (43% Complete - Phases 0-2 Done)
+**Last Updated**: 2025-12-17
 
 ---
 
-## Getting Started
+## Quick Start
 
-### 1. Install VS Code Snippets
+New to the project? Start here:
 
-The snippets are already included in this project:
-
-```
-.vscode/snippets.code-snippets
-```
-
-Reload VS Code to activate them.
-
-### 2. Use the Template
-
-Create a new component:
-
-1. Type `rcp` + Tab
-2. Fill in component name
-3. Add your code in the appropriate sections
-
-### 3. Follow the Structure
-
-Every component file follows this order:
-
-```
-1. IMPORTS
-2. TYPES & INTERFACES
-3. CONSTANTS (if needed)
-4. STYLES
-5. UTILITY FUNCTIONS (if needed)
-6. SUB-COMPONENTS (if needed)
-7. MAIN COMPONENT
-8. EXPORTS (if separate)
-```
+1. **[Development Environment Setup](SETUP.md)** - Install Node.js, pnpm, Git, and required tools
+2. **[Project Overview](architecture/ARCHITECTURE.md)** - Understanding the logo design system, quadrant structure, and color hierarchy
+3. **[Technology Stack](architecture/DECISIONS.md)** - Why we chose Vite, React, Zustand, and Panda CSS
+4. **[Component Development](development/COMPONENT_GUIDE.md)** - File structure template and development patterns
+5. **[Style Development Workflow](development/STYLE_DEV.md)** - Daily development patterns and debugging
 
 ---
 
-## Documentation Overview
+## Project Status
 
-### [COMPONENT_TEMPLATE.md](./COMPONENT_TEMPLATE.md)
+**Current Progress**: 43% Complete
 
-**The main guide** with:
+### ✅ Completed (Phases 0-2)
+- **Phase 0**: Immediate fixes (border syntax, colors, opacity)
+- **Phase 1**: Recipe migration (Button, Input, Panel → .styles.ts files)
+- **Phase 2**: Token architecture overhaul (3-layer system, semantic-only spacing)
 
-- Complete template structure
-- 3 visual separator style options
-- Import organization rules
-- Concrete refactored example (AdvancedColorPicker)
-- VS Code snippets
-- Research & references
+### 🔄 In Progress (Phase 3)
+- Component refactor to cva/sva patterns
+- Extracting reusable patterns (QuadrantCard, Badge, Slider)
 
-**Read this first** if you're setting up the template for the first time.
+### 📋 Planned (Phases 4-6)
+- New components (Badge, Slider, Select, Toggle, Tooltip, Modal, Divider)
+- Expand abstractions (textStyles, layerStyles, animationStyles)
+- Final cleanup and documentation
 
-### [COMPONENT_QUICK_REFERENCE.md](./COMPONENT_QUICK_REFERENCE.md)
-
-**One-page cheat sheet** with:
-
-- Section order at a glance
-- Common patterns
-- VS Code snippets table
-- JSDoc templates
-- Naming conventions
-- Code review checklist
-
-**Keep this open** while coding for quick reference.
-
-### [COMPONENT_REFACTOR_EXAMPLE.md](./COMPONENT_REFACTOR_EXAMPLE.md)
-
-**Concrete before/after** showing:
-
-- Current issues with AdvancedColorPicker (560 lines)
-- Refactored version with template
-- Metrics comparison (time to find things)
-- Step-by-step migration guide
-
-**Read this** to see the template in action and understand the benefits.
-
-### [ESLINT_COMPONENT_RULES.md](./ESLINT_COMPONENT_RULES.md)
-
-**Automated enforcement** with:
-
-- ESLint configuration
-- Import order rules
-- Component structure rules
-- Prettier configuration
-- VS Code settings
-- Custom ESLint plugin (optional)
-
-**Use this** to enforce the template automatically across your team.
+**Master Plan**: `~/.claude/plans/design-system-refactor-master.md`
 
 ---
 
-## Why Use This Template?
+## Documentation Structure
 
-### Problem: Current State
+### Getting Started
 
-- Components grow to 500+ lines
-- Styles scattered throughout JSX
-- Hard to find types, styles, or logic
-- Code duplication (repeated patterns)
-- Inconsistent structure across files
-- Takes 30+ seconds to find specific code
+- **[SETUP.md](SETUP.md)** - Complete development environment setup guide
+  - Node.js + nvm installation (all platforms)
+  - pnpm + Corepack configuration
+  - Git installation and configuration
+  - VS Code setup with recommended extensions
+  - Project installation and verification
 
-### Solution: Opinionated Template
+### Architecture
 
-- Clear visual section boundaries
-- All styles in one STYLES section
-- Sub-components extracted and organized
-- Consistent structure across ALL files
-- Takes <2 seconds to find anything
+High-level system design, UI/UX specifications, and technical decisions.
 
-### Results
+- **[ARCHITECTURE.md](architecture/ARCHITECTURE.md)** - Core logo design system
+  - Quadrant structure and element positioning
+  - Color tier hierarchy (base → two-tone → unique)
+  - SVG manipulation and rendering
+  - State serialization and persistence
 
-| Metric              | Improvement       |
-| ------------------- | ----------------- |
-| Time to find types  | **87% faster**    |
-| Time to find styles | **93% faster**    |
-| Code duplication    | **60% reduction** |
-| Onboarding speed    | **10x faster**    |
-| Code review time    | **50% faster**    |
+- **[UI_ARCHITECTURE.md](architecture/UI_ARCHITECTURE.md)** - Video game-inspired interface redesign
+  - Neo-brutalist control layer design
+  - High-fantasy world layer aesthetics
+  - Component hierarchy and state management
+  - File organization and module structure
 
----
+- **[DECISIONS.md](architecture/DECISIONS.md)** - Technology stack rationale
+  - Build tool selection (Vite vs alternatives)
+  - UI framework choices (DaisyUI → Panda CSS)
+  - State management (Zustand)
+  - Drag & drop libraries (@dnd-kit)
 
-## Core Principles
+### Design System
 
-### 1. Visual Boundaries
+Token definitions, styling patterns, and component library.
 
-Neo-brutalist ASCII headers make sections **impossible to miss**:
+- **[DESIGN_TOKENS.md](design-system/DESIGN_TOKENS.md)** - Complete token system reference
+  - Base tokens (neo-brutalist and high-fantasy palettes)
+  - Semantic tokens (panel, world, logo, overlay)
+  - Naming conventions and usage patterns
+  - Anti-patterns to avoid
 
-```typescript
-// ============================================================================
-// STYLES
-// ============================================================================
-```
+- **[STYLING.md](design-system/STYLING.md)** - Panda CSS deep dive
+  - Core mental models (cascade layers, tokens, APIs)
+  - Responsive design patterns
+  - Recipe vs slot recipe usage
+  - Design pattern library (neo-brutalism, glassmorphism, high-fantasy)
 
-### 2. Consistent Ordering
+- **[COMPONENTS.md](design-system/COMPONENTS.md)** - Component library documentation
+  - UI primitives (Button, Input, Panel)
+  - Composite components (AdvancedColorPicker, Tabs)
+  - Domain components (ColorTab, LayoutTab, ControlPanel)
+  - Usage examples and accessibility considerations
 
-**Same order in every file**. No decisions needed.
+### Development
 
-### 3. Colocation
+Workflows, tooling, and component patterns.
 
-Keep related code together:
+- **[COMPONENT_GUIDE.md](development/COMPONENT_GUIDE.md)** - Component file structure
+  - Opinionated template with visual section boundaries
+  - VS Code snippets and automation
+  - Migration guide for existing components
+  - Code organization best practices
 
-- Styles → STYLES section
-- Utils → UTILS section
-- Sub-components → SUB-COMPONENTS section
+- **[STYLE_DEV.md](development/STYLE_DEV.md)** - Panda CSS development guide
+  - Performance optimization
+  - Debugging techniques
+  - Component development workflow
+  - Visual regression testing
+  - CI/CD integration
 
-### 4. Extractability
+### Design Refactor (Migration History)
 
-If a section grows too large:
+Completed migration work and reference material.
 
-- Styles → Can move to separate `.styles.ts` file
-- Utils → Can move to separate `.utils.ts` file
-- Sub-components → Can move to separate component file
+- **[MIGRATION_COMPLETE.md](design-refactor/MIGRATION_COMPLETE.md)** - Phase 0-2 completion report
+  - Recipe migration completion (Phase 1)
+  - Token architecture overhaul (Phase 2)
+  - Migration lessons learned
+  - Reference for future refactors
 
-### 5. Scannability
-
-Should be able to:
-
-- Jump to any section in <2 seconds
-- Understand component structure in <10 seconds
-- Find any code in <5 seconds
-
----
-
-## Quick Start Examples
-
-### Minimal Component
-
-```typescript
-// ============================================================================
-// IMPORTS
-// ============================================================================
-
-import { css } from 'styled-system/css'
-
-// ============================================================================
-// STYLES
-// ============================================================================
-
-const containerStyles = css({
-  p: 4,
-})
-
-// ============================================================================
-// MAIN COMPONENT
-// ============================================================================
-
-export function SimpleComponent() {
-  return <div className={containerStyles}>Hello</div>
-}
-```
-
-### Component with Props
-
-```typescript
-// ============================================================================
-// TYPES & INTERFACES
-// ============================================================================
-
-interface ButtonProps {
-  variant: 'primary' | 'secondary'
-  children: ReactNode
-}
-
-// ============================================================================
-// STYLES
-// ============================================================================
-
-const buttonStyles = css({
-  px: 4,
-  py: 2,
-})
-
-// ============================================================================
-// MAIN COMPONENT
-// ============================================================================
-
-export function Button({ variant, children }: ButtonProps) {
-  return <button className={buttonStyles}>{children}</button>
-}
-```
-
-### Complex Component
-
-```typescript
-// ============================================================================
-// IMPORTS
-// ============================================================================
-
-import { useState } from 'react'
-import { css } from 'styled-system/css'
-import type { User } from '@/types/user'
-import { formatName } from '@/utils/format'
-import { Avatar } from '@/components/ui/Avatar'
-
-// ============================================================================
-// TYPES & INTERFACES
-// ============================================================================
-
-interface UserCardProps {
-  user: User
-  onEdit: (id: string) => void
-}
-
-// ============================================================================
-// STYLES
-// ============================================================================
-
-const cardStyles = css({
-  p: 4,
-  border: 'brutal',
-})
-
-const headerStyles = css({
-  display: 'flex',
-  gap: 2,
-})
-
-// ============================================================================
-// UTILITY FUNCTIONS
-// ============================================================================
-
-function getInitials(name: string): string {
-  return name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-}
-
-// ============================================================================
-// SUB-COMPONENTS
-// ============================================================================
-
-function UserHeader({ user }: { user: User }) {
-  return (
-    <div className={headerStyles}>
-      <Avatar src={user.avatar} />
-      <h3>{formatName(user.name)}</h3>
-    </div>
-  )
-}
-
-// ============================================================================
-// MAIN COMPONENT
-// ============================================================================
-
-export function UserCard({ user, onEdit }: UserCardProps) {
-  const [isEditing, setIsEditing] = useState(false)
-
-  return (
-    <div className={cardStyles}>
-      <UserHeader user={user} />
-      <button onClick={() => onEdit(user.id)}>Edit</button>
-    </div>
-  )
-}
-```
+- **[TOKEN_MAPPING_REFERENCE.md](design-refactor/TOKEN_MAPPING_REFERENCE.md)** - Token usage reference
+  - Quick lookup for semantic tokens
+  - Component token mappings
+  - Theme-aware token patterns
 
 ---
 
-## VS Code Snippets
+## Documentation by Use Case
 
-All snippets are available via Tab completion:
+### I want to...
 
-| Snippet           | Trigger          | Description                   |
-| ----------------- | ---------------- | ----------------------------- |
-| Full template     | `rcp` + Tab      | Complete component structure  |
-| Section header    | `section` + Tab  | Neo-brutalist section divider |
-| Style object      | `pcss` + Tab     | Panda CSS style definition    |
-| Sub-component     | `rsub` + Tab     | Internal component            |
-| Props interface   | `rprops` + Tab   | Props with JSDoc              |
-| Import section    | `rimports` + Tab | Organized imports             |
-| Utility function  | `rutil` + Tab    | Helper function with JSDoc    |
-| Event handler     | `rhandler` + Tab | Event handler function        |
-| Context component | `rctx` + Tab     | Component with React Context  |
+**Understand the project**
+→ Start with [ARCHITECTURE.md](architecture/ARCHITECTURE.md)
 
----
+**Set up my development environment**
+→ Follow [SETUP.md](SETUP.md) step-by-step
 
-## Migration Guide
+**Add a new UI component**
+→ Read [COMPONENT_GUIDE.md](development/COMPONENT_GUIDE.md) for file structure, then [COMPONENTS.md](design-system/COMPONENTS.md) for patterns
 
-### Step 1: Large Files First
+**Change design tokens or colors**
+→ Consult [DESIGN_TOKENS.md](design-system/DESIGN_TOKENS.md) and [TOKEN_MAPPING_REFERENCE.md](design-refactor/TOKEN_MAPPING_REFERENCE.md)
 
-Start with files >400 lines for maximum impact:
+**Understand the UI redesign decisions**
+→ Review [UI_ARCHITECTURE.md](architecture/UI_ARCHITECTURE.md) Design Vision
 
-```bash
-# Find largest components
-find src/components -name "*.tsx" -exec wc -l {} \; | sort -rn | head -10
-```
+**Learn Panda CSS patterns**
+→ Study [STYLING.md](design-system/STYLING.md) Core Mental Models
 
-### Step 2: Add Section Headers
+**Debug styling issues**
+→ Check [STYLE_DEV.md](development/STYLE_DEV.md) Debugging section
 
-Add visual boundaries without changing code:
+**Understand the refactor progress**
+→ Check master plan at `~/.claude/plans/design-system-refactor-master.md`
 
-```typescript
-// ============================================================================
-// IMPORTS
-// ============================================================================
-// ... existing imports ...
-
-// ============================================================================
-// TYPES & INTERFACES
-// ============================================================================
-// ... existing types ...
-```
-
-Time: 5 minutes per file
-
-### Step 3: Extract Styles
-
-Move inline `css()` calls to STYLES section:
-
-```typescript
-// ============================================================================
-// STYLES
-// ============================================================================
-
-const containerStyles = css({ ... })
-```
-
-Time: 15-30 minutes per file
-
-### Step 4: Extract Sub-components
-
-Extract repeated JSX patterns:
-
-```typescript
-// ============================================================================
-// SUB-COMPONENTS
-// ============================================================================
-
-function RepeatedPattern({ ... }) { ... }
-```
-
-Time: 20-40 minutes per file
-
-### Step 5: Add Documentation
-
-Add JSDoc comments to interfaces and main component:
-
-```typescript
-/**
- * ComponentName - Description
- */
-```
-
-Time: 10-15 minutes per file
-
-### Total Time: 1-2 hours per large component
+**Contribute to the project**
+→ Start with [ARCHITECTURE.md](architecture/ARCHITECTURE.md) Core Constraints
 
 ---
 
-## Team Adoption
+## Key Concepts
 
-### Phase 1: Documentation (Week 1)
+### Logo Design System
 
-- [ ] Share this documentation with team
-- [ ] Review Quick Reference together
-- [ ] Walk through Refactor Example
+**Quadrant Structure**: Logo divided into 4 positions (0-3) with per-quadrant element assignment, scale, and offset.
 
-### Phase 2: Tooling (Week 1)
+**Color Hierarchy**: Three-tier system (base → two-tone → unique) with semantic fallback resolution.
 
-- [ ] Install VS Code snippets (already done)
-- [ ] Set up ESLint rules (optional)
-- [ ] Add Prettier configuration
+**Element Library**: Briefcase, mountains, leaf, dollar sign as swappable quadrant elements.
 
-### Phase 3: Migration (Weeks 2-4)
+### UI Architecture
 
-- [ ] Migrate 3-5 largest components
-- [ ] Review as a team
-- [ ] Refine template based on feedback
+**World Layer**: High-fantasy 3D space where logo floats (mystical, ethereal).
 
-### Phase 4: Enforcement (Week 5+)
+**Camera Layer**: Neo-brutalist control overlay (tactile, grounded UI widgets).
 
-- [ ] Use template for all new components
-- [ ] Code review checklist
-- [ ] Gradually migrate remaining components
+**State Separation**: Distinct stores for design data (logoStore), presentation (worldStore), interaction (uiStore), and persistence (presetsStore).
 
----
+### Design System
 
-## FAQ
+**3-Layer Architecture**:
+- **Layer 1**: Base tokens (raw CSS values)
+- **Layer 2**: Semantic tokens (concern-based, no component namespaces)
+- **Layer 3**: Components (cva/sva composition patterns)
 
-### Why neo-brutalist headers?
+**Token Contract**: Design primitives (neo.*, fantasy.*) → Semantic tokens (panel.*, text.*, bg.*) → Component usage.
 
-Bold, direct, impossible to miss. Aligns with design system philosophy.
-
-### Why not use `#region` instead?
-
-Regions are great for large files (500+ lines) but less visible when expanded. Neo-brutalist headers work in all editors and are always visible.
-
-### What if my file is >600 lines?
-
-Consider splitting into:
-
-- Multiple components
-- Separate `.styles.ts` file
-- Separate `.utils.ts` file
-- Separate `.types.ts` file
-
-### Can I use this with other CSS-in-JS libraries?
-
-Yes! Just replace Panda CSS imports with your library (styled-components, emotion, etc.)
-
-### What about Redux/Zustand/state management?
-
-Add a HOOKS section after CONSTANTS:
-
-```typescript
-// ============================================================================
-// HOOKS
-// ============================================================================
-
-const useUserData = () => { ... }
-```
-
-### Do I need to use all sections?
-
-No! Only use sections you need. Small components might only have IMPORTS, STYLES, and MAIN COMPONENT.
+**Recipe Pattern**: `cva` for single-element, `sva` for multi-part components.
 
 ---
 
-## Support
+## Migration History
 
-### Issues or Questions?
+### 2025-12-17: Design System Refactor (Phases 0-2)
 
-1. Check the [Quick Reference](./COMPONENT_QUICK_REFERENCE.md)
-2. Review the [Refactor Example](./COMPONENT_REFACTOR_EXAMPLE.md)
-3. Open an issue with your team
+**Completed**:
+- Phase 0: Immediate fixes (border syntax, colors, opacity) ✅
+- Phase 1: Recipe migration to component files ✅
+- Phase 2: Token architecture overhaul (3-layer system) ✅
 
-### Want to Contribute?
+**Changes**:
+- Migrated neoButton, neoInput, neoPanel to .styles.ts files
+- Removed recipes from panda.config.ts
+- Flattened semantic token namespaces (no component-specific tokens)
+- Removed numeric spacing scale (semantic-only: xxxxxs-xxxxl)
+- Added base tokens (sizing, transforms, borderStyles)
+- Config reduced from 722 to 480 lines
 
-1. Try the template on real components
-2. Provide feedback on what works/doesn't work
-3. Suggest improvements to the template
+**Status**: 43% complete (3/7 phases), Phase 3 in progress
+
+### 2025-12-14: Documentation Reorganization
+
+**Changes**:
+- Created hierarchical structure (architecture/, design-system/, development/)
+- Extracted SETUP.md for one-time setup procedures
+- Consolidated component template documentation
+- Updated all cross-references
+
+**Rationale**:
+- Separation of concerns (setup vs workflows)
+- Logical domain grouping
+- Improved discoverability
 
 ---
 
-## Credits
+## Contributing
 
-### Research Sources
+When adding new documentation:
 
-- [React Folder Structure in 5 Steps [2025]](https://www.robinwieruch.de/react-folder-structure/)
-- [Josh W. Comeau's File Structure Guide](https://www.joshwcomeau.com/react/file-structure/)
-- [Airbnb React/JSX Style Guide](https://airbnb.io/javascript/react/)
-- [VS Code Region Folding Guide](https://frontendmasters.com/blog/region-folding-in-vs-code/)
+1. **Choose the right folder**:
+   - `architecture/` - High-level system design, specs, decisions
+   - `design-system/` - Tokens, styling patterns, component docs
+   - `development/` - Workflows, tooling, component patterns
+   - `design-refactor/` - Migration history and reference material
 
-### Inspiration
+2. **Follow naming conventions**:
+   - Use `SCREAMING_SNAKE_CASE.md` for consistency
+   - Be specific (e.g., `COMPONENT_PATTERNS.md` not `PATTERNS.md`)
 
-- Airbnb style guide (component organization)
-- Josh W. Comeau (colocation principle)
-- Max Rozen (avoid over-nesting)
-- Community best practices (TypeScript-first, import order)
+3. **Update this README**:
+   - Add entry under appropriate section
+   - Update "Documentation by Use Case" if relevant
+
+4. **Cross-reference existing docs**:
+   - Use relative paths (e.g., `../architecture/ARCHITECTURE.md`)
+   - Update related docs to link to your new doc
 
 ---
 
-**Template Version**: 1.0.0
-**Last Updated**: 2025-12-15
-**Recommended For**: React 18+, TypeScript 5+, Panda CSS
+## External Resources
+
+**Panda CSS**:
+- [Official Documentation](https://panda-css.com)
+- [Recipes Guide](https://panda-css.com/docs/concepts/recipes)
+- [Design Tokens Spec](https://design-tokens.github.io/community-group/format/)
+
+**React + TypeScript**:
+- [Zustand Documentation](https://docs.pmnd.rs/zustand/getting-started/introduction)
+- [Vite Guide](https://vitejs.dev/guide/)
+
+**Design Inspiration**:
+- [Neo-Brutalism Guide](https://www.nngroup.com/articles/neobrutalism/)
+- [Game UI Database](https://www.gameuidatabase.com)
+
+---
+
+**Document Version**: 2.0
+**Status**: Active - primary navigation for logo designer documentation
+**Maintainer**: Development Team

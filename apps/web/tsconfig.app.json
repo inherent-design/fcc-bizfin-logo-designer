@@ -3,7 +3,11 @@
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
     "jsx": "react-jsx",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "moduleDetection": "force",
     /* Bundler mode */
@@ -13,18 +17,27 @@
     "noUncheckedSideEffectImports": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "styled-system/*": [
+        "./styled-system/*"
+      ]
+    },
     "skipLibCheck": true,
     /* Linting */
     "strict": true,
     "target": "ES2022",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "types": ["vite/client"],
+    "types": [
+      "vite/client"
+    ],
     "useDefineForClassFields": true,
-    "verbatimModuleSyntax": true,
-    "paths": {
-      "@/*": ["./src/*"],
-      "styled-system/*": ["./styled-system/*"]
-    }
+    "verbatimModuleSyntax": true
   },
-  "include": ["src", "styled-system"]
+  "include": [
+    "src",
+    "styled-system"
+  ]
 }

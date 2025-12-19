@@ -6,14 +6,14 @@
 import { css } from 'styled-system/css'
 
 // Store
-import { useUIStore } from '../../store/uiStore'
+import { useUIStore } from '@/stores/uiStore'
 
 // Components
 import { GalleryActions } from '../gallery/GalleryActions'
 import { GalleryGrid } from '../gallery/GalleryGrid'
-import { Button } from '../ui/Button'
-import { Icon } from '../ui/Icon'
-import { Panel } from '../ui/Panel'
+import { Button } from '../ui/Button/Button'
+import { Icon } from '../ui/Icon/Icon'
+import { Panel } from '../ui/Panel/Panel'
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -52,11 +52,12 @@ const overlayContainerStyles = css({
   position: 'absolute',
   // Mobile/Tablet: full-screen overlay
   inset: { base: 0 },
+  zIndex: 'modal',
   top: { desktop: 'auto' },
   left: { desktop: 0 },
   right: { desktop: 0 },
   bottom: { desktop: 0 },
-  bg: { base: 'overlay.backdrop', desktop: 'transparent' },
+  bg: { base: 'overlay', desktop: 'transparent' },
   p: { base: 4, desktop: 6 },
   display: { base: 'flex' },
   alignItems: { base: 'flex-end', desktop: 'stretch' },
@@ -69,10 +70,10 @@ const drawerPanelStyles = css({
 })
 
 const drawerContentStyles = css({
-  p: 6,
+  p: 'inset.loose',
   display: 'flex',
   flexDirection: 'column',
-  gap: 4,
+  gap: 'stack.normal',
 })
 
 const headerStyles = css({
@@ -84,7 +85,7 @@ const headerStyles = css({
 const headerTitleRowStyles = css({
   display: 'flex',
   alignItems: 'center',
-  gap: 3,
+  gap: 'inline.normal',
 })
 
 const headerIconStyles = css({
@@ -92,16 +93,13 @@ const headerIconStyles = css({
 })
 
 const headerTitleStyles = css({
-  fontFamily: 'brutalist',
-  fontWeight: 'brutal',
-  fontSize: 'lg',
-  textTransform: 'uppercase',
+  textStyle: 'brutalistLabel',
   color: 'panel.fg',
 })
 
 const filtersRowStyles = css({
   display: 'flex',
-  gap: 2,
+  gap: 'inline.tight',
   flexWrap: 'wrap',
 })
 
@@ -114,7 +112,7 @@ const filtersRowStyles = css({
  */
 function FilterButton({ filter, currentFilter, onClick, children }: FilterButtonProps) {
   return (
-    <Button variant={currentFilter === filter ? 'primary' : 'ghost'} size='sm' onClick={onClick}>
+    <Button variant={currentFilter === filter ? 'primary' : 'ghost'} size='md' onClick={onClick}>
       {children}
     </Button>
   )
@@ -127,12 +125,12 @@ function GalleryHeader({ onClose }: { onClose: () => void }) {
   return (
     <div className={headerStyles}>
       <div className={headerTitleRowStyles}>
-        <Icon name='folder' size='md' className={headerIconStyles} />
+        <Icon name='folder' size='3xl' className={headerIconStyles} />
         <h2 className={headerTitleStyles}>Design Gallery</h2>
       </div>
 
-      <Button variant='ghost' size='sm' onClick={onClose}>
-        <Icon name='close' size='sm' />
+      <Button variant='ghost' size='md' onClick={onClose}>
+        <Icon name='xmark' size='lg' />
       </Button>
     </div>
   )
@@ -163,7 +161,7 @@ function GalleryFilters({
         currentFilter={currentFilter}
         onClick={() => onFilterChange('favorites')}
       >
-        <Icon name='heart' size='xs' />
+        <Icon name='heart' size='lg' />
         Favorites
       </FilterButton>
 
@@ -216,7 +214,7 @@ export function DesignGalleryDrawer() {
   if (!isGalleryOpen) {
     return (
       <Button variant='primary' className={floatingButtonStyles} onClick={toggleGallery}>
-        <Icon name='folder' size='sm' />
+        <Icon name='folder' size='md' />
         Gallery
       </Button>
     )

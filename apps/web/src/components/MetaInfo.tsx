@@ -15,11 +15,12 @@ const containerStyles = css({
   opacity: 'subtle',
   display: 'flex',
   flexDirection: 'column',
-  gap: 1,
+  gap: 'stack.tight',
 })
 
 const linkStyles = css({
-  transition: 'fast',
+  transitionDuration: 'fast',
+  transitionProperty: 'opacity',
   _hover: {
     opacity: 'medium',
   },

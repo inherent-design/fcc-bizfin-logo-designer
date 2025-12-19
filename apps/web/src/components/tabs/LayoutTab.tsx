@@ -6,11 +6,14 @@
 import { css } from 'styled-system/css'
 
 // Store
-import { useLogoStore } from '../../store/logoStore'
+import { useLogoStore } from '@/stores/logoStore'
 
 // Components
-import { FormLabel } from '../ui/FormLabel'
-import { Input } from '../ui/Input'
+import { Badge } from '../ui/Badge/Badge'
+import { FormLabel } from '../ui/FormLabel/FormLabel'
+import { Input } from '../ui/Input/Input'
+import { QuadrantCard } from '../ui/QuadrantCard/QuadrantCard'
+import { Slider } from '../ui/Slider/Slider'
 
 // ============================================================================
 // CONSTANTS
@@ -29,108 +32,44 @@ const QUADRANT_LABELS = ['Top-Left', 'Top-Right', 'Bottom-Right', 'Bottom-Left']
 const containerStyles = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: 6,
-  pt: 4,
+  gap: 'stack.loose',
+  pt: 'stack.normal',
 })
 
-const quadrantCardStyles = css({
-  p: 4,
-  border: '{borderWidths.brutal.inset} solid',
-  borderColor: 'panel.border',
-  bg: 'component.tab.bgActive',
-})
+// quadrantCardStyles removed - now using QuadrantCard component
 
 const headerStyles = css({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  mb: 3,
+  mb: 'stack.tight',
 })
 
 const titleStyles = css({
-  fontFamily: 'brutalist',
-  fontWeight: 'brutal',
-  fontSize: 'sm',
-  textTransform: 'uppercase',
-  color: 'panel.fg',
+  textStyle: 'brutalistLabel',
+  color: 'panel.fg', // Override: brutalistLabel uses text.label
 })
 
-const badgeStyles = css({
-  px: 2,
-  py: 1,
-  border: '{borderWidths.brutal.inset} solid',
-  borderColor: 'panel.border',
-  fontFamily: 'brutalist',
-  fontWeight: 'bold',
-  fontSize: '2xs',
-  textTransform: 'uppercase',
-})
+// badgeStyles removed - now using Badge component with cva recipe
 
 const elementLabelStyles = css({
-  fontFamily: 'brutalist',
-  fontSize: 'xs',
-  mb: 3,
+  textStyle: 'brutalistText',
+  fontSize: 'xs', // Override: brutalistText uses sm
+  mb: 'stack.tight',
   color: 'panel.fg',
   opacity: 'medium',
-  textTransform: 'capitalize',
+  textTransform: 'capitalize', // Override: different from uppercase
 })
 
-const sliderSectionStyles = css({
-  mb: 3,
-})
+// TODO: Extract to dedicated textStyle variant 'elementLabel' in config
+// Multiple semantic overrides (fontSize, color, opacity, textTransform) warrant a custom textStyle token
 
-const sliderHeaderStyles = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  mb: 2,
-})
-
-const sliderLabelStyles = css({
-  fontFamily: 'brutalist',
-  fontWeight: 'bold',
-  fontSize: 'xs',
-  textTransform: 'uppercase',
-  color: 'panel.fg',
-})
-
-const sliderValueStyles = css({
-  fontFamily: 'brutalist',
-  fontWeight: 'brutal',
-  fontSize: 'xs',
-  color: 'panel.primary',
-})
-
-const sliderInputStyles = css({
-  width: '100%',
-  height: 2,
-  bg: 'panel.border',
-  outline: 'none',
-  cursor: 'pointer',
-
-  '&::-webkit-slider-thumb': {
-    appearance: 'none',
-    width: 5,
-    height: 5,
-    bg: 'panel.primary',
-    border: '{borderWidths.brutal.inset} solid',
-    borderColor: 'panel.border',
-    cursor: 'pointer',
-  },
-
-  '&::-moz-range-thumb': {
-    width: 5,
-    height: 5,
-    bg: 'panel.primary',
-    border: '{borderWidths.brutal.inset} solid',
-    borderColor: 'panel.border',
-    cursor: 'pointer',
-  },
-})
+// Slider styles removed - now using Slider component with sva recipe
 
 const offsetGridStyles = css({
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
-  gap: 2,
+  gap: 'inline.tight',
 })
 
 const fullWidthStyles = css({
@@ -141,46 +80,9 @@ const fullWidthStyles = css({
 // SUB-COMPONENTS
 // ============================================================================
 
-/**
- * QuadrantFillBadge - Shows whether quadrant is filled or unfilled
- */
-function QuadrantFillBadge({ isFilled }: { isFilled: boolean }) {
-  return (
-    <div
-      className={badgeStyles}
-      style={{
-        backgroundColor: isFilled ? 'var(--colors-panel-primary)' : 'transparent',
-        color: isFilled ? 'var(--colors-component-tab-text-active)' : 'var(--colors-panel-fg)',
-      }}
-    >
-      {isFilled ? 'Filled' : 'Unfilled'}
-    </div>
-  )
-}
+// QuadrantFillBadge removed - replaced with Badge component
 
-/**
- * ScaleSlider - Element scale control with label and value display
- */
-function ScaleSlider({ value, onChange }: { value: number; onChange: (value: number) => void }) {
-  return (
-    <div className={sliderSectionStyles}>
-      <div className={sliderHeaderStyles}>
-        <label className={sliderLabelStyles}>Scale</label>
-        <span className={sliderValueStyles}>{value.toFixed(2)}</span>
-      </div>
-
-      <input
-        type='range'
-        min={0.5}
-        max={2}
-        step={0.1}
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
-        className={sliderInputStyles}
-      />
-    </div>
-  )
-}
+// ScaleSlider removed - replaced with Slider component
 
 /**
  * OffsetInputs - X and Y position offset controls
@@ -190,18 +92,24 @@ function OffsetInputs({
   offsetY,
   onChangeX,
   onChangeY,
+  quadrantIndex,
 }: {
   offsetX: number
   offsetY: number
   onChangeX: (value: number) => void
   onChangeY: (value: number) => void
+  quadrantIndex: number
 }) {
+  const xId = `offset-x-q${quadrantIndex}`
+  const yId = `offset-y-q${quadrantIndex}`
+
   return (
     <div className={offsetGridStyles}>
       <div>
-        <FormLabel htmlFor='offset-x'>X Offset</FormLabel>
+        <FormLabel htmlFor={xId}>X Offset</FormLabel>
         <Input
-          id='offset-x'
+          id={xId}
+          name={xId}
           type='number'
           value={offsetX}
           onChange={(e) => onChangeX(Number(e.target.value))}
@@ -210,9 +118,10 @@ function OffsetInputs({
       </div>
 
       <div>
-        <FormLabel htmlFor='offset-y'>Y Offset</FormLabel>
+        <FormLabel htmlFor={yId}>Y Offset</FormLabel>
         <Input
-          id='offset-y'
+          id={yId}
+          name={yId}
           type='number'
           value={offsetY}
           onChange={(e) => onChangeY(Number(e.target.value))}
@@ -255,19 +164,25 @@ export function LayoutTab() {
   return (
     <div className={containerStyles}>
       {quadrants.map((quadrant, index) => (
-        <div key={index} className={quadrantCardStyles}>
+        <QuadrantCard key={index}>
           {/* Header with label and fill status */}
           <div className={headerStyles}>
             <h3 className={titleStyles}>{QUADRANT_LABELS[index]}</h3>
-            <QuadrantFillBadge isFilled={quadrant.isFilled} />
+            <Badge variant={quadrant.isFilled ? 'filled' : 'unfilled'}>
+              {quadrant.isFilled ? 'Filled' : 'Unfilled'}
+            </Badge>
           </div>
 
           {/* Element type */}
           <div className={elementLabelStyles}>Element: {quadrant.elementId}</div>
 
           {/* Scale slider */}
-          <ScaleSlider
+          <Slider
+            label='Scale'
             value={quadrant.elementScale}
+            min={0.5}
+            max={2}
+            step={0.1}
             onChange={(value) => setElementScale(index, value)}
           />
 
@@ -275,6 +190,7 @@ export function LayoutTab() {
           <OffsetInputs
             offsetX={quadrant.centerOffset.x}
             offsetY={quadrant.centerOffset.y}
+            quadrantIndex={index}
             onChangeX={(x) =>
               setCenterOffset(index, {
                 ...quadrant.centerOffset,
@@ -288,7 +204,7 @@ export function LayoutTab() {
               })
             }
           />
-        </div>
+        </QuadrantCard>
       ))}
     </div>
   )

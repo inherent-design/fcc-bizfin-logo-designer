@@ -6,11 +6,11 @@
 import { css } from 'styled-system/css'
 
 // Store
-import { useLogoStore } from '../../store/logoStore'
+import { useLogoStore } from '@/stores/logoStore'
 
 // Components
-import { AdvancedColorPicker } from '../AdvancedColorPicker'
-import { Button } from '../ui/Button'
+import { Button } from '../ui/Button/Button'
+import { AdvancedColorPicker } from '../ui/ColorPicker/ColorPicker'
 
 // ============================================================================
 // STYLES
@@ -19,8 +19,8 @@ import { Button } from '../ui/Button'
 const containerStyles = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: 6,
-  pt: 4,
+  gap: 'stack.loose',
+  pt: 'stack.normal',
 })
 
 const buttonStyles = css({

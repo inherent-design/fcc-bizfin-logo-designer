@@ -6,8 +6,8 @@
 import { css } from 'styled-system/css'
 
 // Store
-import { usePresetsStore } from '../../store/presetsStore'
-import { useUIStore } from '../../store/uiStore'
+import { usePresetsStore } from '@/stores/presetsStore'
+import { useUIStore } from '@/stores/uiStore'
 
 // Components
 import { DesignThumbnail } from './DesignThumbnail'
@@ -21,15 +21,14 @@ const emptyStateStyles = css({
   alignItems: 'center',
   justifyContent: 'center',
   minHeight: '200px',
-  fontFamily: 'brutalist',
-  fontSize: 'sm',
+  textStyle: 'brutalistText',
   color: 'panel.fg',
   opacity: 'muted',
 })
 
 const gridStyles = css({
   display: 'grid',
-  gap: 4,
+  gap: 'stack.normal',
 
   // Responsive grid
   gridTemplateColumns: {

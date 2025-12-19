@@ -6,14 +6,15 @@
 import { css } from 'styled-system/css'
 
 // Utils
-import { useUIStore } from '../../store/uiStore'
+import { useUIStore } from '@/stores/uiStore'
 
 // Components
 import { ColorTab } from '../tabs/ColorTab'
 import { LayoutTab } from '../tabs/LayoutTab'
-import { Icon } from '../ui/Icon'
-import { Panel } from '../ui/Panel'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/Tabs'
+import { Button } from '../ui/Button/Button'
+import { Icon } from '../ui/Icon/Icon'
+import { Panel } from '../ui/Panel/Panel'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/Tabs/Tabs'
 
 // ============================================================================
 // STYLES
@@ -35,21 +36,21 @@ const panelStyles = css({
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  gap: 4,
-  p: 6,
+  gap: 'stack.normal',
+  p: 'inset.loose',
 })
 
 const headerStyles = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  mb: 2,
+  mb: 'stack.tight',
 })
 
 const titleContainerStyles = css({
   display: 'flex',
   alignItems: 'center',
-  gap: 3,
+  gap: 'inline.normal',
 })
 
 const paletteIconStyles = css({
@@ -57,41 +58,16 @@ const paletteIconStyles = css({
 })
 
 const titleStyles = css({
-  fontFamily: 'brutalist',
-  fontWeight: 'brutal',
+  textStyle: 'brutalistLabel',
   fontSize: 'xl',
-  textTransform: 'uppercase',
   color: 'panel.fg',
-})
-
-const themeToggleButtonStyles = css({
-  px: 2,
-  py: 1,
-  border: '{borderWidths.brutal.DEFAULT} solid',
-  borderColor: 'panel.border',
-  bg: 'panel.bg',
-  cursor: 'pointer',
-  fontFamily: 'brutalist',
-  fontWeight: 'bold',
-  fontSize: 'xs',
-  textTransform: 'uppercase',
-  color: 'panel.fg',
-  transition: 'fast',
-  _hover: {
-    transform: 'translate(1px, 1px)',
-    boxShadow: '2px 2px 0 {colors.panel.border}',
-  },
-  _active: {
-    transform: 'translate(2px, 2px)',
-    boxShadow: 'none',
-  },
 })
 
 const tabContentContainerStyles = css({
   flex: 1,
   overflowY: 'auto',
   overflowX: 'hidden',
-  pr: 2,
+  pr: 'inline.tight',
 })
 
 // ============================================================================
@@ -105,19 +81,22 @@ function ControlPanelHeader() {
   return (
     <div className={headerStyles}>
       <div className={titleContainerStyles}>
-        <Icon name='palette' size='lg' className={paletteIconStyles} />
+        <Icon name='paintbrush' size='3xl' className={paletteIconStyles} />
         <h1 className={titleStyles}>Logo Designer</h1>
       </div>
-      <button
+      <Button
+        variant='ghost'
+        size='sm'
         onClick={() => {
           const toggleWorldTheme = useUIStore.getState().toggleWorldTheme
           toggleWorldTheme()
         }}
-        className={themeToggleButtonStyles}
-        title='Toggle world theme'
       >
-        {useUIStore((state) => (state.worldTheme === 'dark' ? '☀️' : '🌑'))}
-      </button>
+        <Icon
+          name={useUIStore((state) => (state.worldTheme === 'dark' ? 'sun' : 'moon'))}
+          size='sm'
+        />
+      </Button>
     </div>
   )
 }
@@ -129,11 +108,11 @@ function TabNavigation() {
   return (
     <TabsList>
       <TabsTrigger value='color'>
-        <Icon name='palette' size='xs' />
+        <Icon name='swatch' size='md' />
         Color
       </TabsTrigger>
       <TabsTrigger value='layout'>
-        <Icon name='grid' size='xs' />
+        <Icon name='squares2x2' size='md' />
         Layout
       </TabsTrigger>
     </TabsList>

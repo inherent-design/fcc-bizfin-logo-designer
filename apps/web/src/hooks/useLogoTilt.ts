@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
-import { useWorldStore } from '../store/worldStore'
-import { calculateTiltFromMouse, smoothDamp } from '../utils/animations'
 import { MAX_LOGO_ROTATION, ROTATION_DAMPING } from '../constants/world'
+import { useWorldStore } from '../stores/worldStore'
+import { calculateTiltFromMouse, smoothDamp } from '../utils/animations'
 
 /**
  * Hook to calculate and apply logo tilt based on mouse position

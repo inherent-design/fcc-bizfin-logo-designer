@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
-import { useWorldStore } from '../store/worldStore'
+import { MAX_LOGO_ROTATION, ROTATION_DAMPING } from '../constants/world'
+import { useWorldStore } from '../stores/worldStore'
 import { clamp, smoothDamp } from '../utils/animations'
 import { componentLogger } from '../utils/logger'
-import { MAX_LOGO_ROTATION, ROTATION_DAMPING } from '../constants/world'
 
 // Module-specific logger
 const gyroLogger = componentLogger.child({ module: 'gyroscope' })

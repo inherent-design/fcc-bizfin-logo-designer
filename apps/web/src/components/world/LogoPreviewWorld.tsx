@@ -15,18 +15,18 @@ import type { Vec2 } from '../../schemas/logoState.schema'
 import { applyElementColors, extractGroupContent } from '../../utils'
 
 // Store
-import { useLogoStore } from '../../store/logoStore'
-import { useWorldStore } from '../../store/worldStore'
+import { useLogoStore } from '../../stores/logoStore'
+import { useWorldStore } from '../../stores/worldStore'
 
 // Assets
 import baseShieldSvg from '../../assets/svg/base.svg?raw'
 import briefcaseSvg from '../../assets/svg/briefcase.svg?raw'
 import dollarSvg from '../../assets/svg/dollar-sign.svg?raw'
-import handshakeSvg from '../../assets/svg/handshake.svg?raw'
 import leafSvg from '../../assets/svg/grape-leaf.svg?raw'
-import mountainsSvg from '../../assets/svg/sierra-nevada.svg?raw'
+import handshakeSvg from '../../assets/svg/handshake.svg?raw'
 import quadrantBRSvg from '../../assets/svg/quadrant-br.svg?raw'
 import quadrantTLSvg from '../../assets/svg/quadrant-tl.svg?raw'
+import mountainsSvg from '../../assets/svg/sierra-nevada.svg?raw'
 
 // ============================================================================
 // TYPES & INTERFACES

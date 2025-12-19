@@ -9,17 +9,17 @@ import { useRef } from 'react'
 import { css } from 'styled-system/css'
 
 // Utils
-import { componentLogger } from '../../utils/logger'
+import { componentLogger } from '@/utils/logger'
 
 // Store
-import { useLogoStore } from '../../store/logoStore'
-import { usePresetsStore } from '../../store/presetsStore'
-import { useUIStore } from '../../store/uiStore'
+import { useLogoStore } from '@/stores/logoStore'
+import { usePresetsStore } from '@/stores/presetsStore'
+import { useUIStore } from '@/stores/uiStore'
 
 // Components
-import { Button } from '../ui/Button'
-import { Icon } from '../ui/Icon'
-import { Input } from '../ui/Input'
+import { Button } from '../ui/Button/Button'
+import { Icon } from '../ui/Icon/Icon'
+import { Input } from '../ui/Input/Input'
 
 // ============================================================================
 // STYLES
@@ -28,13 +28,13 @@ import { Input } from '../ui/Input'
 const containerStyles = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: 3,
-  mb: 4,
+  gap: 'stack.normal',
+  mb: 'stack.normal',
 })
 
 const saveRowStyles = css({
   display: 'flex',
-  gap: 2,
+  gap: 'inline.tight',
 })
 
 const nameInputStyles = css({
@@ -43,7 +43,7 @@ const nameInputStyles = css({
 
 const exportImportRowStyles = css({
   display: 'flex',
-  gap: 2,
+  gap: 'inline.tight',
 })
 
 const actionButtonStyles = css({
@@ -212,7 +212,7 @@ export function GalleryActions() {
           disabled={!activeDesignId || isExporting}
           className={actionButtonStyles}
         >
-          <Icon name='download' className={iconStyles} />
+          <Icon name='arrowdowntray' className={iconStyles} />
           {isExporting ? 'Exporting...' : 'Export'}
         </Button>
 
@@ -223,7 +223,7 @@ export function GalleryActions() {
           disabled={isImporting}
           className={actionButtonStyles}
         >
-          <Icon name='upload' className={iconStyles} />
+          <Icon name='arrowuptray' className={iconStyles} />
           {isImporting ? 'Importing...' : 'Import'}
         </Button>
 

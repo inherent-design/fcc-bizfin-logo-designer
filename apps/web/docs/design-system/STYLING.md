@@ -324,6 +324,159 @@ utilities: {
 
 ---
 
+## Advanced Patterns
+
+### Text Styles Pattern
+
+**What**: Reusable typography combinations that bundle font properties (size, weight, line-height, letter-spacing) into named styles.
+
+**Why**: Enforces DRY principle, ensures typographic consistency across components, and simplifies maintenance when design system evolves.
+
+**How**:
+
+```typescript
+// panda.config.ts
+textStyles: {
+  brutalistLabel: {
+    fontFamily: 'mono',
+    fontSize: 'sm',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: '0.05em'
+  }
+}
+
+// Component usage
+<label className={css({ textStyle: 'brutalistLabel' })}>
+  Name
+</label>
+```
+
+**Available Styles**:
+
+- `brutalistLabel` - Monospace uppercase labels for forms
+- `sectionHeader` - Bold section headings
+- `formLabel` - Standard form field labels
+- `brutalistText` - Body text in brutalist style
+
+**Override Pattern**: Can override individual properties when component needs slight variation:
+
+```typescript
+css({
+  textStyle: 'brutalistLabel',
+  fontSize: 'xs' // Override just the size
+})
+```
+
+### Layer Styles Pattern
+
+**What**: Reusable container patterns combining borders, shadows, backgrounds, and spacing—the visual "skin" of components.
+
+**Why**: Creates consistent visual language across cards, panels, and containers. Easier theming and style updates.
+
+**How**:
+
+```typescript
+// panda.config.ts
+layerStyles: {
+  brutalInset: {
+    border: '3px solid black',
+    boxShadow: 'inset 4px 4px 0 rgba(0,0,0,0.2)',
+    bg: 'gray.50',
+    p: 4
+  }
+}
+
+// Component usage
+<div className={css({ layerStyle: 'brutalInset' })}>
+  Content
+</div>
+```
+
+**Available Styles**:
+
+- `brutalInset` - Inset brutal container for form inputs
+
+### TextStyle Decision Matrix
+
+Understanding when to create, override, or skip textStyles:
+
+**When to CREATE new textStyle**:
+
+- **Concern**: Design system level (3+ components will use it)
+- **Usage**: Repeated pattern with consistent properties
+- **Context**: Global typography standard
+- **Example**: `brutalistLabel` used across all form labels
+
+**When to OVERRIDE textStyle**:
+
+- **Concern**: Component-specific variation
+- **Usage**: One-off adjustment for specific context
+- **Context**: Local styling that deviates from design system
+- **Example**: `textStyle: 'brutalistLabel', fontSize: 'xs'` for compact layout
+
+**When to SKIP textStyle (use inline)**:
+
+- **Concern**: Completely unique, no reusable base pattern
+- **Usage**: One-time use with no similarity to existing styles
+- **Context**: Component-specific without any reusable foundation
+- **Example**: Custom animated text with transforms and effects
+
+**Golden Rule**: If you're overriding 3+ properties of a textStyle, create a new textStyle instead.
+
+### Animation Styles Pattern
+
+**What**: Reusable animation and transition patterns for consistent motion design across components.
+
+**Why**: Ensures consistent motion language, improves performance by reusing animation definitions, and simplifies maintenance.
+
+**How**:
+
+```typescript
+// panda.config.ts
+animationStyles: {
+  scaleHover: {
+    transition: 'transform 200ms ease-in-out',
+    _hover: {
+      transform: 'scale(1.05)'
+    }
+  }
+}
+
+// Component usage
+<button className={css({ animationStyle: 'scaleHover' })}>
+  Hover me
+</button>
+```
+
+**Available Styles**:
+
+- `scaleHover` - Scale effect on hover for interactive elements
+
+### Static CSS Pre-generation
+
+**What**: Force CSS class generation for config recipes (which are just-in-time by default).
+
+**Why**: Config recipes only generate CSS for variants actually used in code. Static CSS ensures all variant combinations are available at runtime, critical for dynamic UIs.
+
+**When**: Always configure for recipes used in your design system—prevents missing classes when variants are determined at runtime.
+
+**Configuration**:
+
+```typescript
+// panda.config.ts
+staticCss: {
+  recipes: {
+    neoButton: ['*'], // Generate all variants
+    badge: [{ size: ['sm', 'md', 'lg'] }] // Generate specific variants
+  }
+}
+```
+
+**Trade-off**: Larger CSS bundle vs. runtime safety. Use `['*']` for design system recipes, specific variants for application recipes.
+
+---
+
 ## Design Pattern Library
 
 ### Neo-Brutalism

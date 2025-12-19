@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useWorldStore } from '../store/worldStore'
+import { useWorldStore } from '../stores/worldStore'
 
 /**
  * Hook to track global mouse position and update world store

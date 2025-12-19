@@ -18,7 +18,7 @@ import { useLogoTilt } from '../../hooks/useLogoTilt'
 import { useMouseTracking } from '../../hooks/useMouseTracking'
 
 // Store
-import { useUIStore } from '../../store/uiStore'
+import { useUIStore } from '../../stores/uiStore'
 
 // Utils
 import { componentLogger } from '../../utils/logger'
