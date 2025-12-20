@@ -141,3 +141,6 @@ checkIgnorePragma: false
 #   - files: '*.md'
 #     options:
 #       proseWrap: always
+
+plugins:
+  - "@pandabox/prettier-plugin"
