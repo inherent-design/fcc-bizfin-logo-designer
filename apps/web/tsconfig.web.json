@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "styled-system/*": [
+        "./styled-system/*"
+      ]
+    },
+    "types": [
+      "vite/client"
+    ],
+    "useDefineForClassFields": true
+  },
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "styled-system/**/*.ts",
+    "styled-system/**/*.tsx"
+  ]
+}
