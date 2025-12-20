@@ -6,264 +6,12 @@
 
 ---
 
-## Foundational Understanding
+## Project-Specific Design Patterns
 
-### What Panda CSS Is
+This document focuses on the **project-specific styling patterns** for the FCC Logo Designer. For comprehensive Panda CSS documentation, see:
 
-Panda CSS is a **build-time CSS-in-JS framework** that generates atomic CSS classes from TypeScript/JSX code. Unlike runtime CSS-in-JS (styled-components, Emotion), Panda performs **static extraction** at build time—analyzing your code, generating CSS files, and producing lightweight className strings with zero runtime overhead.
-
-**Core Architecture**:
-
-1. **Static Analysis**: Scans files matching `include` patterns in config
-2. **Code Generation**: Creates `styled-system/` directory with type-safe utilities
-3. **Atomic CSS Output**: Generates minimal CSS using `@layer` cascade system
-4. **Type Safety**: Full TypeScript autocomplete for tokens, utilities, and variants
-
-### Why Panda CSS Exists
-
-**1. Runtime Performance Tax**
-Traditional CSS-in-JS (styled-components, Emotion) parses styles at runtime, increasing bundle size and blocking rendering. Panda eliminates this by moving work to build time—generated CSS is pure static files with zero JavaScript overhead.
-
-**2. Token Contract Enforcement**
-Tailwind allows arbitrary values (`className="p-[23px]"`). Panda enforces **strict token contracts**—`css({ p: '23px' })` fails TypeScript compilation if `23px` isn't a defined spacing token. This prevents design system drift.
-
-**3. Cascade Layer Predictability**
-Traditional CSS specificity creates fragile overrides (`!important` chains, selector weight wars). Panda uses CSS `@layer` to establish **deterministic precedence**:
-
-```
-@layer reset, base, tokens, recipes, utilities;
-```
-
-Utilities _always_ override recipes. No specificity debugging.
-
-**4. Type-Safe Variants**
-Component libraries need variant systems (size, color, state). Panda provides `cva()` and slot recipes with **compile-time variant validation**—invalid variant combinations fail at build, not runtime.
-
-### Origin Story
-
-**Creator**: Segun Adebayo (Chakra UI founder)
-**Launch**: July 2023
-**Genesis**: June 2020 RFC for static CSS extraction, driven by React Server Components incompatibility with runtime CSS-in-JS and performance demands from Chakra community.
-
-**Timeline Context**:
-
-- **2015-2020**: Runtime CSS-in-JS golden age (~40% adoption by 2020)
-- **2020-2022**: Zero-runtime revolution (Linaria, vanilla-extract, Stitches)
-- **January 2024**: Styled-components enters maintenance mode
-- **2025**: Tailwind dominates (68%), Panda carves niche for type-safe design systems
-
-**Key Innovations**: First framework combining zero-runtime + full TypeScript support + RSC-native + multi-variant components + framework-agnostic (React/Vue/Solid/Svelte).
-
-**Chakra Connection**: Panda = Chakra's styling engine extracted. Chakra v3 aligns APIs with Panda to ease future migration to Ark (headless components) + Panda stack.
-
----
-
-## Core Mental Models
-
-### 1. Cascade Layers
-
-Panda generates five layers in strict order:
-
-- **reset**: Browser defaults (when `preflight: true`)
-- **base**: Global styles, element resets
-- **tokens**: Design token CSS variables
-- **recipes**: Component variant styles
-- **utilities**: Atomic classes (highest precedence)
-
-**Critical Insight**: Utilities override recipes by design. When you `cx(button(), css({ bg: 'red' }))`, red wins because `css()` generates utility-layer classes.
-
-**Gotchas**:
-
-- **Unlayered CSS** (third-party libraries) defeats all Panda layers → Use PostCSS plugin or import as layers
-- **Tailwind conflicts**: Share layer names → Rename Panda layers: `layers: { utilities: 'panda_utilities' }`
-- **cx() misuse**: Use `css.raw()` for true merging, not `cx()` string concatenation
-- **Browser support**: Pre-2022 browsers need `polyfill: true`
-
-### 2. Tokens → Semantics → Usage
-
-**Base Tokens** define raw values:
-
-```typescript
-tokens: {
-  colors: { pink: { 500: { value: '#ec4899' } } },
-  spacing: { 4: { value: '16px' } }
-}
-```
-
-**Semantic Tokens** create context-aware references:
-
-```typescript
-semanticTokens: {
-  colors: {
-    primary: { value: { base: '{colors.pink.500}', _dark: '{colors.purple.500}' } }
-  }
-}
-```
-
-**Usage** consumes semantic names:
-
-```typescript
-css({ bg: 'primary' }) // Auto-switches based on theme
-```
-
-This three-tier system separates **values** (tokens) from **meaning** (semantics) from **application** (usage).
-
-### 3. Styling APIs: Decision Tree
-
-**css()** - One-off styles
-
-```typescript
-<div className={css({ bg: 'blue.500', p: 4 })} />
-```
-
-Use when: No reusability needed.
-
-**css.raw()** - Style composition
-
-```typescript
-const base = css.raw({ color: 'red' })
-css(base, { fontSize: '2xl' })
-```
-
-Use when: Passing styles as props, merging style objects.
-
-**cva()** - Component variants (atomic recipe)
-
-```typescript
-const button = cva({
-  variants: { size: { sm: {...}, lg: {...} } },
-  defaultVariants: { size: 'lg' }
-})
-```
-
-Use when: Component needs predefined variants, code colocation.
-
-**Config recipes** - Design system variants (JIT)
-
-```typescript
-// panda.config.ts
-recipes: { button: defineRecipe({...}) }
-```
-
-Use when: Shared design system, want minimal bundle (only used variants compiled).
-
-**styled()** - JSX style props
-
-```typescript
-<styled.div bg="blue.500" p={4} />
-```
-
-Use when: Prefer React-like prop syntax. Trade-off: Larger runtime.
-
-**Anti-patterns**:
-
-- Mixing CVA + Config Recipes (breaks deterministic ordering)
-- Using dynamic callbacks in styled() (use `compoundVariants` instead)
-
-### 4. Recipes vs Slot Recipes
-
-**Recipes** style single elements:
-
-```typescript
-const badge = cva({
-  variants: { color: { red: {...}, blue: {...} } },
-  defaultVariants: { color: 'red' }
-})
-```
-
-**Slot Recipes** style multi-part components:
-
-```typescript
-const checkbox = sva({
-  slots: ['root', 'control', 'label'],
-  variants: { size: { sm: { control: {...}, label: {...} } } },
-  compoundVariants: [{ size: 'sm', checked: true, css: {...} }]
-})
-```
-
-Use slot recipes when component has multiple DOM elements needing coordinated styling. They support **compound variants**—apply styles when _multiple_ variant conditions match.
-
-**Best Practices**:
-
-- Always use `defaultVariants` to prevent invalid states
-- Config recipes > atomic recipes for design systems (JIT = smaller bundles)
-- Avoid reserved names for boolean variants
-
-### 5. Static Extraction Limits
-
-Panda operates at **build time**, scanning code for patterns.
-
-**✅ Works** (statically analyzable):
-
-```typescript
-css({ p: '4', bg: 'red.500' })
-```
-
-**❌ Fails** (runtime values):
-
-```typescript
-const size = useState(20)
-css({ width: size }) // Can't extract
-```
-
-**Solution**: Use CSS variables:
-
-```typescript
-<div style={{ '--size': size }} className={css({ width: 'var(--size)' })} />
-```
-
-Or pre-generate with `staticCss`:
-
-```typescript
-staticCss: {
-  css: [{ width: ['20px', '40px', '60px'] }]
-}
-```
-
-### 6. Responsive & Theming
-
-**Mobile-First Breakpoints**:
-
-```typescript
-css({ p: { base: '2', md: '4', lg: '6' } })
-```
-
-**Custom Breakpoints**:
-
-```typescript
-breakpoints: { sm: '640px', '3xl': '1800px' }
-```
-
-**Container Queries**:
-
-```typescript
-import { cq } from 'styled-system/patterns'
-<nav className={cq()}><div className={css({ fontSize: { '@/sm': 'md' } })} /></nav>
-```
-
-**Dark Mode**:
-
-```typescript
-conditions: {
-  dark: '[data-color-mode=dark] &'
-},
-semanticTokens: {
-  colors: {
-    bg: { value: { base: 'white', _dark: 'black' } }
-  }
-}
-```
-
-FOUC Prevention:
-
-```html
-<script>
-  const theme =
-    localStorage.getItem('theme') ||
-    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-  document.documentElement.setAttribute('data-color-mode', theme)
-</script>
-```
+- **Panda CSS Architecture**: `/Users/zer0cell/production/.atlas/integrator-reports/panda-css-architecture-research-2025-12-17.md`
+- **UI Architecture**: `UX_ARCHITECTURE.md` (aesthetic principles and component structure)
 
 ---
 
@@ -287,13 +35,6 @@ FOUC Prevention:
 **States**: `_hover`, `_focus`, `_active`, `_disabled`, `_checked`
 **Themes**: `_dark`, `_light`, `_osLight`, `_osDark`
 **Data Attributes**: `_loading`, `_open`, `_closed`, `_horizontal`, `_vertical`
-**Custom Conditions**:
-
-```typescript
-conditions: {
-  groupHover: '[role=group]:where(:hover, [data-hover]) &'
-}
-```
 
 ### Color Opacity Modifier
 
@@ -302,29 +43,9 @@ css({ bg: 'red.300/40', color: 'blue.500/50' })
 // Uses CSS color-mix()
 ```
 
-### Custom Utilities
-
-```typescript
-utilities: {
-  extend: {
-    truncate: {
-      values: { type: 'boolean' },
-      transform(value) {
-        if (!value) return {}
-        return {
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap'
-        }
-      }
-    }
-  }
-}
-```
-
 ---
 
-## Advanced Patterns
+## Pattern System
 
 ### Text Styles Pattern
 
@@ -452,28 +173,6 @@ animationStyles: {
 **Available Styles**:
 
 - `scaleHover` - Scale effect on hover for interactive elements
-
-### Static CSS Pre-generation
-
-**What**: Force CSS class generation for config recipes (which are just-in-time by default).
-
-**Why**: Config recipes only generate CSS for variants actually used in code. Static CSS ensures all variant combinations are available at runtime, critical for dynamic UIs.
-
-**When**: Always configure for recipes used in your design system—prevents missing classes when variants are determined at runtime.
-
-**Configuration**:
-
-```typescript
-// panda.config.ts
-staticCss: {
-  recipes: {
-    neoButton: ['*'], // Generate all variants
-    badge: [{ size: ['sm', 'md', 'lg'] }] // Generate specific variants
-  }
-}
-```
-
-**Trade-off**: Larger CSS bundle vs. runtime safety. Use `['*']` for design system recipes, specific variants for application recipes.
 
 ---
 
@@ -633,13 +332,63 @@ recipes: {
 
 ---
 
+## Project Aesthetic: Neo-Brutalism + High-Fantasy
+
+### Hybrid Approach
+
+This project combines **Neo-Brutalism** for UI controls with **High-Fantasy** for the world layer. See `UX_ARCHITECTURE.md` for detailed aesthetic principles.
+
+**Key Design Tokens**:
+
+```typescript
+tokens: {
+  colors: {
+    // Neo-brutalist controls
+    brutalistBg: '#FFFFFF',
+    brutalistText: '#000000',
+    brutalistBorder: '#000000',
+    brutalistAccent: '#00FF00',
+
+    // High-fantasy world
+    fantasyGold: '#d7913a',
+    fantasyVoid: '#0a0a0f'
+  },
+  shadows: {
+    brutal: '4px 4px 0 #000',
+    brutalLg: '8px 8px 0 #000',
+    brutalInset: 'inset 4px 4px 0 rgba(0,0,0,0.2)'
+  },
+  borderWidths: {
+    brutal: '3px',
+    brutalThick: '4px'
+  }
+}
+```
+
+### Usage Guidelines
+
+**For UI Controls** (Camera Layer):
+
+- Use neo-brutalist tokens (brutalist*)
+- Apply thick borders and hard shadows
+- Use high-contrast colors
+- Zero border radius
+
+**For World/Logo** (3D Layer):
+
+- Use fantasy tokens (fantasy*)
+- Apply subtle glows and depth cues
+- Use gold/parchment color palette
+- Organic, mystical aesthetics
+
+---
+
 ## References
 
 **Panda CSS**:
 
 - [Official Documentation](https://panda-css.com)
 - [GitHub Repository](https://github.com/chakra-ui/panda)
-- [Origin Story](https://www.adebayosegun.com/blog/panda-css-the-origin-story)
 
 **Design Systems**:
 
@@ -647,13 +396,20 @@ recipes: {
 - [Park UI Components](https://park-ui.com)
 - [Ark UI Headless](https://ark-ui.com)
 
-**Visual Testing**:
-
-- [Argos CI](https://argos-ci.com)
-- [Playwright Visual Testing](https://playwright.dev/docs/test-snapshots)
-
 **Design Inspiration**:
 
 - [Neo-Brutalism Guide (NN/g)](https://www.nngroup.com/articles/neobrutalism/)
 - [Glassmorphism Guide (IxDF)](https://www.interaction-design.org/literature/topics/glassmorphism)
 - [Game UI Database](https://www.gameuidatabase.com)
+
+---
+
+**For comprehensive Panda CSS guidance**, including:
+- Core primitives and mental models
+- Token architecture and generation
+- Recipe vs pattern system
+- Build-time computation
+- Edge cases and gotchas
+- Migration strategies
+
+**See**: `/Users/zer0cell/production/.atlas/integrator-reports/panda-css-architecture-research-2025-12-17.md`
