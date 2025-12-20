@@ -5,7 +5,11 @@ import js from '@eslint/js'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import globals from 'globals'
+import path from 'path'
 import tseslint from 'typescript-eslint'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default [
   js.configs.recommended,
@@ -30,6 +34,11 @@ export default [
       'react-refresh': reactRefresh,
     },
     languageOptions: {
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+        project: ['./tsconfig.json'],
+      },
       ecmaVersion: 2020,
       globals: globals.browser,
     },
