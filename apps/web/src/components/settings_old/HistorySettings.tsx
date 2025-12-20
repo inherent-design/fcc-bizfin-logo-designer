@@ -213,10 +213,10 @@ export function HistorySettings({ currentDesignName, actions }: HistorySettingsP
         <SectionHeader title='Saved Designs' />
         <div className={buttonListStyles}>
           <Button
+            className={activeDesignButtonStyles}
             onClick={() => componentLogger.debug({ name: 'Default' }, 'Saved design clicked')}
             variant='ghost'
             size='sm'
-            className={activeDesignButtonStyles}
           >
             <span className={iconStyles}>→</span>
             {currentDesignName}

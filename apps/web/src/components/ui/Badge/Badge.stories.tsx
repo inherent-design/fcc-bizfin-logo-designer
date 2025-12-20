@@ -180,13 +180,13 @@ export const NotificationCounts: Story = {
           Messages
         </button>
         <Badge
-          variant='filled'
-          size='sm'
           className={css({
             position: 'absolute',
             top: '-8px',
             right: '-8px',
           })}
+          variant='filled'
+          size='sm'
         >
           5
         </Badge>
@@ -208,13 +208,13 @@ export const NotificationCounts: Story = {
           Notifications
         </button>
         <Badge
-          variant='filled'
-          size='sm'
           className={css({
             position: 'absolute',
             top: '-8px',
             right: '-8px',
           })}
+          variant='filled'
+          size='sm'
         >
           12
         </Badge>

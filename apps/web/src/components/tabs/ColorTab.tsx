@@ -63,15 +63,15 @@ export function ColorTab() {
   return (
     <div className={containerStyles}>
       {/* Base Color */}
-      <AdvancedColorPicker label='Base Color' color={baseColor} onChange={setBaseColor} />
+      <AdvancedColorPicker label='Base Color' onChange={setBaseColor} color={baseColor} />
 
       {/* Two-Tone Toggle */}
       <div>
         <Button
+          className={buttonStyles}
           variant={isTwoTone ? 'primary' : 'secondary'}
           size='sm'
           onClick={() => (isTwoTone ? disableTwoTone() : enableTwoTone())}
-          className={buttonStyles}
         >
           {isTwoTone ? 'Disable' : 'Enable'} Two-Tone
         </Button>
@@ -82,13 +82,13 @@ export function ColorTab() {
         <>
           <AdvancedColorPicker
             label='Fill Color (Top-Left)'
-            color={fillColorQ0}
             onChange={(color) => setTwoToneFillColor(0, color)}
+            color={fillColorQ0}
           />
           <AdvancedColorPicker
             label='Fill Color (Bottom-Right)'
-            color={fillColorQ3}
             onChange={(color) => setTwoToneFillColor(3, color)}
+            color={fillColorQ3}
           />
         </>
       )}

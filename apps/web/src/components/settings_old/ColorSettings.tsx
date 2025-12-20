@@ -157,11 +157,11 @@ export function ColorSettings({
         <SectionHeader title='Base // Shield + Laurel + Handshake' />
         <AdvancedColorPicker
           label='Shield & Laurel'
-          color={baseColor}
           onChange={(newColor) => {
             componentLogger.debug({ from: baseColor, to: newColor }, 'Base color changed')
             actions.setBaseColor(newColor)
           }}
+          color={baseColor}
         />
       </div>
 
@@ -195,30 +195,30 @@ export function ColorSettings({
           // 1-tone mode: single fill color
           <AdvancedColorPicker
             label='Fill'
-            color={baseDesign.fillColorForFilledQuadrants}
             onChange={(newColor) => {
               componentLogger.debug({ to: newColor }, 'Fill color changed')
               actions.setBaseFillColor(newColor)
             }}
+            color={baseDesign.fillColorForFilledQuadrants}
           />
         ) : (
           // 2-tone mode: two separate fill colors
           <div className={colorPickerGroupStyles}>
             <AdvancedColorPicker
               label='Quad 1 (TL)'
-              color={twoToneDesign!.fillColorQuadrant0}
               onChange={(newColor) => {
                 componentLogger.debug({ quadrant: 0, to: newColor }, 'Two-tone fill color changed')
                 actions.setTwoToneFillColor(0, newColor)
               }}
+              color={twoToneDesign!.fillColorQuadrant0}
             />
             <AdvancedColorPicker
               label='Quad 2 (BR)'
-              color={twoToneDesign!.fillColorQuadrant3}
               onChange={(newColor) => {
                 componentLogger.debug({ quadrant: 3, to: newColor }, 'Two-tone fill color changed')
                 actions.setTwoToneFillColor(3, newColor)
               }}
+              color={twoToneDesign!.fillColorQuadrant3}
             />
           </div>
         )}
@@ -257,19 +257,19 @@ export function ColorSettings({
           <div className={colorPickerGroupStyles}>
             <AdvancedColorPicker
               label='Over Base'
-              color={baseDesign.elementColorOverBase}
               onChange={(newColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over base changed')
                 actions.setBaseElementColorOverBase(newColor)
               }}
+              color={baseDesign.elementColorOverBase}
             />
             <AdvancedColorPicker
               label='Over Filled'
-              color={baseDesign.elementColorOverFilledQuadrants}
               onChange={(newColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over filled changed')
                 actions.setBaseElementColorOverFilledQuadrants(newColor)
               }}
+              color={baseDesign.elementColorOverFilledQuadrants}
             />
           </div>
         ) : !hasUniqueElementColors ? (
@@ -277,19 +277,19 @@ export function ColorSettings({
           <div className={colorPickerGroupStyles}>
             <AdvancedColorPicker
               label='Over Base'
-              color={baseDesign.elementColorOverBase}
               onChange={(newColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over base changed')
                 actions.setBaseElementColorOverBase(newColor)
               }}
+              color={baseDesign.elementColorOverBase}
             />
             <AdvancedColorPicker
               label='Over Filled'
-              color={baseDesign.elementColorOverFilledQuadrants}
               onChange={(newColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over filled changed')
                 actions.setBaseElementColorOverFilledQuadrants(newColor)
               }}
+              color={baseDesign.elementColorOverFilledQuadrants}
             />
           </div>
         ) : (
@@ -297,27 +297,27 @@ export function ColorSettings({
           <div className={colorPickerGroupStyles}>
             <AdvancedColorPicker
               label='Over Base'
-              color={baseDesign.elementColorOverBase}
               onChange={(newColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over base changed')
                 actions.setBaseElementColorOverBase(newColor)
               }}
+              color={baseDesign.elementColorOverBase}
             />
             <AdvancedColorPicker
               label='Over Quad 1'
-              color={twoToneDesign!.uniqueElementColors!.elementColorOverQuadrant0Fill}
               onChange={(newColor) => {
                 componentLogger.debug({ quadrant: 0, to: newColor }, 'Unique element color changed')
                 actions.setUniqueElementColor(0, newColor)
               }}
+              color={twoToneDesign!.uniqueElementColors!.elementColorOverQuadrant0Fill}
             />
             <AdvancedColorPicker
               label='Over Quad 2'
-              color={twoToneDesign!.uniqueElementColors!.elementColorOverQuadrant3Fill}
               onChange={(newColor) => {
                 componentLogger.debug({ quadrant: 3, to: newColor }, 'Unique element color changed')
                 actions.setUniqueElementColor(3, newColor)
               }}
+              color={twoToneDesign!.uniqueElementColors!.elementColorOverQuadrant3Fill}
             />
           </div>
         )}

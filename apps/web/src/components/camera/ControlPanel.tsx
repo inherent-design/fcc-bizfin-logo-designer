@@ -81,7 +81,7 @@ function ControlPanelHeader() {
   return (
     <div className={headerStyles}>
       <div className={titleContainerStyles}>
-        <Icon name='paintbrush' size='3xl' className={paletteIconStyles} />
+        <Icon className={paletteIconStyles} name='paintbrush' size='3xl' />
         <h1 className={titleStyles}>Logo Designer</h1>
       </div>
       <Button

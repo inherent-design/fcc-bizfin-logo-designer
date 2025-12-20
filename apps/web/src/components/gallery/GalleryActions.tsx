@@ -193,12 +193,12 @@ export function GalleryActions() {
       <div className={saveRowStyles}>
         <Input
           ref={nameInputRef}
+          className={nameInputStyles}
           type='text'
           placeholder='Design name...'
-          className={nameInputStyles}
         />
         <Button variant='primary' size='sm' onClick={handleSave}>
-          <Icon name='plus' className={iconStyles} />
+          <Icon className={iconStyles} name='plus' />
           Save
         </Button>
       </div>
@@ -206,24 +206,24 @@ export function GalleryActions() {
       {/* Export/Import Row */}
       <div className={exportImportRowStyles}>
         <Button
+          className={actionButtonStyles}
           variant='secondary'
           size='sm'
           onClick={handleExport}
           disabled={!activeDesignId || isExporting}
-          className={actionButtonStyles}
         >
-          <Icon name='arrowdowntray' className={iconStyles} />
+          <Icon className={iconStyles} name='arrowdowntray' />
           {isExporting ? 'Exporting...' : 'Export'}
         </Button>
 
         <Button
+          className={actionButtonStyles}
           variant='secondary'
           size='sm'
           onClick={handleImportClick}
           disabled={isImporting}
-          className={actionButtonStyles}
         >
-          <Icon name='arrowuptray' className={iconStyles} />
+          <Icon className={iconStyles} name='arrowuptray' />
           {isImporting ? 'Importing...' : 'Import'}
         </Button>
 

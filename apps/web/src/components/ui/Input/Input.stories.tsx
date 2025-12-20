@@ -223,11 +223,11 @@ export const WithError: Story = {
         Email Address
       </label>
       <Input
+        className={css({ borderColor: 'bg.danger' })}
         id='error-example'
         type='email'
         placeholder='Enter email...'
         defaultValue='invalid-email'
-        className={css({ borderColor: 'bg.danger' })}
       />
       <p className={css({ fontSize: 'sm', color: 'bg.danger', m: 0 })}>
         Please enter a valid email address

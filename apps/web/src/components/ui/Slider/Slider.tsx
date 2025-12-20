@@ -51,7 +51,14 @@ interface SliderProps extends Omit<ComponentProps<'input'>, 'type' | 'onChange'>
  * />
  * ```
  */
-export function Slider({ label, value, onChange, decimals = 2, id: providedId, ...props }: SliderProps) {
+export function Slider({
+  label,
+  value,
+  onChange,
+  decimals = 2,
+  id: providedId,
+  ...props
+}: SliderProps) {
   const generatedId = useId()
   const inputId = providedId || generatedId
   const classes = sliderRecipe()
@@ -59,14 +66,16 @@ export function Slider({ label, value, onChange, decimals = 2, id: providedId, .
   return (
     <div className={classes.container}>
       <div className={classes.header}>
-        <label htmlFor={inputId} className={classes.label}>{label}</label>
+        <label htmlFor={inputId} className={classes.label}>
+          {label}
+        </label>
         <span className={classes.value}>{value.toFixed(decimals)}</span>
       </div>
 
       <input
         id={inputId}
         name={inputId}
-        type="range"
+        type='range'
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
         className={classes.input}

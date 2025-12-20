@@ -267,6 +267,7 @@ function HSLInputs({
         <div>
           <FormLabel htmlFor={hId}>H</FormLabel>
           <Input
+            className={fullWidthInputStyles}
             id={hId}
             name={hId}
             type='number'
@@ -274,12 +275,12 @@ function HSLInputs({
             max={360}
             value={color.h}
             onChange={(e) => onFieldChange('h', e.target.value)}
-            className={fullWidthInputStyles}
           />
         </div>
         <div>
           <FormLabel htmlFor={sId}>S</FormLabel>
           <Input
+            className={fullWidthInputStyles}
             id={sId}
             name={sId}
             type='number'
@@ -287,12 +288,12 @@ function HSLInputs({
             max={100}
             value={color.s}
             onChange={(e) => onFieldChange('s', e.target.value)}
-            className={fullWidthInputStyles}
           />
         </div>
         <div>
           <FormLabel htmlFor={lId}>L</FormLabel>
           <Input
+            className={fullWidthInputStyles}
             id={lId}
             name={lId}
             type='number'
@@ -300,17 +301,16 @@ function HSLInputs({
             max={100}
             value={color.l}
             onChange={(e) => onFieldChange('l', e.target.value)}
-            className={fullWidthInputStyles}
           />
         </div>
       </div>
       <Input
+        className={monoInputStyles}
         id={stringId}
         name={stringId}
         type='text'
         value={hslString}
         onChange={(e) => onStringChange(e.target.value)}
-        className={monoInputStyles}
         placeholder='hsl(360, 100%, 50%)'
       />
     </ColorInputSection>
@@ -344,6 +344,7 @@ function RGBInputs({
         <div>
           <FormLabel htmlFor={rId}>R</FormLabel>
           <Input
+            className={fullWidthInputStyles}
             id={rId}
             name={rId}
             type='number'
@@ -351,12 +352,12 @@ function RGBInputs({
             max={255}
             value={rgb.r}
             onChange={(e) => onFieldChange('r', e.target.value)}
-            className={fullWidthInputStyles}
           />
         </div>
         <div>
           <FormLabel htmlFor={gId}>G</FormLabel>
           <Input
+            className={fullWidthInputStyles}
             id={gId}
             name={gId}
             type='number'
@@ -364,12 +365,12 @@ function RGBInputs({
             max={255}
             value={rgb.g}
             onChange={(e) => onFieldChange('g', e.target.value)}
-            className={fullWidthInputStyles}
           />
         </div>
         <div>
           <FormLabel htmlFor={bId}>B</FormLabel>
           <Input
+            className={fullWidthInputStyles}
             id={bId}
             name={bId}
             type='number'
@@ -377,17 +378,16 @@ function RGBInputs({
             max={255}
             value={rgb.b}
             onChange={(e) => onFieldChange('b', e.target.value)}
-            className={fullWidthInputStyles}
           />
         </div>
       </div>
       <Input
+        className={monoInputStyles}
         id={stringId}
         name={stringId}
         type='text'
         value={rgbString}
         onChange={(e) => onStringChange(e.target.value)}
-        className={monoInputStyles}
         placeholder='rgb(255, 0, 0)'
       />
     </ColorInputSection>
@@ -411,12 +411,12 @@ function HEXInput({
   return (
     <ColorInputSection label='HEX'>
       <Input
+        className={upperMonoInputStyles}
         id={hexId}
         name={hexId}
         type='text'
         value={hex}
         onChange={(e) => onChange(e.target.value)}
-        className={upperMonoInputStyles}
         placeholder='#FF0000'
         maxLength={7}
       />
@@ -448,9 +448,9 @@ function AdvancedColorPickerContent({
       <div className={pickerColumnStyles}>
         <div className={pickerWrapperStyles}>
           <HslColorPicker
-            color={toPickerFormat(color)}
             onChange={(newColor) => onChange(fromPickerFormat(newColor))}
             style={{ width: '100%' }}
+            color={toPickerFormat(color)}
           />
         </div>
       </div>
@@ -458,11 +458,11 @@ function AdvancedColorPickerContent({
       {/* Right column: Input fields */}
       <div className={inputsColumnStyles}>
         <HSLInputs
-          color={color}
           hslString={hslString}
           onFieldChange={handleHSLChange}
           onStringChange={handleHSLStringChange}
           idPrefix={idPrefix}
+          color={color}
         />
         <RGBInputs
           rgb={rgb}
@@ -569,7 +569,6 @@ export function AdvancedColorPicker({ color, onChange, label }: AdvancedColorPic
         <div className={modalOverlayStyles}>
           <div className={modalContentStyles}>
             <AdvancedColorPickerContent
-              color={color}
               rgb={rgb}
               hex={hex}
               hslString={hslString}
@@ -583,12 +582,13 @@ export function AdvancedColorPicker({ color, onChange, label }: AdvancedColorPic
               handleHexChange={handleHexChange}
               onChange={onChange}
               idPrefix={uniqueId}
+              color={color}
             />
             <Button
+              className={doneButtonStyles}
               onClick={() => setIsOpen(false)}
               variant='primary'
               size='sm'
-              className={doneButtonStyles}
             >
               Done
             </Button>
@@ -599,7 +599,6 @@ export function AdvancedColorPicker({ color, onChange, label }: AdvancedColorPic
       {/* Desktop: Inline view */}
       <div className={desktopContainerStyles}>
         <AdvancedColorPickerContent
-          color={color}
           rgb={rgb}
           hex={hex}
           hslString={hslString}
@@ -613,6 +612,7 @@ export function AdvancedColorPicker({ color, onChange, label }: AdvancedColorPic
           handleHexChange={handleHexChange}
           onChange={onChange}
           idPrefix={uniqueId}
+          color={color}
         />
       </div>
     </div>

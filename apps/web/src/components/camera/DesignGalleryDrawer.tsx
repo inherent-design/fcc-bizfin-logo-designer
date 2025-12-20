@@ -125,7 +125,7 @@ function GalleryHeader({ onClose }: { onClose: () => void }) {
   return (
     <div className={headerStyles}>
       <div className={headerTitleRowStyles}>
-        <Icon name='folder' size='3xl' className={headerIconStyles} />
+        <Icon className={headerIconStyles} name='folder' size='3xl' />
         <h2 className={headerTitleStyles}>Design Gallery</h2>
       </div>
 
@@ -149,26 +149,26 @@ function GalleryFilters({
   return (
     <div className={filtersRowStyles}>
       <FilterButton
-        filter='all'
         currentFilter={currentFilter}
         onClick={() => onFilterChange('all')}
+        filter='all'
       >
         All
       </FilterButton>
 
       <FilterButton
-        filter='favorites'
         currentFilter={currentFilter}
         onClick={() => onFilterChange('favorites')}
+        filter='favorites'
       >
         <Icon name='heart' size='lg' />
         Favorites
       </FilterButton>
 
       <FilterButton
-        filter='recent'
         currentFilter={currentFilter}
         onClick={() => onFilterChange('recent')}
+        filter='recent'
       >
         Recent
       </FilterButton>
@@ -213,7 +213,7 @@ export function DesignGalleryDrawer() {
   // Closed state: Floating button
   if (!isGalleryOpen) {
     return (
-      <Button variant='primary' className={floatingButtonStyles} onClick={toggleGallery}>
+      <Button className={floatingButtonStyles} variant='primary' onClick={toggleGallery}>
         <Icon name='folder' size='md' />
         Gallery
       </Button>

@@ -108,24 +108,24 @@ function OffsetInputs({
       <div>
         <FormLabel htmlFor={xId}>X Offset</FormLabel>
         <Input
+          className={fullWidthStyles}
           id={xId}
           name={xId}
           type='number'
           value={offsetX}
           onChange={(e) => onChangeX(Number(e.target.value))}
-          className={fullWidthStyles}
         />
       </div>
 
       <div>
         <FormLabel htmlFor={yId}>Y Offset</FormLabel>
         <Input
+          className={fullWidthStyles}
           id={yId}
           name={yId}
           type='number'
           value={offsetY}
           onChange={(e) => onChangeY(Number(e.target.value))}
-          className={fullWidthStyles}
         />
       </div>
     </div>

@@ -271,8 +271,8 @@ export function DesignThumbnail({ design }: DesignThumbnailProps) {
           title='Toggle Favorite'
         >
           <Icon
-            name='heart'
             className={design.isFavorite ? favoriteIconActiveStyles : iconStyles}
+            name='heart'
           />
         </button>
 
@@ -283,7 +283,7 @@ export function DesignThumbnail({ design }: DesignThumbnailProps) {
               className={actionButtonStyles}
               title='Duplicate'
             >
-              <Icon name='documentduplicate' className={iconStyles} />
+              <Icon className={iconStyles} name='documentduplicate' />
             </button>
 
             <button
@@ -295,7 +295,7 @@ export function DesignThumbnail({ design }: DesignThumbnailProps) {
               className={deleteButtonStyles}
               title='Delete'
             >
-              <Icon name='trash' className={iconStyles} />
+              <Icon className={iconStyles} name='trash' />
             </button>
           </>
         )}

@@ -1,6 +1,1 @@
 @layer reset, base, tokens, recipes, utilities;
-
-/* SF Pro font stack with fallbacks */
-* {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', 'Segoe UI', system-ui, sans-serif;
-}
