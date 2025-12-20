@@ -1,37 +1,40 @@
 /**
- * Token System
+ * Design Token System - Main Export
+ *
+ * Four-layer architecture:
+ * - Layer 0: constants.ts (pure math, ratios, base values)
+ * - Layer 1: primitives.ts (unitless calculations)
+ * - Layer 2: base/* (CSS-valued tokens)
+ * - Layer 3: semantic/* (token references, theme-aware)
+ *
+ * MIGRATION: 1rem = 16px (browser default)
+ * - All spacing/sizing values recalculated from 1rem = 10px to 1rem = 16px
+ * - Visual pixel sizes remain unchanged (8px is still 8px)
+ * - Rem values are now different (8px = 0.5rem instead of 0.8rem)
+ *
+ * Usage in panda.config.ts:
+ * ```typescript
+ * import { baseTokens, semanticTokens } from './src/tokens-new'
+ *
+ * export default defineConfig({
+ *   theme: {
+ *     extend: {
+ *       tokens: baseTokens,
+ *       semanticTokens: semanticTokens,
+ *     }
+ *   }
+ * })
+ * ```
  */
 
-export { BASES, scaleRatios } from './constants'
+// Layer 0: Constants (mathematical foundations)
+export * from './constants'
 
-export {
-  blurs,
-  borderWidths,
-  breakpoints,
-  colors,
-  containerSizes,
-  easings,
-  fonts,
-  fontWeights,
-  iconSizes,
-  radii,
-} from './baseTokens'
+// Layer 1: Primitives (unitless calculations)
+export * from './primitives'
 
-export {
-  angles,
-  displaySizes,
-  durations,
-  fontSizes,
-  letterSpacings,
-  lineHeightRatios,
-  opacityLevels,
-  radiansAngles,
-  spacing,
-  zIndexLevels,
-} from './primitives'
+// Layer 2: Base tokens (CSS values)
+export { baseTokens } from './base'
 
-export { direction, radial, rotationSemantics, semanticTokens, tilt, turns } from './semantics'
-
-export { animationStyles, keyframes, layerStyles, textStyles } from './styles'
-
-export { patterns } from './patterns'
+// Layer 3: Semantic tokens (token references)
+export { semanticTokens } from './semantic'

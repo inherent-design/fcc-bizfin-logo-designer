@@ -1,19 +1,222 @@
 /**
  * Token Generation Constants
  *
- * These base values and ratio systems are the single source of truth
- * for all primitive tokens. Change these to experiment with different
- * design scales.
+ * Layer 0: Pure mathematics, zero semantic meaning
+ * - Ratios, angles, base values
+ * - NO CSS units
+ * - NO semantic names
  *
- * WARN run `pnpm prepare` to regen. tokens
+ * These are the single source of truth for all primitive calculations.
+ * Changing these values will regenerate all derived tokens.
+ */
+
+// ============================================================================
+// BASE VALUES
+// ============================================================================
+
+/**
+ * Foundational numeric bases for token generation
  */
 export const BASES = {
+  /** Base rhythm unit (quarter notes in time) - 4 converts to 8px */
   rhythm: 4,
+  /** Base typography unit in rem */
   type: 1,
 } as const
 
+// ============================================================================
+// MUSICAL RATIOS (Just Intonation)
+// ============================================================================
+
 /**
- * Polar angle increments
+ * Complete diatonic interval set using just intonation (simple ratios)
+ *
+ * Just intonation uses pure mathematical ratios (3:2, 5:4, etc.) rather than
+ * equal temperament (12th root of 2). This provides:
+ * - Simpler mathematics (3/2 vs 1.4983)
+ * - Better alignment with Apple HIG empirical values
+ * - Human-comprehensible ratios
+ *
+ * @see https://en.wikipedia.org/wiki/Just_intonation
+ * @see ~/production/.atlas/integrator-reports/token-system-redesign-2025-12-19.md
+ */
+export const musicalRatios = {
+  /** Unison - 1:1 (1.0) - Same pitch */
+  unison: 1 / 1,
+
+  /** Minor Second - 16:15 (1.067) - Semitone */
+  minorSecond: 16 / 15,
+
+  /** Major Second - 9:8 (1.125) - Whole tone */
+  majorSecond: 9 / 8,
+
+  /** Minor Third - 6:5 (1.2) - Subtle progression */
+  minorThird: 6 / 5,
+
+  /** Major Third - 5:4 (1.25) - Bright progression */
+  majorThird: 5 / 4,
+
+  /** Perfect Fourth - 4:3 (1.333) - Stable, open */
+  perfectFourth: 4 / 3,
+
+  /** Tritone - 45:32 (1.406) - Augmented fourth */
+  tritone: 45 / 32,
+
+  /** Perfect Fifth - 3:2 (1.5) - Strong progression */
+  perfectFifth: 3 / 2,
+
+  /** Minor Sixth - 8:5 (1.6) - Slightly tense */
+  minorSixth: 8 / 5,
+
+  /** Major Sixth - 5:3 (1.667) - Consonant */
+  majorSixth: 5 / 3,
+
+  /** Minor Seventh - 16:9 (1.778) - Dominant tension */
+  minorSeventh: 16 / 9,
+
+  /** Major Seventh - 15:8 (1.875) - Leading tone */
+  majorSeventh: 15 / 8,
+
+  /** Octave - 2:1 (2.0) - Double frequency */
+  octave: 2 / 1,
+} as const
+
+/**
+ * Equal temperament ratios (for comparison/experimentation)
+ *
+ * Equal temperament divides the octave into 12 equal semitones using
+ * the 12th root of 2 (≈1.05946). This is used in modern Western music
+ * for instrument tuning.
+ *
+ * NOT RECOMMENDED for design tokens - just intonation ratios are simpler
+ * and better aligned with HIG patterns.
+ *
+ * @see ~/production/.atlas/integrator-reports/token-system-redesign-2025-12-19.md
+ */
+export const equalTemperamentRatios = {
+  minorSecond: Math.pow(2, 1 / 12), // 1.0595
+  majorSecond: Math.pow(2, 2 / 12), // 1.1225
+  minorThird: Math.pow(2, 3 / 12), // 1.1892
+  majorThird: Math.pow(2, 4 / 12), // 1.2599
+  perfectFourth: Math.pow(2, 5 / 12), // 1.3348
+  tritone: Math.pow(2, 6 / 12), // 1.4142
+  perfectFifth: Math.pow(2, 7 / 12), // 1.4983
+  minorSixth: Math.pow(2, 8 / 12), // 1.5874
+  majorSixth: Math.pow(2, 9 / 12), // 1.6818
+  minorSeventh: Math.pow(2, 10 / 12), // 1.7818
+  majorSeventh: Math.pow(2, 11 / 12), // 1.8877
+  octave: Math.pow(2, 12 / 12), // 2.0
+} as const
+
+// ============================================================================
+// HARMONIC SERIES
+// ============================================================================
+
+/**
+ * Harmonic (overtone) series - integer multiples of fundamental frequency
+ *
+ * Perfect for structural divisions and container sizing.
+ * Apple HIG spacing uses harmonic series: 4pt × [1, 2, 3, 4, 6, 8]
+ *
+ * @see https://en.wikipedia.org/wiki/Harmonic_series_(music)
+ */
+export const harmonicSeries = {
+  /** 1st harmonic - Fundamental (1×) */
+  fundamental: 1,
+
+  /** 2nd harmonic - Octave (2×) */
+  second: 2,
+
+  /** 3rd harmonic - Octave + Perfect Fifth (3×) */
+  third: 3,
+
+  /** 4th harmonic - Two octaves (4×) */
+  fourth: 4,
+
+  /** 5th harmonic - Two octaves + Major Third (5×) */
+  fifth: 5,
+
+  /** 6th harmonic - Two octaves + Perfect Fifth (6×) */
+  sixth: 6,
+
+  /** 8th harmonic - Three octaves (8×) */
+  eighth: 8,
+
+  /** 10th harmonic - Three octaves + Major Third (10×) */
+  tenth: 10,
+
+  /** 12th harmonic - Three octaves + Perfect Fifth (12×) */
+  twelfth: 12,
+
+  /** 16th harmonic - Four octaves (16×) */
+  sixteenth: 16,
+} as const
+
+/**
+ * Subharmonic (undertone) series - unit fractions below fundamental
+ *
+ * Useful for micro-spacing, opacity scales, and fractional values.
+ *
+ * @see https://en.wikipedia.org/wiki/Undertone_series
+ */
+export const subharmonicSeries = {
+  /** 1st subharmonic - Fundamental (1.0) */
+  fundamental: 1,
+
+  /** 2nd subharmonic - Octave down (0.5) */
+  second: 1 / 2,
+
+  /** 3rd subharmonic - Octave + Fifth down (0.333) */
+  third: 1 / 3,
+
+  /** 4th subharmonic - Two octaves down (0.25) */
+  fourth: 1 / 4,
+
+  /** 5th subharmonic (0.2) */
+  fifth: 1 / 5,
+
+  /** 6th subharmonic (0.167) */
+  sixth: 1 / 6,
+
+  /** 8th subharmonic - Three octaves down (0.125) */
+  eighth: 1 / 8,
+} as const
+
+// ============================================================================
+// CHORD RATIOS
+// ============================================================================
+
+/**
+ * Chord ratios for multi-token semantic progressions
+ *
+ * Use in semantic layer to define harmonious relationships between
+ * multiple tokens (e.g., 4-tier text hierarchy using dominant 7th chord).
+ *
+ * @see ~/production/.atlas/integrator-reports/token-system-redesign-2025-12-19.md
+ */
+export const chordRatios = {
+  /** Major triad - 4:5:6 (1.0, 1.25, 1.5) - Bright, expansive */
+  majorTriad: [1.0, 1.25, 1.5] as const,
+
+  /** Minor triad - 10:12:15 (1.0, 1.2, 1.5) - Subtle, contained */
+  minorTriad: [1.0, 1.2, 1.5] as const,
+
+  /** Dominant 7th - 4:5:6:7 (1.0, 1.25, 1.5, 1.75) - 4-tier hierarchy */
+  dominant7th: [1.0, 1.25, 1.5, 1.75] as const,
+
+  /** Major 7th - 8:10:12:15 (1.0, 1.25, 1.5, 1.875) */
+  major7th: [1.0, 1.25, 1.5, 1.875] as const,
+
+  /** Minor 7th - 10:12:15:18 (1.0, 1.2, 1.5, 1.8) */
+  minor7th: [1.0, 1.2, 1.5, 1.8] as const,
+} as const
+
+// ============================================================================
+// POLAR ANGLES
+// ============================================================================
+
+/**
+ * Polar angle increments in degrees
  */
 export const polarAngles = {
   deg0: 0,
@@ -50,72 +253,38 @@ export const radianAngles = {
   radTau: Math.PI * 2, // 2π = 360° (full circle)
 } as const
 
-/**
- * Musical ratios
- *
- * @see https://en.wikipedia.org/wiki/Just_intonation
- * @see https://en.wikipedia.org/wiki/Harmonic_series_(music)
- */
-export const musicalRatios = {
-  minorThird: 6 / 5, // 1.200 - Minor third (Eb)
-  majorThird: 5 / 4, // 1.250 - Major third (E)
-  perfectFourth: 4 / 3, // 1.333 - Perfect fourth (F)
-  perfectFifth: 3 / 2, // 1.500 - Perfect fifth (G)
-  minorSixth: 8 / 5, // 1.600 - Minor sixth (Ab)
-  goldenRatio: (1 + Math.sqrt(5)) / 2, // 1.618 - Phi (golden ratio)
-  minorSeventh: 16 / 9, // 1.778 - Minor seventh (Bb)
-  octave: 2 / 1, // 2.000 - Octave (C)
-} as const
+// ============================================================================
+// ANIMATION DURATIONS
+// ============================================================================
 
 /**
- * Letter spacing ratios
- */
-export const letterSpacingRatios = {
-  tight: -0.05, // -5% tracking
-  normal: 0, // No tracking
-  wide: 0.025, // 2.5% (1/40)
-  wider: 0.05, // 5% (1/20)
-  widest: 0.1, // 10% (1/10)
-} as const
-
-/**
- * Transform scale ratios
- */
-export const scaleRatios = {
-  subtle: 1.05, // ~5% (current)
-} as const
-
-/**
- * Opacity ratios
- */
-export const opacityRatios = {
-  disabled: 1 / 4, // 0.250
-  muted: 2 / 5, // 0.400
-  subtle: 1 / musicalRatios.goldenRatio, // 0.618 (φ⁻¹)
-  medium: 1 - (1 / musicalRatios.goldenRatio) ** 2, // 0.854 (1 - φ⁻²)
-} as const
-
-/**
- * Animation duration ratios
+ * Base duration for animation timing (milliseconds)
  */
 export const durationBase = 150
 
+/**
+ * Duration ratio multipliers
+ */
 export const durationRatios = {
-  fast: 2 / 3, // 100ms
-  normal: 1, // 150ms
-  slow: musicalRatios.perfectFifth, // 225ms (3/2 ratio)
-  verySlow: musicalRatios.perfectFifth ** 2, // 337.5ms (9/4 ratio)
+  /** Fast - 2/3 of base (100ms) */
+  fast: 2 / 3,
+
+  /** Normal - 1× base (150ms) */
+  normal: 1,
+
+  /** Slow - Perfect Fifth ratio (225ms) */
+  slow: musicalRatios.perfectFifth,
+
+  /** Very slow - Perfect Fifth squared (337.5ms) */
+  verySlow: musicalRatios.perfectFifth ** 2,
 } as const
 
-export const durations = {
-  fast: Math.round(durationBase * durationRatios.fast),
-  normal: Math.round(durationBase * durationRatios.normal),
-  slow: Math.round(durationBase * durationRatios.slow),
-  verySlow: Math.round(durationBase * durationRatios.verySlow),
-}
+// ============================================================================
+// Z-INDEX SCALE
+// ============================================================================
 
 /**
- * Z-index scale based on Fibonacci sequence
+ * Z-index layering scale based on Fibonacci-like progression
  */
 export const zIndexScale = {
   base: 1,
@@ -126,24 +295,69 @@ export const zIndexScale = {
   tooltip: 80,
 } as const
 
-/**
- * Breakpoints
- */
-export const breakpoints = {
-  sm: '64rem', // 640px
-  md: '76.8rem', // 768px
-  lg: '102.4rem', // 1024px
-  xl: '128rem', // 1280px
-  '2xl': '153.6rem', // 1536px
-  tablet: '76.8rem',
-  desktop: '128rem',
-} as const
+// ============================================================================
+// LETTER SPACING RATIOS
+// ============================================================================
 
 /**
- * Type aliases for better IDE autocomplete
+ * Letter spacing as fraction of font size
  */
+export const letterSpacingRatios = {
+  tight: -0.05, // -5% tracking
+  normal: 0, // No tracking
+  wide: 0.025, // 2.5% (1/40)
+  wider: 0.05, // 5% (1/20)
+  widest: 0.1, // 10% (1/10)
+} as const
+
+// ============================================================================
+// OPACITY RATIOS
+// ============================================================================
+
+/**
+ * Opacity levels using subharmonic series
+ */
+export const opacityRatios = {
+  /** Disabled - 1/4 (0.25) */
+  disabled: subharmonicSeries.fourth,
+
+  /** Muted - 1/3 (0.333) */
+  muted: subharmonicSeries.third,
+
+  /** Subtle - 1/2 (0.5) */
+  subtle: subharmonicSeries.second,
+
+  /** Medium - 3/4 (0.75) */
+  medium: 1 - subharmonicSeries.fourth,
+
+  /** Full - 1 (1.0) */
+  full: subharmonicSeries.fundamental,
+} as const
+
+// ============================================================================
+// BREAKPOINTS
+// ============================================================================
+
+/**
+ * Responsive breakpoints (in rem)
+ */
+export const breakpoints = {
+  sm: '40rem', // 640px
+  md: '48rem', // 768px
+  lg: '64rem', // 1024px
+  xl: '80rem', // 1280px
+  '2xl': '96rem', // 1536px
+  tablet: '48rem',
+  desktop: '80rem',
+} as const
+
+// ============================================================================
+// TYPE ALIASES
+// ============================================================================
+
 export type PolarAngle = keyof typeof polarAngles
 export type RadianAngle = keyof typeof radianAngles
 export type MusicalRatio = keyof typeof musicalRatios
+export type HarmonicMultiple = keyof typeof harmonicSeries
 export type DurationRatio = keyof typeof durationRatios
 export type ZIndexLevel = keyof typeof zIndexScale
