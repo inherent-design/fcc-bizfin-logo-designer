@@ -1,10 +1,5 @@
 # Development Environment Setup
 
-**Project**: FCC Business & Finance Club Logo Designer
-**Last Updated**: 2025-12-14
-
----
-
 ## Overview
 
 This guide walks you through setting up your development environment for the Logo Designer project from scratch. Whether you're new to web development or setting up a fresh machine, these instructions will get you ready to contribute.
@@ -886,10 +881,3 @@ Sources for this guide's research:
 - [Corepack Documentation](https://github.com/nodejs/corepack)
 - [Git Installation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [Panda CSS VS Code Extension](https://marketplace.visualstudio.com/items?itemName=chakra-ui.panda-css-vscode)
-
----
-
-**Document Version**: 1.0
-**Status**: Active - Primary setup guide for new developers
-**Maintainer**: Development Team
-**Last Reviewed**: 2025-12-14

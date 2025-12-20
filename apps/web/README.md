@@ -1,4 +1,5 @@
-# Logo Designer Web App
+# Logo Designer | Web App
+## Business & Finance Club - Fresno City College
 
 A modern web application for logo design built with React and TypeScript.
 
@@ -9,7 +10,7 @@ A modern web application for logo design built with React and TypeScript.
 - **TypeScript** - Type-safe JavaScript
 - **Panda CSS** - Zero-runtime CSS-in-JS styling solution
 - **Zustand** - Lightweight state management
-- **React Router** - Client-side routing
+- **React Router** - Client-side routing  <!-- TODO -->
 
 ## Setup Requirements
 
@@ -17,10 +18,6 @@ Before running the project, ensure you have the following:
 
 - **Node.js** (v18 or higher recommended)
 - **pnpm** - Package manager
-- **SOPS** - For secrets management and encryption
-- **Go tooling** - Required for secret encryption/decryption
-- **Age key** - For SOPS encryption (if applicable)
-- **Panda CSS codegen** - Must be run before first build
 
 ## Development Commands
 
@@ -28,23 +25,22 @@ Before running the project, ensure you have the following:
 # Install dependencies
 pnpm install
 
-# Generate Panda CSS styles and types
-pnpm panda codegen
+# Generate Panda CSS styles and types (optionally clean first)
+pnpm prepare [-- --clean]
 
-# Clean regenerate Panda CSS from scratch
-pnpm panda codegen --clean
+
+#
+# Vite
+#
 
 # Start development server
 pnpm dev
 
-# Build for production
+# Start build preview server
+pnpm preview
+
+# Build for production (in ./dist/)
 pnpm build
-
-# Run tests
-pnpm test
-
-# Lint code
-pnpm lint
 ```
 
 ## Getting Started
@@ -57,10 +53,15 @@ pnpm lint
 
 ## Project Structure
 
-This is part of a monorepo workspace. For detailed documentation, see the `docs/` directory in the project root.
+This is part of a monorepo workspace. For detailed documentation, see the `docs/` directory:
+
+**Key Documentation:**
+- **[docs/README.md](docs/README.md)** - Index
+- **[docs/STYLING.md](docs/STYLING.md)** - Design token system
+- **[docs/PANDA.md](docs/PANDA.md)** - Panda CSS
+
+**Current Phase:** Phase 2 complete (token architecture overhaul), Phase 3 in progress (component refactor)
 
 ## Notes
 
-- Always run `pnpm panda codegen` after pulling changes that modify Panda CSS configurations
-- SOPS-encrypted secrets are used for sensitive configuration
-- Ensure Go tooling is properly configured for secret operations
+- During development, periodically run `pnpm prepare` (or `pnpm prepare -- --clean`)

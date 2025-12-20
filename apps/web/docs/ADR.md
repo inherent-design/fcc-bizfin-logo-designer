@@ -1,11 +1,5 @@
 # Frontend Architecture Decisions
 
-**Project**: Interactive SVG Logo Designer
-**Context**: Drag-and-drop quadrant layout, color customization, size adjustment, state persistence
-**Requirements**: Low bundle size, TypeScript support, simple APIs, easy serialization
-
----
-
 ## Stack Overview
 
 **Build**: Vite + React + TypeScript
