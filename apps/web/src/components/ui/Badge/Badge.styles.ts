@@ -19,7 +19,7 @@ export const badgeRecipe = cva({
     borderStyle: 'solid',
     borderColor: 'border',
     textStyle: 'sectionHeader',
-    fontSize: '2xs',
+    fontSize: 'typeMinus2',
     display: 'inline-block',
   },
 
@@ -46,17 +46,17 @@ export const badgeRecipe = cva({
       sm: {
         px: 'inline.tight',
         py: 'inline.tight',
-        fontSize: '3xs',
+        fontSize: 'typeMinus2',
       },
       md: {
         px: 'inline.tight',
         py: 'inline.tight',
-        fontSize: '2xs',
+        fontSize: 'typeMinus1',
       },
       lg: {
         px: 'inline.normal',
         py: 'inline.tight',
-        fontSize: 'xs',
+        fontSize: 'typeBase',
       },
     },
   },

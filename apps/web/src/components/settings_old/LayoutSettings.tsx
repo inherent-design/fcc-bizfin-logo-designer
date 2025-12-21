@@ -9,13 +9,13 @@ import type { ReactNode } from 'react'
 import { css } from 'styled-system/css'
 
 // Types
-import type { Vec2 } from '../schemas/logoState.schema'
+import type { Vec2 } from '@/schemas/logoState.schema'
 
 // Utils
-import { componentLogger } from '../utils/logger'
+import { componentLogger } from '@/utils/logger'
 
 // Components
-import { Button } from './ui/Button/Button'
+import { Button } from '@/components/ui/Button/Button'
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -84,12 +84,12 @@ const QUADRANT_LABELS = ['Top-Left', 'Top-Right', 'Bottom-Left', 'Bottom-Right']
 // ============================================================================
 
 const sectionHeaderStyles = css({
-  fontSize: 'xs',
+  fontSize: 'typeMinus2',
   fontFamily: 'brutalist',
   fontWeight: 'bold',
   textTransform: 'uppercase',
   letterSpacing: 'wider',
-  color: 'panel.fg',
+  color: 'surface.fg',
   opacity: 'subtle',
 })
 
@@ -106,9 +106,9 @@ const sliderHeaderStyles = css({
 })
 
 const sliderLabelStyles = css({
-  fontSize: 'sm',
+  fontSize: 'typeMinus1',
   fontFamily: 'brutalist',
-  color: 'panel.fg',
+  color: 'surface.fg',
   opacity: 'medium',
 })
 
@@ -119,9 +119,9 @@ const sliderValueContainerStyles = css({
 })
 
 const sliderValueStyles = css({
-  fontSize: 'xs',
+  fontSize: 'typeMinus2',
   fontFamily: 'mono',
-  color: 'panel.fg',
+  color: 'surface.fg',
   opacity: 'muted',
 })
 

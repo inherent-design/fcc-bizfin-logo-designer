@@ -1,20 +1,20 @@
 // ============================================================================
-// CHECKBOX RECIPE
+// SWITCH RECIPE
 // ============================================================================
 
 import { sva, type RecipeVariantProps } from 'styled-system/css'
 
 /**
- * Checkbox recipe - Neo-brutalist checkbox styling
+ * Switch recipe - Neo-brutalist toggle switch styling
  *
  * Supports:
  * - Size variants: sm, md, lg
- * - Checked, unchecked, and indeterminate states
+ * - On and off states
  * - Focus and disabled states
  * - Semantic token usage
  */
-export const checkboxRecipe = sva({
-  slots: ['container', 'wrapper', 'input', 'box', 'check', 'label', 'helper'],
+export const switchRecipe = sva({
+  slots: ['container', 'wrapper', 'input', 'track', 'thumb', 'label', 'helper'],
   base: {
     container: {
       display: 'inline-flex',
@@ -41,7 +41,6 @@ export const checkboxRecipe = sva({
 
       _focusVisible: {
         '& + div': {
-          borderColor: 'border.focus',
           outline: '2px solid',
           outlineColor: 'focus.ring',
           outlineOffset: '2px',
@@ -53,9 +52,8 @@ export const checkboxRecipe = sva({
           bg: 'bg.primary',
           borderColor: 'bg.primary',
         },
-        '& + div > svg': {
-          opacity: 1,
-          transform: 'scale(1)',
+        '& + div > div': {
+          transform: 'translateX(var(--switch-translate))',
         },
       },
 
@@ -69,32 +67,26 @@ export const checkboxRecipe = sva({
         },
       },
     },
-    box: {
+    track: {
       position: 'relative',
       flexShrink: 0,
       display: 'inline-flex',
       alignItems: 'center',
-      justifyContent: 'center',
-      bg: 'bg.transparent',
+      bg: 'bg.subtle',
       borderWidth: 'borderWidth.brutal',
       borderStyle: 'solid',
       borderColor: 'border.default',
+      borderRadius: '9999px',
       transitionDuration: 'fast',
-      transitionProperty: 'background-color, border-color, transform',
+      transitionProperty: 'background-color, border-color',
       transitionTimingFunction: 'default',
-
-      _hover: {
-        borderColor: 'border.focus',
-      },
     },
-    check: {
-      width: '75%',
-      height: '75%',
-      color: 'text.inverted',
-      opacity: 0,
-      transform: 'scale(0)',
+    thumb: {
+      bg: 'surface.bg',
+      borderRadius: '9999px',
+      boxShadow: 'elevation.flat',
       transitionDuration: 'fast',
-      transitionProperty: 'opacity, transform',
+      transitionProperty: 'transform',
       transitionTimingFunction: 'default',
     },
     label: {
@@ -104,46 +96,64 @@ export const checkboxRecipe = sva({
     helper: {
       textStyle: 'body.sm',
       color: 'text.helper',
-      pl: 'calc(var(--checkbox-size) + {spacing.inline.normal})',
+      pl: 'calc(var(--switch-width) + {spacing.inline.normal})',
     },
   },
 
   variants: {
     size: {
       sm: {
-        box: {
-          width: 'size.icon.sm',
-          height: 'size.icon.sm',
+        track: {
+          width: '2.5rem',
+          height: '1.25rem',
+          p: '2px',
+        },
+        thumb: {
+          width: '1rem',
+          height: '1rem',
         },
         label: {
           fontSize: 'fontSize.sm',
         },
         container: {
-          '--checkbox-size': 'token(sizes.icon.sm)',
+          '--switch-width': '2.5rem',
+          '--switch-translate': 'calc(2.5rem - 1rem - 4px)',
         },
       },
       md: {
-        box: {
-          width: 'size.icon.md',
-          height: 'size.icon.md',
+        track: {
+          width: '3rem',
+          height: '1.5rem',
+          p: '2px',
+        },
+        thumb: {
+          width: '1.25rem',
+          height: '1.25rem',
         },
         label: {
           fontSize: 'fontSize.md',
         },
         container: {
-          '--checkbox-size': 'token(sizes.icon.md)',
+          '--switch-width': '3rem',
+          '--switch-translate': 'calc(3rem - 1.25rem - 4px)',
         },
       },
       lg: {
-        box: {
-          width: 'size.icon.lg',
-          height: 'size.icon.lg',
+        track: {
+          width: '3.5rem',
+          height: '1.75rem',
+          p: '2px',
+        },
+        thumb: {
+          width: '1.5rem',
+          height: '1.5rem',
         },
         label: {
           fontSize: 'fontSize.lg',
         },
         container: {
-          '--checkbox-size': 'token(sizes.icon.lg)',
+          '--switch-width': '3.5rem',
+          '--switch-translate': 'calc(3.5rem - 1.5rem - 4px)',
         },
       },
     },
@@ -154,4 +164,4 @@ export const checkboxRecipe = sva({
   },
 })
 
-export type CheckboxVariantProps = RecipeVariantProps<typeof checkboxRecipe>
+export type SwitchVariantProps = RecipeVariantProps<typeof switchRecipe>

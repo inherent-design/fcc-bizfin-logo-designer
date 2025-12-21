@@ -89,12 +89,12 @@ const headerTitleRowStyles = css({
 })
 
 const headerIconStyles = css({
-  color: 'panel.primary',
+  color: 'accent.primary',
 })
 
 const headerTitleStyles = css({
   textStyle: 'brutalistLabel',
-  color: 'panel.fg',
+  color: 'surface.fg',
 })
 
 const filtersRowStyles = css({

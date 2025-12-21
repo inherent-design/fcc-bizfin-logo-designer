@@ -63,7 +63,7 @@ const sectionHeaderStyles = css({
   fontWeight: 'bold',
   textTransform: 'uppercase',
   letterSpacing: 'wider',
-  color: 'panel.fg',
+  color: 'surface.fg',
   opacity: 'subtle',
 })
 
@@ -74,7 +74,7 @@ const buttonListStyles = css({
 })
 
 const activeDesignButtonStyles = css({
-  color: 'panel.primary',
+  color: 'accent.primary',
 })
 
 const iconStyles = css({

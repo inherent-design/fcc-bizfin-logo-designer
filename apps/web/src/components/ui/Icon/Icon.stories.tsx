@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { iconSizes } from '@/tokens'
 import { css } from 'styled-system/css'
 import { token, type Token } from 'styled-system/tokens'
 
 import { Icon, icons, type IconName } from './Icon'
-import type { IconVariantProps } from './Icon.styles'
+
+const iconSizes = ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'] as const
 
 const meta = {
   title: 'UI/Icon',
@@ -22,8 +22,8 @@ const meta = {
     },
     size: {
       control: 'select',
-      options: Object.keys(iconSizes),
-      description: 'Icon size - demonstrates ratio-based sizing system',
+      options: iconSizes,
+      description: 'Icon size from 8px (3xs) to 128px (4xl)',
     },
   },
 } satisfies Meta<typeof Icon>
@@ -41,14 +41,16 @@ export const Default: Story = {
 
 // All sizes showcase - demonstrates ratio-based size scale
 export const SizeScale: Story = {
-  args: {},
+  args: {
+    name: 'swatch',
+  },
   render: () => (
     <div className={css({ display: 'flex', flexDirection: 'column', gap: '6' })}>
       <div className={css({ fontSize: 'sm', fontWeight: 'bold', mb: '2' })}>
         Ratio-Based Icon Size Scale
       </div>
       <div className={css({ display: 'flex', gap: '8', alignItems: 'center', flexWrap: 'wrap' })}>
-        {Object.entries(iconSizes).map(([size, _]) => (
+        {iconSizes.map((size) => (
           <div
             key={size}
             className={css({
@@ -60,7 +62,7 @@ export const SizeScale: Story = {
           >
             <Icon
               name={Object.keys(icons)[0] as IconName}
-              size={size as IconVariantProps['size']}
+              size={size}
             />
             <code>{size}</code>
             <code>{token(`sizes.icon.${size}` as Token)}</code>
@@ -73,7 +75,9 @@ export const SizeScale: Story = {
 
 // All icons showcase
 export const IconGallery: Story = {
-  args: {},
+  args: {
+    name: 'swatch',
+  },
   render: () => (
     <div className={css({ display: 'flex', flexDirection: 'column', gap: '6' })}>
       <div className={css({ fontSize: 'sm', fontWeight: 'bold', mb: '2' })}>
@@ -107,7 +111,9 @@ export const IconGallery: Story = {
 
 // Practical use cases
 export const InButton: Story = {
-  args: {},
+  args: {
+    name: 'swatch',
+  },
   render: () => (
     <div className={css({ display: 'flex', gap: '4' })}>
       <button

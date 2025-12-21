@@ -22,7 +22,7 @@ const emptyStateStyles = css({
   justifyContent: 'center',
   minHeight: '200px',
   textStyle: 'brutalistText',
-  color: 'panel.fg',
+  color: 'surface.fg',
   opacity: 'muted',
 })
 

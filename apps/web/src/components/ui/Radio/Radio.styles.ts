@@ -1,20 +1,20 @@
 // ============================================================================
-// CHECKBOX RECIPE
+// RADIO RECIPE
 // ============================================================================
 
 import { sva, type RecipeVariantProps } from 'styled-system/css'
 
 /**
- * Checkbox recipe - Neo-brutalist checkbox styling
+ * Radio recipe - Neo-brutalist radio button styling
  *
  * Supports:
  * - Size variants: sm, md, lg
- * - Checked, unchecked, and indeterminate states
+ * - Checked and unchecked states
  * - Focus and disabled states
  * - Semantic token usage
  */
-export const checkboxRecipe = sva({
-  slots: ['container', 'wrapper', 'input', 'box', 'check', 'label', 'helper'],
+export const radioRecipe = sva({
+  slots: ['container', 'wrapper', 'input', 'circle', 'dot', 'label', 'helper'],
   base: {
     container: {
       display: 'inline-flex',
@@ -49,11 +49,7 @@ export const checkboxRecipe = sva({
       },
 
       _checked: {
-        '& + div': {
-          bg: 'bg.primary',
-          borderColor: 'bg.primary',
-        },
-        '& + div > svg': {
+        '& + div > div': {
           opacity: 1,
           transform: 'scale(1)',
         },
@@ -69,7 +65,7 @@ export const checkboxRecipe = sva({
         },
       },
     },
-    box: {
+    circle: {
       position: 'relative',
       flexShrink: 0,
       display: 'inline-flex',
@@ -79,18 +75,18 @@ export const checkboxRecipe = sva({
       borderWidth: 'borderWidth.brutal',
       borderStyle: 'solid',
       borderColor: 'border.default',
+      borderRadius: '9999px',
       transitionDuration: 'fast',
-      transitionProperty: 'background-color, border-color, transform',
+      transitionProperty: 'border-color',
       transitionTimingFunction: 'default',
 
       _hover: {
         borderColor: 'border.focus',
       },
     },
-    check: {
-      width: '75%',
-      height: '75%',
-      color: 'text.inverted',
+    dot: {
+      bg: 'bg.primary',
+      borderRadius: '9999px',
       opacity: 0,
       transform: 'scale(0)',
       transitionDuration: 'fast',
@@ -104,46 +100,58 @@ export const checkboxRecipe = sva({
     helper: {
       textStyle: 'body.sm',
       color: 'text.helper',
-      pl: 'calc(var(--checkbox-size) + {spacing.inline.normal})',
+      pl: 'calc(var(--radio-size) + {spacing.inline.normal})',
     },
   },
 
   variants: {
     size: {
       sm: {
-        box: {
+        circle: {
           width: 'size.icon.sm',
           height: 'size.icon.sm',
+        },
+        dot: {
+          width: '50%',
+          height: '50%',
         },
         label: {
           fontSize: 'fontSize.sm',
         },
         container: {
-          '--checkbox-size': 'token(sizes.icon.sm)',
+          '--radio-size': 'token(sizes.icon.sm)',
         },
       },
       md: {
-        box: {
+        circle: {
           width: 'size.icon.md',
           height: 'size.icon.md',
+        },
+        dot: {
+          width: '50%',
+          height: '50%',
         },
         label: {
           fontSize: 'fontSize.md',
         },
         container: {
-          '--checkbox-size': 'token(sizes.icon.md)',
+          '--radio-size': 'token(sizes.icon.md)',
         },
       },
       lg: {
-        box: {
+        circle: {
           width: 'size.icon.lg',
           height: 'size.icon.lg',
+        },
+        dot: {
+          width: '50%',
+          height: '50%',
         },
         label: {
           fontSize: 'fontSize.lg',
         },
         container: {
-          '--checkbox-size': 'token(sizes.icon.lg)',
+          '--radio-size': 'token(sizes.icon.lg)',
         },
       },
     },
@@ -154,4 +162,4 @@ export const checkboxRecipe = sva({
   },
 })
 
-export type CheckboxVariantProps = RecipeVariantProps<typeof checkboxRecipe>
+export type RadioVariantProps = RecipeVariantProps<typeof radioRecipe>

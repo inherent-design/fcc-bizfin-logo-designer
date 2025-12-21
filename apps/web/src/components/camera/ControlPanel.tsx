@@ -54,13 +54,13 @@ const titleContainerStyles = css({
 })
 
 const paletteIconStyles = css({
-  color: 'panel.primary',
+  color: 'accent.primary',
 })
 
 const titleStyles = css({
   textStyle: 'brutalistLabel',
   fontSize: 'xl',
-  color: 'panel.fg',
+  color: 'surface.fg',
 })
 
 const tabContentContainerStyles = css({

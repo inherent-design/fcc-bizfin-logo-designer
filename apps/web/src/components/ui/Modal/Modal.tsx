@@ -14,25 +14,25 @@ import { Icon } from '../Icon/Icon'
 import { Button } from '../Button/Button'
 
 // Component styles
-import { drawerRecipe } from './Drawer.styles'
+import { modalRecipe } from './Modal.styles'
 
 // ============================================================================
 // TYPES & INTERFACES
 // ============================================================================
 
 /**
- * Drawer component props
+ * Modal component props
  */
-export interface DrawerProps {
-  /** Placement variant */
-  placement?: 'left' | 'right' | 'top' | 'bottom'
-  /** Whether the drawer is open */
+export interface ModalProps {
+  /** Size variant */
+  size?: 'sm' | 'md' | 'lg' | 'full'
+  /** Whether the modal is open */
   isOpen: boolean
-  /** Callback when the drawer should close */
+  /** Callback when the modal should close */
   onClose: () => void
-  /** Drawer title */
+  /** Modal title */
   title?: ReactNode
-  /** Drawer content */
+  /** Modal content */
   children: ReactNode
   /** Footer content (usually buttons) */
   footer?: ReactNode
@@ -49,36 +49,36 @@ export interface DrawerProps {
 // ============================================================================
 
 /**
- * Drawer - Neo-brutalist drawer component
+ * Modal - Neo-brutalist modal dialog component
  *
  * Features:
- * - Placement: left, right, top, bottom
+ * - Size variants: sm, md, lg, full
  * - Portal rendering
  * - Overlay backdrop
- * - Slide-in animation
  * - Close on overlay click or Escape key
+ * - Focus trap
  * - Uses semantic tokens for all styling
  * - WCAG AA compliant
  *
  * @example
  * ```tsx
- * <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} placement="right" title="Settings">
- *   <p>Drawer content</p>
- * </Drawer>
+ * <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Confirm">
+ *   <p>Are you sure?</p>
+ * </Modal>
  * ```
  */
-export function Drawer({
+export function Modal({
   isOpen,
   onClose,
   title,
   children,
   footer,
-  placement = 'right',
+  size = 'md',
   className,
   closeOnOverlayClick = true,
   closeOnEsc = true,
-}: DrawerProps) {
-  const recipeStyles = drawerRecipe({ placement })
+}: ModalProps) {
+  const recipeStyles = modalRecipe({ size })
 
   // Handle escape key
   useEffect(() => {
@@ -112,10 +112,10 @@ export function Drawer({
 
   return createPortal(
     <div className={recipeStyles.overlay} onClick={handleOverlayClick}>
-      <div className={cx(recipeStyles.content, className)} role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <div className={cx(recipeStyles.content, className)} role="dialog" aria-modal="true" aria-labelledby="modal-title">
         {title && (
           <div className={recipeStyles.header}>
-            <h2 id="drawer-title" className={recipeStyles.title}>
+            <h2 id="modal-title" className={recipeStyles.title}>
               {title}
             </h2>
             <Button variant="ghost" size="sm" onClick={onClose} aria-label="Close">

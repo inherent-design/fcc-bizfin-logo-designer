@@ -35,20 +35,20 @@ const containerStyles = css({
   position: 'relative',
   borderWidth: 'brutal',
   borderStyle: 'solid',
-  borderColor: 'panel.border',
-  bg: 'panel.bg',
+  borderColor: 'border.default',
+  bg: 'surface.bg',
   overflow: 'hidden',
   cursor: 'pointer',
   transitionDuration: 'fast',
   transitionProperty: 'all',
   _hover: {
     transform: 'scale(1.02)',
-    borderColor: 'panel.primary',
+    borderColor: 'accent.primary',
   },
 })
 
 const containerActiveStyles = css({
-  borderColor: 'panel.primary',
+  borderColor: 'accent.primary',
 })
 
 const thumbnailAreaStyles = css({
@@ -69,24 +69,24 @@ const thumbnailImageStyles = css({
 
 const noPreviewStyles = css({
   fontFamily: 'brutalist',
-  fontSize: 'xs',
-  color: 'panel.fg',
+  fontSize: 'typeMinus2',
+  color: 'surface.fg',
   opacity: 'disabled',
 })
 
 const infoSectionStyles = css({
   p: 'inline.tight',
-  bg: 'panel.bg',
-  borderTopWidth: '1px',
+  bg: 'surface.bg',
+  borderTopWidth: 'hairline',
   borderTopStyle: 'solid',
-  borderColor: 'panel.border',
+  borderColor: 'border.default',
 })
 
 const nameStyles = css({
   fontFamily: 'brutalist',
   fontWeight: 'bold',
-  fontSize: 'xs',
-  color: 'panel.fg',
+  fontSize: 'typeMinus2',
+  color: 'surface.fg',
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
@@ -95,8 +95,8 @@ const nameStyles = css({
 
 const timestampStyles = css({
   fontFamily: 'brutalist',
-  fontSize: '2xs',
-  color: 'panel.fg',
+  fontSize: 'typeMinus3',
+  color: 'surface.fg',
   opacity: 'subtle',
 })
 
@@ -116,13 +116,13 @@ const actionsContainerStyles = css({
 
 const actionButtonStyles = css({
   p: 'inline.tight',
-  bg: 'surface.base',
+  bg: 'surface.bg',
   borderWidth: 'base',
   borderStyle: 'solid',
   borderColor: 'border',
   cursor: 'pointer',
   _hover: {
-    bg: 'neo.secondary',
+    bg: 'bg.hover',
   },
 })
 
@@ -138,12 +138,12 @@ const favoriteButtonStyles = css({
 })
 
 const favoriteButtonActiveStyles = css({
-  bg: 'neo.warning',
+  bg: 'accent.warning',
 })
 
 const deleteButtonStyles = css({
   p: 'inline.tight',
-  bg: 'surface.base',
+  bg: 'surface.bg',
   borderWidth: 'base',
   borderStyle: 'solid',
   borderColor: 'border',
@@ -156,13 +156,13 @@ const deleteButtonStyles = css({
 const iconStyles = css({
   width: 4,
   height: 4,
-  color: 'panel.border',
+  color: 'border.default',
 })
 
 const favoriteIconActiveStyles = css({
   width: 4,
   height: 4,
-  color: 'panel.bg',
+  color: 'surface.bg',
 })
 
 const activeBadgeStyles = css({
@@ -171,15 +171,15 @@ const activeBadgeStyles = css({
   left: '3xs',
   px: 'inline.tight',
   py: 'inline.tight',
-  bg: 'panel.primary',
+  bg: 'accent.primary',
   borderWidth: 'base',
   borderStyle: 'solid',
-  borderColor: 'panel.border',
+  borderColor: 'border.default',
   fontFamily: 'brutalist',
   fontWeight: 'brutal',
-  fontSize: '2xs',
+  fontSize: 'typeMinus3',
   textTransform: 'uppercase',
-  color: 'panel.bg',
+  color: 'surface.bg',
 })
 
 const systemBadgeStyles = css({
@@ -194,7 +194,7 @@ const systemBadgeStyles = css({
   borderColor: 'border',
   fontFamily: 'brutalist',
   fontWeight: 'brutal',
-  fontSize: '2xs',
+  fontSize: 'typeMinus3',
   textTransform: 'uppercase',
   color: 'text',
 })

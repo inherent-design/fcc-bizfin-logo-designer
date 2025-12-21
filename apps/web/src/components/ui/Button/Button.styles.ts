@@ -14,13 +14,13 @@ import { cva, type RecipeVariantProps } from 'styled-system/css'
 export const buttonRecipe = cva({
   base: {
     bg: 'bg.primary',
-    boxShadow: 'brutal',
+    boxShadow: 'elevation.raised',
     color: 'text.inverted',
-    borderWidth: 'brutal',
+    borderWidth: 'borderWidth.brutal',
     borderStyle: 'solid',
     borderColor: 'border',
-    fontFamily: 'brutalist',
-    fontWeight: 'brutal',
+    fontFamily: 'fontFamily.brutalist',
+    fontWeight: 'fontWeight.brutal',
     textTransform: 'uppercase',
     px: 'inset.normal',
     py: 'inset.tight',
@@ -30,7 +30,7 @@ export const buttonRecipe = cva({
 
     _hover: {
       transform: 'translate(2px, 2px)',
-      boxShadow: 'brutalInset',
+      boxShadow: 'interaction.pressed',
     },
 
     _active: {
@@ -67,9 +67,9 @@ export const buttonRecipe = cva({
     },
 
     size: {
-      sm: { px: 'inset.tight', py: 'inset.tight', fontSize: 'xs' },
-      md: { px: 'inset.normal', py: 'inset.tight', fontSize: 'sm' },
-      lg: { px: 'inset.loose', py: 'inset.normal', fontSize: 'md' },
+      sm: { px: 'inset.tight', py: 'inset.tight', fontSize: 'typeMinus1' },
+      md: { px: 'inset.normal', py: 'inset.tight', fontSize: 'typeBase' },
+      lg: { px: 'inset.loose', py: 'inset.normal', fontSize: 'typePlus1' },
     },
   },
 

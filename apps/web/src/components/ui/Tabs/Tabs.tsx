@@ -95,12 +95,12 @@ const tabsTriggerActiveStyles = css({
   borderStyle: 'solid',
   borderColor: 'border',
   borderBottom: 'none',
-  mb: '-0.4rem',
+  mb: 'overlap.tabBorder',
 })
 
 const tabsTriggerInactiveStyles = css({
   bg: 'transparent',
-  color: 'panel.fg',
+  color: 'surface.fg',
   border: 'none',
   borderColor: 'transparent',
   _hover: {

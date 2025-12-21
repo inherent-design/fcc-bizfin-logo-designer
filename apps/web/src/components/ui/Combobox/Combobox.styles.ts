@@ -1,43 +1,51 @@
 // ============================================================================
-// SELECT RECIPE
+// COMBOBOX RECIPE
 // ============================================================================
 
 import { sva, type RecipeVariantProps } from 'styled-system/css'
 
 /**
- * Select recipe - Neo-brutalist select styling
+ * Combobox recipe - Neo-brutalist combobox styling
  *
  * Supports:
  * - Size variants: sm, md, lg
- * - Open/closed states
+ * - Searchable dropdown
  * - Selected option highlighting
+ * - Empty state
  * - Semantic token usage
  */
-export const selectRecipe = sva({
-  slots: ['container', 'trigger', 'value', 'icon', 'iconOpen', 'menu', 'option', 'optionSelected'],
+export const comboboxRecipe = sva({
+  slots: ['container', 'inputWrapper', 'input', 'icons', 'clear', 'chevron', 'chevronOpen', 'menu', 'option', 'optionSelected', 'empty'],
   base: {
     container: {
       position: 'relative',
       display: 'inline-flex',
       width: '100%',
     },
-    trigger: {
+    inputWrapper: {
+      position: 'relative',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between',
       width: '100%',
-      gap: 'inline.normal',
+    },
+    input: {
+      flex: 1,
       px: 'inset.normal',
       py: 'inset.tight',
+      pr: 'calc({spacing.inset.normal} + 3rem)',
       bg: 'input.bg',
       borderWidth: 'borderWidth.brutal',
       borderStyle: 'solid',
       borderColor: 'input.border',
-      textAlign: 'left',
-      cursor: 'pointer',
+      textStyle: 'body.md',
+      color: 'input.text',
       transitionDuration: 'fast',
       transitionProperty: 'border-color, background-color',
       transitionTimingFunction: 'default',
+
+      _placeholder: {
+        color: 'input.textPlaceholder',
+      },
 
       _hover: {
         bg: 'input.bgHover',
@@ -59,18 +67,37 @@ export const selectRecipe = sva({
         opacity: 'disabled',
       },
     },
-    value: {
-      flex: 1,
-      textStyle: 'body.md',
-      color: 'input.text',
+    icons: {
+      position: 'absolute',
+      right: 'inset.tight',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 'inline.tight',
+      pointerEvents: 'none',
     },
-    icon: {
+    clear: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      bg: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+      color: 'icon.secondary',
+      pointerEvents: 'auto',
+      p: '2px',
+
+      _hover: {
+        color: 'icon.default',
+      },
+    },
+    chevron: {
       flexShrink: 0,
+      color: 'icon.default',
       transitionDuration: 'fast',
       transitionProperty: 'transform',
       transitionTimingFunction: 'default',
     },
-    iconOpen: {
+    chevronOpen: {
       transform: 'rotate(180deg)',
     },
     menu: {
@@ -122,15 +149,19 @@ export const selectRecipe = sva({
       bg: 'bg.selected',
       fontWeight: 'fontWeight.brutal',
     },
+    empty: {
+      px: 'inset.normal',
+      py: 'inset.normal',
+      textAlign: 'center',
+      textStyle: 'body.sm',
+      color: 'text.secondary',
+    },
   },
 
   variants: {
     size: {
       sm: {
-        trigger: {
-          fontSize: 'fontSize.sm',
-        },
-        value: {
+        input: {
           fontSize: 'fontSize.sm',
         },
         option: {
@@ -138,10 +169,7 @@ export const selectRecipe = sva({
         },
       },
       md: {
-        trigger: {
-          fontSize: 'fontSize.md',
-        },
-        value: {
+        input: {
           fontSize: 'fontSize.md',
         },
         option: {
@@ -149,10 +177,7 @@ export const selectRecipe = sva({
         },
       },
       lg: {
-        trigger: {
-          fontSize: 'fontSize.lg',
-        },
-        value: {
+        input: {
           fontSize: 'fontSize.lg',
         },
         option: {
@@ -167,4 +192,4 @@ export const selectRecipe = sva({
   },
 })
 
-export type SelectVariantProps = RecipeVariantProps<typeof selectRecipe>
+export type ComboboxVariantProps = RecipeVariantProps<typeof comboboxRecipe>

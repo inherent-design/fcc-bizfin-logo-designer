@@ -85,7 +85,7 @@ const containerStyles = css({
 
 const labelStyles = css({
   textStyle: 'brutalistLabel',
-  color: 'panel.fg',
+  color: 'surface.fg',
   display: 'block',
 })
 
@@ -95,14 +95,14 @@ const mobileButtonStyles = css({
   height: '12',
   borderWidth: 'brutal',
   borderStyle: 'solid',
-  borderColor: 'panel.border',
-  boxShadow: 'brutal',
+  borderColor: 'border.default',
+  boxShadow: 'elevation.raised',
   cursor: 'pointer',
   transitionDuration: 'fast',
   transitionProperty: 'all',
   _hover: {
     transform: 'translate(2px, 2px)',
-    boxShadow: 'brutalInset',
+    boxShadow: 'interaction.pressed',
   },
   _active: {
     transform: 'translate(4px, 4px)',
@@ -121,11 +121,11 @@ const modalOverlayStyles = css({
 })
 
 const modalContentStyles = css({
-  bg: 'panel.bg',
+  bg: 'surface.bg',
   borderWidth: 'brutal',
   borderStyle: 'solid',
-  borderColor: 'panel.border',
-  boxShadow: 'brutalLg',
+  borderColor: 'border.default',
+  boxShadow: 'elevation.modal',
   p: 'inset.loose',
   m: 'stack.normal',
   maxWidth: 'md',
@@ -157,10 +157,10 @@ const pickerWrapperStyles = css({
   maxWidth: '300px',
   borderWidth: 'brutal',
   borderStyle: 'solid',
-  borderColor: 'panel.border',
-  boxShadow: 'brutalInset',
+  borderColor: 'border.default',
+  boxShadow: 'elevation.floating',
   p: 'inset.tight',
-  bg: 'panel.bg',
+  bg: 'surface.bg',
 })
 
 const inputsColumnStyles = css({

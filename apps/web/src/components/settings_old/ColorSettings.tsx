@@ -80,7 +80,7 @@ const sectionHeaderTitleStyles = css({
   fontWeight: 'bold',
   textTransform: 'uppercase',
   letterSpacing: 'wider',
-  color: 'panel.fg',
+  color: 'surface.fg',
   opacity: 'subtle',
 })
 

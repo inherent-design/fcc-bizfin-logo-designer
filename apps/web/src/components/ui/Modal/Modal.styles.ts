@@ -1,18 +1,18 @@
 // ============================================================================
-// DRAWER RECIPE
+// MODAL RECIPE
 // ============================================================================
 
 import { sva, type RecipeVariantProps } from 'styled-system/css'
 
 /**
- * Drawer recipe - Neo-brutalist drawer styling
+ * Modal recipe - Neo-brutalist modal styling
  *
  * Supports:
- * - Placement: left, right, top, bottom
- * - Slide-in animation
+ * - Size variants: sm, md, lg, full
+ * - Overlay backdrop
  * - Semantic token usage
  */
-export const drawerRecipe = sva({
+export const modalRecipe = sva({
   slots: ['overlay', 'content', 'header', 'title', 'body', 'footer'],
   base: {
     overlay: {
@@ -20,6 +20,8 @@ export const drawerRecipe = sva({
       inset: 0,
       zIndex: 'modal',
       display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       bg: 'overlay.heavy',
       animation: 'fadeIn 200ms ease-out',
     },
@@ -31,6 +33,8 @@ export const drawerRecipe = sva({
       borderStyle: 'solid',
       borderColor: 'border.default',
       boxShadow: 'elevation.floating',
+      maxHeight: '90vh',
+      animation: 'scaleIn 200ms ease-out',
     },
     header: {
       display: 'flex',
@@ -69,57 +73,34 @@ export const drawerRecipe = sva({
   },
 
   variants: {
-    placement: {
-      left: {
-        overlay: {
-          justifyContent: 'flex-start',
-        },
+    size: {
+      sm: {
         content: {
-          width: '24rem',
-          maxWidth: '90vw',
-          height: '100vh',
-          animation: 'slideInLeft 250ms ease-out',
+          width: '20rem',
         },
       },
-      right: {
-        overlay: {
-          justifyContent: 'flex-end',
-        },
+      md: {
         content: {
-          width: '24rem',
-          maxWidth: '90vw',
-          height: '100vh',
-          animation: 'slideInRight 250ms ease-out',
+          width: '32rem',
         },
       },
-      top: {
-        overlay: {
-          alignItems: 'flex-start',
-        },
+      lg: {
         content: {
-          width: '100vw',
-          height: '24rem',
-          maxHeight: '90vh',
-          animation: 'slideInTop 250ms ease-out',
+          width: '48rem',
         },
       },
-      bottom: {
-        overlay: {
-          alignItems: 'flex-end',
-        },
+      full: {
         content: {
-          width: '100vw',
-          height: '24rem',
-          maxHeight: '90vh',
-          animation: 'slideInBottom 250ms ease-out',
+          width: '90vw',
+          height: '90vh',
         },
       },
     },
   },
 
   defaultVariants: {
-    placement: 'right',
+    size: 'md',
   },
 })
 
-export type DrawerVariantProps = RecipeVariantProps<typeof drawerRecipe>
+export type ModalVariantProps = RecipeVariantProps<typeof modalRecipe>

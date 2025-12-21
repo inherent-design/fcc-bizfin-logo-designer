@@ -2,28 +2,14 @@
 // ICON RECIPE
 // ============================================================================
 
-import { iconSizes } from '@/tokens'
 import { cva, type RecipeVariantProps } from 'styled-system/css'
 
 /**
- * Generate size variants from available icon sizing tokens
- * Each size uses the token reference: icon.{size}
- */
-const generateIconSizeVariants = () => {
-  return Object.fromEntries(
-    Object.keys(iconSizes).map((size) => [
-      size,
-      {
-        width: `icon.${size}`,
-        height: `icon.${size}`,
-      },
-    ])
-  )
-}
-
-/**
- * Icon recipe - Uses icon-specific size tokens from sizes.icon.*
- * Variants are dynamically generated from token system
+ * Icon recipe - Uses explicit variant mapping to sizes.icon.* tokens
+ *
+ * Size progression uses two-stage approach:
+ * - Micro sizes (3xs→xs): Musical ratios for subtle transitions
+ * - Structural sizes (xs→4xl): Harmonic multiples of 8px base
  */
 export const iconRecipe = cva({
   base: {
@@ -32,7 +18,18 @@ export const iconRecipe = cva({
   },
 
   variants: {
-    size: generateIconSizeVariants(),
+    size: {
+      '3xs': { width: 'sizes.icon.3xs', height: 'sizes.icon.3xs' },
+      '2xs': { width: 'sizes.icon.2xs', height: 'sizes.icon.2xs' },
+      'xs': { width: 'sizes.icon.xs', height: 'sizes.icon.xs' },
+      'sm': { width: 'sizes.icon.sm', height: 'sizes.icon.sm' },
+      'md': { width: 'sizes.icon.md', height: 'sizes.icon.md' },
+      'lg': { width: 'sizes.icon.lg', height: 'sizes.icon.lg' },
+      'xl': { width: 'sizes.icon.xl', height: 'sizes.icon.xl' },
+      '2xl': { width: 'sizes.icon.2xl', height: 'sizes.icon.2xl' },
+      '3xl': { width: 'sizes.icon.3xl', height: 'sizes.icon.3xl' },
+      '4xl': { width: 'sizes.icon.4xl', height: 'sizes.icon.4xl' },
+    },
   },
 
   defaultVariants: {

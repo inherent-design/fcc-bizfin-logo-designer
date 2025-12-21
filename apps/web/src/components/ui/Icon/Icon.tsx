@@ -53,11 +53,14 @@ type IconProps = ComponentProps<'svg'> &
  *
  * Features:
  * - Type-safe icon name selection
- * - Direct 1:1 size mapping to ALL size tokens (no remapping)
- * - Size prop passed as-is to recipe
- * - Supports all SVG props (className, etc.)
- * - Uses 24x24 solid icons from Heroicons
- * - CSS-based sizing (via className) to support CSS custom properties
+ * - Size variants: 3xs (8px) → 4xl (128px)
+ * - Default size: md (32px) - optimized for UI controls
+ * - Supports all SVG props
+ * - CSS-based sizing (supports design token references)
+ *
+ * Size progression uses two-stage approach:
+ * - Micro sizes (3xs→xs): Musical ratios for subtle transitions
+ * - Structural sizes (xs→4xl): Harmonic multiples of 8px base
  *
  * Note: Width/height are set via CSS classes (iconRecipe), not SVG attributes.
  * This allows proper use of CSS custom properties from design tokens.
@@ -65,12 +68,12 @@ type IconProps = ComponentProps<'svg'> &
  *
  * @example
  * ```tsx
- * <Icon name="swatch" size="xs" />
- * <Icon name="close" size="2xs" />
- * <Icon name="paintbrush" size="4xl" />
+ * <Icon name="swatch" size="md" />  // Default: 32px
+ * <Icon name="close" size="sm" />   // Small: 24px
+ * <Icon name="paintbrush" size="3xl" /> // Large: 96px
  * ```
  */
-export function Icon({ name, size = 'xs', className, ...props }: IconProps) {
+export function Icon({ name, size = 'md', className, ...props }: IconProps) {
   const IconComponent = icons[name]
 
   return <IconComponent className={cx(iconRecipe({ size }), className)} {...props} />

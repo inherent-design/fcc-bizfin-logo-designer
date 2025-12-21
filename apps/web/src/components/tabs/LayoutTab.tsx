@@ -47,7 +47,7 @@ const headerStyles = css({
 
 const titleStyles = css({
   textStyle: 'brutalistLabel',
-  color: 'panel.fg', // Override: brutalistLabel uses text.label
+  color: 'surface.fg', // Override: brutalistLabel uses text.label
 })
 
 // badgeStyles removed - now using Badge component with cva recipe
@@ -56,7 +56,7 @@ const elementLabelStyles = css({
   textStyle: 'brutalistText',
   fontSize: 'xs', // Override: brutalistText uses sm
   mb: 'stack.tight',
-  color: 'panel.fg',
+  color: 'surface.fg',
   opacity: 'medium',
   textTransform: 'capitalize', // Override: different from uppercase
 })

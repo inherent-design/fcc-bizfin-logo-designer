@@ -15,7 +15,7 @@ export const panelRecipe = cva({
     borderWidth: 'brutal',
     borderStyle: 'solid',
     borderColor: 'border',
-    boxShadow: 'brutalLg',
+    boxShadow: 'elevation.floating',
     p: 'inset.normal',
   },
 })

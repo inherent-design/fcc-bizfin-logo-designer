@@ -11,7 +11,7 @@ import { css } from 'styled-system/css'
 
 const containerStyles = css({
   fontSize: 'xs',
-  color: 'panel.fg',
+  color: 'surface.fg',
   opacity: 'subtle',
   display: 'flex',
   flexDirection: 'column',
