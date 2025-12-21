@@ -103,8 +103,14 @@ export const spacing = {
   // Negative spacing (for overlaps)
   // ========================================
 
+  /** -0.25rem (-4px) - Architectural: tab border overlap */
+  negMicro4: { value: pxToRem(spacingPrimitives.negMicro4) },
+
   /** -0.6rem (-9.6px) */
   negMinorThird: { value: pxToRem(spacingPrimitives.negMinorThird) },
+
+  /** -0.625rem (-10px) */
+  negMajorThird: { value: pxToRem(spacingPrimitives.negMajorThird) },
 
   /** -0.75rem (-12px) */
   negPerfectFifth: { value: pxToRem(spacingPrimitives.negPerfectFifth) },
@@ -145,6 +151,44 @@ export const sizes = {
 
   /** 80rem (1280px) - 16th harmonic × 10 */
   container16: { value: pxToRem(containerPrimitives.container16) },
+
+  // ========================================
+  // Icon sizes (two-stage progression)
+  // ========================================
+  // Micro sizes (3xs→xs): Musical ratios for subtle transitions
+  // Structural sizes (xs→4xl): Harmonic multiples of 8px base
+
+  icon: {
+    /** 0.5rem (8px) - Base rhythm */
+    '3xs': { value: pxToRem(spacingPrimitives.base) },
+
+    /** 0.75rem (12px) - Perfect Fifth */
+    '2xs': { value: pxToRem(spacingPrimitives.perfectFifth) },
+
+    /** 1rem (16px) - 2× base (harmonic2) */
+    'xs': { value: pxToRem(spacingPrimitives.harmonic2) },
+
+    /** 1.5rem (24px) - 3× base (harmonic3) */
+    'sm': { value: pxToRem(spacingPrimitives.harmonic3) },
+
+    /** 2rem (32px) - 4× base (harmonic4) */
+    'md': { value: pxToRem(spacingPrimitives.harmonic4) },
+
+    /** 3rem (48px) - 6× base (harmonic6) */
+    'lg': { value: pxToRem(spacingPrimitives.harmonic6) },
+
+    /** 4rem (64px) - 8× base (harmonic8) */
+    'xl': { value: pxToRem(spacingPrimitives.harmonic8) },
+
+    /** 5rem (80px) - 10× base (harmonic10) */
+    '2xl': { value: pxToRem(spacingPrimitives.harmonic10) },
+
+    /** 6rem (96px) - 12× base (harmonic12) */
+    '3xl': { value: pxToRem(spacingPrimitives.harmonic12) },
+
+    /** 8rem (128px) - 16× base (harmonic16) */
+    '4xl': { value: pxToRem(spacingPrimitives.harmonic16) },
+  },
 
   // ========================================
   // Content-based sizes

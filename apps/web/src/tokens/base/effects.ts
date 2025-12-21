@@ -35,14 +35,35 @@ export const opacity = {
 // ============================================================================
 
 export const blurs = {
-  /** 0.5rem (8px) - Soft blur */
-  soft: { value: '0.5rem' },
+  /** 0 - No blur */
+  none: { value: '0' },
 
-  /** 0.75rem (12px) - Glass effect */
-  glass: { value: '0.75rem' },
+  /** 0.5rem (8px) - Subtle blur */
+  subtle: { value: '0.5rem' },
+
+  /** 0.75rem (12px) - Moderate blur / Glass effect */
+  moderate: { value: '0.75rem' },
 
   /** 1.5rem (24px) - Heavy blur */
   heavy: { value: '1.5rem' },
+} as const
+
+// ============================================================================
+// BACKDROP BLUR (for overlay effects)
+// ============================================================================
+
+export const backdropBlurs = {
+  /** 0 - No backdrop blur */
+  none: { value: '0' },
+
+  /** 0.25rem (4px) - Subtle backdrop blur */
+  subtle: { value: '0.25rem' },
+
+  /** 0.5rem (8px) - Moderate backdrop blur */
+  moderate: { value: '0.5rem' },
+
+  /** 1rem (16px) - Heavy backdrop blur */
+  heavy: { value: '1rem' },
 } as const
 
 // ============================================================================
@@ -51,9 +72,10 @@ export const blurs = {
 
 /**
  * Neo-brutalist shadows
- * Hard shadows with no blur, semantic layer will add color token refs
+ * Hard shadows with no blur
  */
 export const shadows = {
+  /** Neo-brutalist hard shadows (no blur) */
   brutal: {
     /** Small brutal shadow - 4px offset */
     sm: {
@@ -61,6 +83,7 @@ export const shadows = {
         offsetX: '0.25rem',
         offsetY: '0.25rem',
         blur: '0',
+        spread: '0',
         color: '#1a1a1a',
       },
     },
@@ -71,6 +94,7 @@ export const shadows = {
         offsetX: '0.5rem',
         offsetY: '0.5rem',
         blur: '0',
+        spread: '0',
         color: '#1a1a1a',
       },
     },
@@ -81,17 +105,19 @@ export const shadows = {
         offsetX: '0.75rem',
         offsetY: '0.75rem',
         blur: '0',
+        spread: '0',
         color: '#1a1a1a',
       },
     },
   },
 
-  /** Inset shadow for pressed states */
-  inset: {
+  /** Inset brutal shadow for pressed states */
+  brutalInset: {
     value: {
       offsetX: '0.125rem',
       offsetY: '0.125rem',
       blur: '0',
+      spread: '0',
       color: 'rgba(26, 26, 26, 0.2)',
       inset: true,
     },

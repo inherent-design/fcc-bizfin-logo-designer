@@ -65,6 +65,12 @@ export const fontSizes = {
 
   /** 6rem - Display +2 */
   displayPlus2: { value: `${typePrimitives.displayPlus2}rem` },
+
+  /** 8rem - Display +3 (two octaves) */
+  displayPlus3: { value: `${typePrimitives.displayPlus3}rem` },
+
+  /** 10rem - Display +4 (fifth harmonic) */
+  displayPlus4: { value: `${typePrimitives.displayPlus4}rem` },
 } as const
 
 // ============================================================================

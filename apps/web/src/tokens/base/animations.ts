@@ -46,3 +46,27 @@ export const easings = {
   /** Ease-in-out */
   inOut: { value: 'ease-in-out' },
 } as const
+
+// ============================================================================
+// TRANSITION PATTERNS
+// ============================================================================
+
+export const transitions = {
+  /** Fast transition - all properties */
+  fast: { value: `all ${Math.round(durationBase * durationRatios.fast)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+
+  /** Normal transition - all properties */
+  normal: { value: `all ${Math.round(durationBase * durationRatios.normal)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+
+  /** Slow transition - all properties */
+  slow: { value: `all ${Math.round(durationBase * durationRatios.slow)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+
+  /** Colors only transition */
+  colors: { value: `color, background-color, border-color ${Math.round(durationBase * durationRatios.fast)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+
+  /** Transform only transition */
+  transform: { value: `transform ${Math.round(durationBase * durationRatios.normal)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+
+  /** Opacity only transition */
+  opacity: { value: `opacity ${Math.round(durationBase * durationRatios.fast)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+} as const

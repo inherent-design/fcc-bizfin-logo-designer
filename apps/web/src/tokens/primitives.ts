@@ -121,8 +121,14 @@ export const spacingPrimitives = {
   // Negative spacing (for overlaps)
   // ========================================
 
+  /** Negative micro4 - -4px (architectural: tab border overlap) */
+  negMicro4: -rhythmToPx(subharmonicSeries.second), // -4px
+
   /** Negative minor third - -9.6px */
   negMinorThird: -rhythmToPx(musicalRatios.minorThird), // -9.6px
+
+  /** Negative major third - -10px */
+  negMajorThird: -rhythmToPx(musicalRatios.majorThird), // -10px
 
   /** Negative perfect fifth - -12px */
   negPerfectFifth: -rhythmToPx(musicalRatios.perfectFifth), // -12px
@@ -195,9 +201,11 @@ export const typePrimitives = {
   typePlus8: typeScale(8, musicalRatios.minorThird), // ~4.3
 
   /** Display scale - using octave jumps for large sizes */
-  displayBase: BASES.type * musicalRatios.octave * 2, // 4rem
-  displayPlus1: BASES.type * musicalRatios.octave * 2.5, // 5rem
-  displayPlus2: BASES.type * musicalRatios.octave * 3, // 6rem
+  displayBase: BASES.type * musicalRatios.octave * 2, // 4rem (64px)
+  displayPlus1: BASES.type * musicalRatios.octave * 2.5, // 5rem (80px)
+  displayPlus2: BASES.type * musicalRatios.octave * 3, // 6rem (96px)
+  displayPlus3: BASES.type * musicalRatios.octave * harmonicSeries.fourth, // 8rem (128px) - two octaves
+  displayPlus4: BASES.type * musicalRatios.octave * harmonicSeries.fifth, // 10rem (160px) - fifth harmonic
 } as const
 
 // ============================================================================

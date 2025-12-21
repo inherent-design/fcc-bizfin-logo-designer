@@ -8,8 +8,8 @@ export { colors } from './colors'
 export { spacing, sizes } from './spacing'
 export { fonts, fontSizes, fontWeights, lineHeights, letterSpacings } from './typography'
 export { radii, borderWidths } from './borders'
-export { opacity, blurs, shadows } from './effects'
-export { durations, easings } from './animations'
+export { opacity, blurs, backdropBlurs, shadows } from './effects'
+export { durations, easings, transitions } from './animations'
 export { zIndex, aspectRatios } from './layout'
 export { gradients } from './gradients'
 
@@ -20,8 +20,8 @@ import { colors } from './colors'
 import { spacing, sizes } from './spacing'
 import { fonts, fontSizes, fontWeights, lineHeights, letterSpacings } from './typography'
 import { radii, borderWidths } from './borders'
-import { opacity, blurs, shadows } from './effects'
-import { durations, easings } from './animations'
+import { opacity, blurs, backdropBlurs, shadows } from './effects'
+import { durations, easings, transitions } from './animations'
 import { zIndex, aspectRatios } from './layout'
 import { gradients } from './gradients'
 
@@ -38,9 +38,11 @@ export const baseTokens = {
   borderWidths,
   opacity,
   blurs,
+  backdropBlurs,
   shadows,
   durations,
   easings,
+  transitions,
   zIndex,
   aspectRatios,
   gradients,

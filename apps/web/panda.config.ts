@@ -1,7 +1,8 @@
-import { defineConfig } from '@pandacss/dev'
+import { defineConfig, defineTextStyles } from '@pandacss/dev'
 
 // Import base tokens from baseTokens.ts
 import { baseTokens, breakpoints, semanticTokens } from './src/tokens'
+import { textStyles } from './src/tokens/styles/textStyles'
 
 export default defineConfig({
   // ============================================================================
@@ -29,7 +30,7 @@ export default defineConfig({
 
       semanticTokens,
 
-      // textStyles: defineTextStyles(textStyles),
+      textStyles: defineTextStyles(textStyles),
 
       // layerStyles: defineLayerStyles(layerStyles),
 

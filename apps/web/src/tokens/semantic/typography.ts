@@ -83,6 +83,42 @@ const caption = {
 } as const
 
 // ============================================================================
+// FONT FAMILIES
+// ============================================================================
+
+/**
+ * Semantic font families by intent
+ */
+const fontFamily = {
+  /** Neo-brutalist UI font for controls and headers */
+  brutalist: { value: '{fonts.brutalist}' },
+
+  /** Monospace font for code and technical content */
+  mono: { value: '{fonts.mono}' },
+} as const
+
+// ============================================================================
+// FONT WEIGHTS
+// ============================================================================
+
+/**
+ * Semantic font weights by intent
+ */
+const fontWeight = {
+  /** Normal weight for body text */
+  normal: { value: '{fontWeights.normal}' },
+
+  /** Medium weight for emphasis */
+  medium: { value: '{fontWeights.medium}' },
+
+  /** Bold weight for strong emphasis */
+  bold: { value: '{fontWeights.bold}' },
+
+  /** Extra heavy weight for neo-brutalist UI */
+  brutal: { value: '{fontWeights.brutal}' },
+} as const
+
+// ============================================================================
 // ALL SEMANTIC TYPOGRAPHY
 // ============================================================================
 
@@ -91,4 +127,6 @@ export const typography = {
   body,
   label,
   caption,
+  fontFamily,
+  fontWeight,
 } as const

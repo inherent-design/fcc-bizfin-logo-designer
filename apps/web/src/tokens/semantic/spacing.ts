@@ -135,6 +135,9 @@ const inline = {
  * Negative values create pull effects
  */
 const overlap = {
+  /** Tab border - Specific overlap for tab border effect (-0.25rem/-4px) */
+  tabBorder: { value: '{spacing.negMicro4}' },
+
   /** Slight - Minor overlap */
   slight: { value: '{spacing.negMinorThird}' },
 

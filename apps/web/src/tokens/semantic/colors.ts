@@ -258,6 +258,30 @@ const accent = {
       _dark: 'color-mix(in srgb, {colors.neo.primary} 30%, transparent)',
     },
   },
+
+  /** Success accent */
+  success: {
+    value: {
+      _light: '{colors.neo.accent}',
+      _dark: '{colors.neo.accent}',
+    },
+  },
+
+  /** Error accent */
+  error: {
+    value: {
+      _light: '{colors.neo.warning}',
+      _dark: '{colors.neo.warning}',
+    },
+  },
+
+  /** Warning accent */
+  warning: {
+    value: {
+      _light: '{colors.neo.warning}',
+      _dark: '{colors.neo.warning}',
+    },
+  },
 } as const
 
 // ============================================================================
@@ -287,6 +311,88 @@ const overlay = {
 
 const focus = {
   ring: { value: '{colors.neo.accent}' },
+
+  /** Primary focus ring variant */
+  primary: { value: '{colors.neo.primary}' },
+
+  /** Error focus ring variant */
+  error: { value: '{colors.neo.warning}' },
+
+  /** Success focus ring variant */
+  success: { value: '{colors.neo.secondary}' },
+} as const
+
+// ============================================================================
+// LOADING STATE COLORS
+// ============================================================================
+
+const loading = {
+  /** Loading spinner color */
+  spinner: { value: '{colors.neo.primary}' },
+
+  /** Skeleton loading background */
+  skeleton: { value: '{colors.bg.subtle}' },
+
+  /** Skeleton shimmer color */
+  shimmer: {
+    value: {
+      _light: 'color-mix(in srgb, {colors.surface.bg} 70%, {colors.surface.fg})',
+      _dark: 'color-mix(in srgb, {colors.surface.fg} 70%, {colors.surface.bg})',
+    },
+  },
+} as const
+
+// ============================================================================
+// INTERACTION STATE COLORS
+// ============================================================================
+
+const interaction = {
+  /** Disabled state opacity */
+  disabled: {
+    opacity: { value: '{opacity.disabled}' },
+    bg: { value: '{colors.bg.subtle}' },
+    text: { value: '{colors.text.disabled}' },
+  },
+} as const
+
+// ============================================================================
+// DRAG STATE COLORS
+// ============================================================================
+
+const drag = {
+  /** Active drag state */
+  active: {
+    value: {
+      _light: 'color-mix(in srgb, {colors.neo.primary} 20%, transparent)',
+      _dark: 'color-mix(in srgb, {colors.neo.primary} 30%, transparent)',
+    },
+  },
+
+  /** Drag ghost/preview */
+  ghost: {
+    value: 'color-mix(in srgb, {colors.surface.bg} 60%, transparent)',
+  },
+
+  /** Drop target indicator */
+  dropTarget: { value: '{colors.neo.accent}' },
+} as const
+
+// ============================================================================
+// PROGRESS INDICATOR COLORS
+// ============================================================================
+
+const progress = {
+  /** Progress bar fill */
+  bar: { value: '{colors.neo.primary}' },
+
+  /** Progress track background */
+  track: { value: '{colors.bg.subtle}' },
+
+  /** Success progress */
+  success: { value: '{colors.neo.secondary}' },
+
+  /** Warning progress */
+  warning: { value: '{colors.neo.warning}' },
 } as const
 
 // ============================================================================
@@ -304,4 +410,8 @@ export const colors = {
   accent,
   overlay,
   focus,
+  loading,
+  interaction,
+  drag,
+  progress,
 } as const
