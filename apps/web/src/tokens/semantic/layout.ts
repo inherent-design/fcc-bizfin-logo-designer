@@ -13,29 +13,29 @@
 
 /**
  * Z-index semantic tokens
- * Musical progression: base 10, minor third ratio (10, 12, 15, 18, 22)
+ * Maps semantic component names to base z-index magnitude values
  */
 const zIndex = {
   /** Base layer - default content (0) */
-  base: { value: '0' },
+  base: { value: '{zIndex.zIndex0}' },
 
   /** Dropdown layer - select menus, combobox (10) */
-  dropdown: { value: '10' },
+  dropdown: { value: '{zIndex.zIndex10}' },
 
   /** Sticky layer - sticky headers, tabs (12) */
-  sticky: { value: '12' },
+  sticky: { value: '{zIndex.zIndex12}' },
 
   /** Popover layer - tooltips, popovers (15) */
-  popover: { value: '15' },
+  popover: { value: '{zIndex.zIndex15}' },
 
   /** Overlay layer - modals, drawers (18) */
-  overlay: { value: '18' },
+  overlay: { value: '{zIndex.zIndex18}' },
 
   /** Toast layer - notifications (22) */
-  toast: { value: '22' },
+  toast: { value: '{zIndex.zIndex22}' },
 
   /** Maximum layer - critical overlays (25) */
-  max: { value: '25' },
+  max: { value: '{zIndex.zIndex25}' },
 } as const
 
 // ============================================================================

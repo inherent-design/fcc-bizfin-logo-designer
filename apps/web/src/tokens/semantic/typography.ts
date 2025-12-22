@@ -106,16 +106,16 @@ const fontFamily = {
  */
 const fontWeight = {
   /** Normal weight for body text */
-  normal: { value: '{fontWeights.normal}' },
+  normal: { value: '{fontWeights.fontWeight400}' },
 
   /** Medium weight for emphasis */
-  medium: { value: '{fontWeights.medium}' },
+  medium: { value: '{fontWeights.fontWeight500}' },
 
   /** Bold weight for strong emphasis */
-  bold: { value: '{fontWeights.bold}' },
+  bold: { value: '{fontWeights.fontWeight700}' },
 
   /** Extra heavy weight for neo-brutalist UI */
-  brutal: { value: '{fontWeights.brutal}' },
+  brutal: { value: '{fontWeights.fontWeight900}' },
 } as const
 
 // ============================================================================

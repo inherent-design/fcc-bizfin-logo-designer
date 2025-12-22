@@ -38,20 +38,7 @@ export default defineConfig({
     },
   },
 
-  // globalCss: keyframes,
-
   // patterns,
-
-  staticCss: {
-    css: [
-      {
-        properties: {
-          width: ['*'],
-          height: ['*'],
-        },
-      },
-    ],
-  },
 
   // ============================================================================
   // CONDITIONS - Theme switching support

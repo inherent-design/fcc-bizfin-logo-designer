@@ -12,23 +12,41 @@ import { zIndexScale } from '../constants'
 // ============================================================================
 
 export const zIndex = {
-  /** 1 - Base layer */
-  base: { value: zIndexScale.base },
+  /** 0 - Default/reset layer */
+  zIndex0: { value: zIndexScale.zIndex0 },
 
-  /** 10 - Dropdown */
-  dropdown: { value: zIndexScale.dropdown },
+  /** 1 - Base content layer */
+  zIndex1: { value: zIndexScale.zIndex1 },
 
-  /** 20 - Sticky */
-  sticky: { value: zIndexScale.sticky },
+  /** 10 */
+  zIndex10: { value: zIndexScale.zIndex10 },
 
-  /** 30 - Overlay */
-  overlay: { value: zIndexScale.overlay },
+  /** 12 */
+  zIndex12: { value: zIndexScale.zIndex12 },
 
-  /** 50 - Modal */
-  modal: { value: zIndexScale.modal },
+  /** 15 */
+  zIndex15: { value: zIndexScale.zIndex15 },
 
-  /** 80 - Tooltip */
-  tooltip: { value: zIndexScale.tooltip },
+  /** 18 */
+  zIndex18: { value: zIndexScale.zIndex18 },
+
+  /** 20 */
+  zIndex20: { value: zIndexScale.zIndex20 },
+
+  /** 22 */
+  zIndex22: { value: zIndexScale.zIndex22 },
+
+  /** 25 - Maximum UI layer */
+  zIndex25: { value: zIndexScale.zIndex25 },
+
+  /** 30 */
+  zIndex30: { value: zIndexScale.zIndex30 },
+
+  /** 50 */
+  zIndex50: { value: zIndexScale.zIndex50 },
+
+  /** 80 */
+  zIndex80: { value: zIndexScale.zIndex80 },
 } as const
 
 // ============================================================================

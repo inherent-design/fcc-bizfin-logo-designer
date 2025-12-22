@@ -264,19 +264,20 @@ export const durationBase = 150
 
 /**
  * Duration ratio multipliers
+ * Magnitude-based naming (no semantic intent)
  */
 export const durationRatios = {
-  /** Fast - 2/3 of base (100ms) */
-  fast: 2 / 3,
+  /** 0.67 - 2/3 of base (produces 100ms) */
+  ratio67: 2 / 3,
 
-  /** Normal - 1× base (150ms) */
-  normal: 1,
+  /** 1.0 - 1× base (produces 150ms) */
+  ratio100: 1,
 
-  /** Slow - Perfect Fifth ratio (225ms) */
-  slow: musicalRatios.perfectFifth,
+  /** 1.5 - Perfect Fifth ratio (produces 225ms) */
+  ratio150: musicalRatios.perfectFifth,
 
-  /** Very slow - Perfect Fifth squared (337.5ms) */
-  verySlow: musicalRatios.perfectFifth ** 2,
+  /** 2.25 - Perfect Fifth squared (produces 337.5ms) */
+  ratio225: musicalRatios.perfectFifth ** 2,
 } as const
 
 // ============================================================================
@@ -284,15 +285,21 @@ export const durationRatios = {
 // ============================================================================
 
 /**
- * Z-index layering scale based on Fibonacci-like progression
+ * Z-index layering scale - numeric progression
  */
 export const zIndexScale = {
-  base: 1,
-  dropdown: 10,
-  sticky: 20,
-  overlay: 30,
-  modal: 50,
-  tooltip: 80,
+  zIndex0: 0,
+  zIndex1: 1,
+  zIndex10: 10,
+  zIndex12: 12,
+  zIndex15: 15,
+  zIndex18: 18,
+  zIndex20: 20,
+  zIndex22: 22,
+  zIndex25: 25,
+  zIndex30: 30,
+  zIndex50: 50,
+  zIndex80: 80,
 } as const
 
 // ============================================================================
@@ -301,13 +308,19 @@ export const zIndexScale = {
 
 /**
  * Letter spacing as fraction of font size
+ * Magnitude-based naming (no semantic intent)
  */
 export const letterSpacingRatios = {
-  tight: -0.05, // -5% tracking
-  normal: 0, // No tracking
-  wide: 0.025, // 2.5% (1/40)
-  wider: 0.05, // 5% (1/20)
-  widest: 0.1, // 10% (1/10)
+  /** -5% tracking */
+  ratioNeg5: -0.05,
+  /** 0% tracking (no tracking) */
+  ratio0: 0,
+  /** 2.5% tracking (1/40) */
+  ratio2_5: 0.025,
+  /** 5% tracking (1/20) */
+  ratio5: 0.05,
+  /** 10% tracking (1/10) */
+  ratio10: 0.1,
 } as const
 
 // ============================================================================
@@ -316,22 +329,48 @@ export const letterSpacingRatios = {
 
 /**
  * Opacity levels using subharmonic series
+ * Magnitude-based naming (no semantic intent)
  */
 export const opacityRatios = {
-  /** Disabled - 1/4 (0.25) */
-  disabled: subharmonicSeries.fourth,
+  /** 0.25 (1/4 subharmonic) */
+  ratio25: subharmonicSeries.fourth,
 
-  /** Muted - 1/3 (0.333) */
-  muted: subharmonicSeries.third,
+  /** 0.333 (1/3 subharmonic) */
+  ratio33: subharmonicSeries.third,
 
-  /** Subtle - 1/2 (0.5) */
-  subtle: subharmonicSeries.second,
+  /** 0.5 (1/2 subharmonic) */
+  ratio50: subharmonicSeries.second,
 
-  /** Medium - 3/4 (0.75) */
-  medium: 1 - subharmonicSeries.fourth,
+  /** 0.67 (2/3) */
+  ratio67: 1 - subharmonicSeries.third,
 
-  /** Full - 1 (1.0) */
-  full: subharmonicSeries.fundamental,
+  /** 0.75 (3/4) */
+  ratio75: 1 - subharmonicSeries.fourth,
+
+  /** 0.90 (9/10) */
+  ratio90: 0.9,
+
+  /** 1.0 (full) */
+  ratio100: subharmonicSeries.fundamental,
+} as const
+
+// ============================================================================
+// COLOR SEEDS (OKLCH)
+// ============================================================================
+
+/**
+ * Minimal color seeds for OKLCH palette generation
+ *
+ * These constants serve as input to Layer 1 primitive generation.
+ * - Hue: 0-360 degrees (OKLCH hue wheel)
+ * - Chroma: 0-0.4 (saturation intensity)
+ */
+export const colorSeeds = {
+  /** Neutral hue - Blue-gray (240°) for neutral palette */
+  neutralHue: 240,
+
+  /** Base chroma for neutral colors - Low saturation (0.05) */
+  baseChroma: 0.05,
 } as const
 
 // ============================================================================

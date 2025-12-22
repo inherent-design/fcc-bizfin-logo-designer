@@ -16,13 +16,17 @@
  */
 const borderWidth = {
   /** Default border width for standard UI elements */
-  default: { value: '{borderWidths.base}' },
+  default: { value: '{borderWidths.border4}' },
 
   /** Hairline border for subtle dividers */
-  hairline: { value: '{borderWidths.hairline}' },
+  hairline: { value: '{borderWidths.border1}' },
 
   /** Neo-brutalist heavy border for UI controls */
-  brutal: { value: '{borderWidths.brutal.md}' },
+  brutal: {
+    DEFAULT: { value: '{borderWidths.border3}' },   // 3px - neo-brutalist default
+    thick: { value: '{borderWidths.border4}' },     // 4px
+    extraThick: { value: '{borderWidths.border5}' }, // 5px
+  },
 } as const
 
 // ============================================================================
@@ -34,13 +38,42 @@ const borderWidth = {
  */
 const borderRadius = {
   /** No rounding for brutalist aesthetic */
-  none: { value: '{radii.none}' },
+  none: { value: '{radii.radius0}' },
 
-  /** Small radius for subtle rounding */
-  small: { value: '{radii.sm}' },
+  /** Small radius for subtle rounding (4px) */
+  small: { value: '{radii.radius4}' },
 
-  /** Medium radius for standard controls */
-  medium: { value: '{radii.md}' },
+  /** Medium radius for standard controls (8px) */
+  medium: { value: '{radii.radius8}' },
+
+  /** Large radius for emphasized controls (12px) */
+  large: { value: '{radii.radius12}' },
+
+  /** Extra large radius (16px) */
+  xlarge: { value: '{radii.radius16}' },
+
+  /** Full radius for pill shapes */
+  full: { value: '{radii.radiusFull}' },
+} as const
+
+// ============================================================================
+// OUTLINE TOKENS
+// ============================================================================
+
+/**
+ * Semantic outline tokens for focus states
+ */
+const outline = {
+  /** Outline widths */
+  width: {
+    focus: { value: '{borderWidths.border2}' },
+    emphasized: { value: '{borderWidths.border4}' },
+  },
+
+  /** Outline offsets */
+  offset: {
+    normal: { value: '{borderWidths.border2}' },
+  },
 } as const
 
 // ============================================================================
@@ -50,4 +83,5 @@ const borderRadius = {
 export const borders = {
   borderWidth,
   borderRadius,
+  outline,
 } as const

@@ -78,11 +78,11 @@ export const fontSizes = {
 // ============================================================================
 
 export const fontWeights = {
-  normal: { value: '400' },
-  medium: { value: '500' },
-  semibold: { value: '600' },
-  bold: { value: '700' },
-  brutal: { value: '900' },
+  fontWeight400: { value: '400' },
+  fontWeight500: { value: '500' },
+  fontWeight600: { value: '600' },
+  fontWeight700: { value: '700' },
+  fontWeight900: { value: '900' },
 } as const
 
 // ============================================================================
@@ -91,13 +91,13 @@ export const fontWeights = {
 
 export const lineHeights = {
   /** 1.2 - Minor third ratio */
-  tight: { value: `${musicalRatios.minorThird}` },
+  lineHeight1_2: { value: `${musicalRatios.minorThird}` },
 
   /** 1.5 - Perfect fifth ratio */
-  normal: { value: `${musicalRatios.perfectFifth}` },
+  lineHeight1_5: { value: `${musicalRatios.perfectFifth}` },
 
   /** 1.778 - Minor seventh ratio */
-  relaxed: { value: `${musicalRatios.minorSeventh.toFixed(3)}` },
+  lineHeight1_778: { value: `${musicalRatios.minorSeventh.toFixed(3)}` },
 } as const
 
 // ============================================================================
@@ -105,18 +105,18 @@ export const lineHeights = {
 // ============================================================================
 
 export const letterSpacings = {
-  /** -0.05em - Tight tracking */
-  tight: { value: `${letterSpacingRatios.tight}em` },
+  /** -0.05em - Negative tracking */
+  letterSpacingNeg0_05: { value: `${letterSpacingRatios.ratioNeg5}em` },
 
-  /** 0em - Normal tracking */
-  normal: { value: `${letterSpacingRatios.normal}em` },
+  /** 0em - No tracking */
+  letterSpacing0: { value: `${letterSpacingRatios.ratio0}em` },
 
-  /** 0.025em - Wide tracking */
-  wide: { value: `${letterSpacingRatios.wide}em` },
+  /** 0.025em */
+  letterSpacing0_025: { value: `${letterSpacingRatios.ratio2_5}em` },
 
-  /** 0.05em - Wider tracking */
-  wider: { value: `${letterSpacingRatios.wider}em` },
+  /** 0.05em */
+  letterSpacing0_05: { value: `${letterSpacingRatios.ratio5}em` },
 
-  /** 0.1em - Widest tracking */
-  widest: { value: `${letterSpacingRatios.widest}em` },
+  /** 0.1em */
+  letterSpacing0_1: { value: `${letterSpacingRatios.ratio10}em` },
 } as const

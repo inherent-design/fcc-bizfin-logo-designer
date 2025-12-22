@@ -1,37 +1,32 @@
 /**
  * Base Gradient Tokens
  *
- * Layer 2: CSS values with units
+ * Layer 2: CSS values with gradient definitions
  * - Format: { value: 'radial-gradient(...)' } or { value: 'linear-gradient(...)' }
- * - NO token references (use direct color references)
- * - NO semantic names (palette-based names only)
+ * - References base color tokens only (not semantic)
+ * - Magnitude/appearance-based naming
  */
 
 /**
- * Fantasy gradients
- * For atmospheric backgrounds and world-layer effects
+ * Radial gradients using gray scale
+ *
+ * Naming convention: radial{ColorStart}to{ColorEnd}
  */
-const fantasy = {
+const radialGradients = {
   /**
-   * Void gradient - Dark theme radial gradient
-   * Ellipse from center: mid → start → end
+   * Radial gradient from light gray to near-white
+   * For light theme backgrounds
    */
-  void: {
-    radial: {
-      value:
-        'radial-gradient(ellipse at center, {colors.fantasy.void.mid} 0%, {colors.fantasy.void.start} 50%, {colors.fantasy.void.end} 100%)',
-    },
+  radialGray0to2: {
+    value: 'radial-gradient(ellipse at center, {colors.gray.1} 0%, {colors.gray.0} 50%, {colors.gray.2} 100%)',
   },
 
   /**
-   * Aether gradient - Light theme radial gradient
-   * Ellipse from center: mid → start → end
+   * Radial gradient from dark gray to near-black
+   * For dark theme backgrounds
    */
-  aether: {
-    radial: {
-      value:
-        'radial-gradient(ellipse at center, {colors.fantasy.aether.mid} 0%, {colors.fantasy.aether.start} 50%, {colors.fantasy.aether.end} 100%)',
-    },
+  radialGray10to8: {
+    value: 'radial-gradient(ellipse at center, {colors.gray.9} 0%, {colors.gray.10} 50%, {colors.gray.8} 100%)',
   },
 } as const
 
@@ -39,5 +34,5 @@ const fantasy = {
  * All base gradient tokens
  */
 export const gradients = {
-  fantasy,
+  ...radialGradients,
 } as const

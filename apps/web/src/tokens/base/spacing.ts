@@ -153,6 +153,22 @@ export const sizes = {
   container16: { value: pxToRem(containerPrimitives.container16) },
 
   // ========================================
+  // Component sizes (UI element dimensions)
+  // ========================================
+
+  /** 12rem (192px) - Compact component size */
+  component12: { value: '12rem' },
+
+  /** 24rem (384px) - Default component size */
+  component24: { value: '24rem' },
+
+  /** 32rem (512px) - Comfortable component size */
+  component32: { value: '32rem' },
+
+  /** 48rem (768px) - Spacious component size */
+  component48: { value: '48rem' },
+
+  // ========================================
   // Icon sizes (two-stage progression)
   // ========================================
   // Micro sizes (3xs→xs): Musical ratios for subtle transitions

@@ -14,20 +14,26 @@ import { opacityPrimitives } from '../primitives'
 // ============================================================================
 
 export const opacity = {
-  /** 0.25 - Disabled state */
-  disabled: { value: opacityPrimitives.disabled },
+  /** 0.25 (1/4 subharmonic) */
+  opacity25: { value: opacityPrimitives.opacity25 },
 
-  /** 0.333 - Muted state */
-  muted: { value: opacityPrimitives.muted },
+  /** 0.333 (1/3 subharmonic) */
+  opacity33: { value: opacityPrimitives.opacity33 },
 
-  /** 0.5 - Subtle state */
-  subtle: { value: opacityPrimitives.subtle },
+  /** 0.5 (1/2 subharmonic) */
+  opacity50: { value: opacityPrimitives.opacity50 },
 
-  /** 0.75 - Medium state */
-  medium: { value: opacityPrimitives.medium },
+  /** 0.67 (2/3) */
+  opacity67: { value: opacityPrimitives.opacity67 },
 
-  /** 1.0 - Full opacity */
-  full: { value: opacityPrimitives.full },
+  /** 0.75 (3/4) */
+  opacity75: { value: opacityPrimitives.opacity75 },
+
+  /** 0.90 (9/10) */
+  opacity90: { value: opacityPrimitives.opacity90 },
+
+  /** 1.0 (full opacity) */
+  opacity100: { value: opacityPrimitives.opacity100 },
 } as const
 
 // ============================================================================
@@ -35,17 +41,23 @@ export const opacity = {
 // ============================================================================
 
 export const blurs = {
-  /** 0 - No blur */
-  none: { value: '0' },
+  /** 0rem - No blur */
+  blur0: { value: '0' },
 
-  /** 0.5rem (8px) - Subtle blur */
-  subtle: { value: '0.5rem' },
+  /** 0.25rem (4px) */
+  blur4: { value: '0.25rem' },
 
-  /** 0.75rem (12px) - Moderate blur / Glass effect */
-  moderate: { value: '0.75rem' },
+  /** 0.5rem (8px) */
+  blur8: { value: '0.5rem' },
 
-  /** 1.5rem (24px) - Heavy blur */
-  heavy: { value: '1.5rem' },
+  /** 0.75rem (12px) */
+  blur12: { value: '0.75rem' },
+
+  /** 1rem (16px) */
+  blur16: { value: '1rem' },
+
+  /** 1.5rem (24px) */
+  blur24: { value: '1.5rem' },
 } as const
 
 // ============================================================================
@@ -53,17 +65,17 @@ export const blurs = {
 // ============================================================================
 
 export const backdropBlurs = {
-  /** 0 - No backdrop blur */
-  none: { value: '0' },
+  /** 0rem - No backdrop blur */
+  backdropBlur0: { value: '0' },
 
-  /** 0.25rem (4px) - Subtle backdrop blur */
-  subtle: { value: '0.25rem' },
+  /** 0.5rem (8px) */
+  backdropBlur8: { value: '0.5rem' },
 
-  /** 0.5rem (8px) - Moderate backdrop blur */
-  moderate: { value: '0.5rem' },
+  /** 0.75rem (12px) */
+  backdropBlur12: { value: '0.75rem' },
 
-  /** 1rem (16px) - Heavy backdrop blur */
-  heavy: { value: '1rem' },
+  /** 1rem (16px) */
+  backdropBlur16: { value: '1rem' },
 } as const
 
 // ============================================================================
@@ -73,12 +85,13 @@ export const backdropBlurs = {
 /**
  * Neo-brutalist shadows
  * Hard shadows with no blur
+ * Magnitude-based naming (offset in pixels)
  */
 export const shadows = {
   /** Neo-brutalist hard shadows (no blur) */
   brutal: {
-    /** Small brutal shadow - 4px offset */
-    sm: {
+    /** 4px offset brutal shadow */
+    offset4: {
       value: {
         offsetX: '0.25rem',
         offsetY: '0.25rem',
@@ -88,8 +101,8 @@ export const shadows = {
       },
     },
 
-    /** Medium brutal shadow - 8px offset */
-    md: {
+    /** 8px offset brutal shadow */
+    offset8: {
       value: {
         offsetX: '0.5rem',
         offsetY: '0.5rem',
@@ -99,8 +112,8 @@ export const shadows = {
       },
     },
 
-    /** Large brutal shadow - 12px offset */
-    lg: {
+    /** 12px offset brutal shadow */
+    offset12: {
       value: {
         offsetX: '0.75rem',
         offsetY: '0.75rem',
@@ -111,8 +124,8 @@ export const shadows = {
     },
   },
 
-  /** Inset brutal shadow for pressed states */
-  brutalInset: {
+  /** Inset brutal shadow for pressed states (2px offset) */
+  brutalInset2: {
     value: {
       offsetX: '0.125rem',
       offsetY: '0.125rem',

@@ -9,8 +9,10 @@
  * Formula explanations:
  * - Spacing: BASES.rhythm × 2 × ratio (4 × 2 × ratio = pixels)
  * - Typography: BASES.type × ratio^step (1 × 1.2^2 = 1.44rem)
+ * - Colors: OKLCH color objects (build-time dependency, not runtime)
  */
 
+import { oklch } from 'culori'
 import {
   BASES,
   musicalRatios,
@@ -19,6 +21,7 @@ import {
   polarAngles,
   radianAngles,
   opacityRatios,
+  colorSeeds,
 } from './constants'
 
 // ============================================================================
@@ -308,20 +311,26 @@ export const angleDirections = {
  * Opacity levels using subharmonic series
  */
 export const opacityPrimitives = {
-  /** Disabled - 0.25 (1/4) */
-  disabled: opacityRatios.disabled,
+  /** 0.25 (1/4 subharmonic) */
+  opacity25: opacityRatios.ratio25,
 
-  /** Muted - 0.333 (1/3) */
-  muted: opacityRatios.muted,
+  /** 0.333 (1/3 subharmonic) */
+  opacity33: opacityRatios.ratio33,
 
-  /** Subtle - 0.5 (1/2) */
-  subtle: opacityRatios.subtle,
+  /** 0.5 (1/2 subharmonic) */
+  opacity50: opacityRatios.ratio50,
 
-  /** Medium - 0.75 (3/4) */
-  medium: opacityRatios.medium,
+  /** 0.67 (2/3) */
+  opacity67: opacityRatios.ratio67,
 
-  /** Full - 1.0 */
-  full: opacityRatios.full,
+  /** 0.75 (3/4) */
+  opacity75: opacityRatios.ratio75,
+
+  /** 0.90 (9/10) */
+  opacity90: opacityRatios.ratio90,
+
+  /** 1.0 (full opacity) */
+  opacity100: opacityRatios.ratio100,
 } as const
 
 // ============================================================================
@@ -373,4 +382,125 @@ export const borderWidthPrimitives = {
 
   /** Extra thick - 16px */
   extraThick: rhythmToPx(musicalRatios.octave), // 16px
+} as const
+
+// ============================================================================
+// COLOR PRIMITIVES (OKLCH Objects)
+// ============================================================================
+
+/**
+ * Empirical OKLCH lightness scale for perceptually uniform color progressions
+ *
+ * Based on research from OKLCH color palette generation:
+ * - 11-step scale (0-10, matching Tailwind 50-950 convention)
+ * - Perceptually uniform steps
+ * - Optimized for accessibility (WCAG AA compliance)
+ *
+ * @see ~/production/.atlas/connector-outputs/color-perception-palette-generation-2025-12-21.md
+ */
+const lightnessScale = [
+  97, // 0: Lightest (near white)
+  95, // 1: Very light
+  93, // 2: Light
+  88, // 3: Moderately light
+  80, // 4: Light-mid
+  72, // 5: Mid
+  60, // 6: Dark-mid
+  50, // 7: Moderately dark
+  40, // 8: Dark
+  32, // 9: Very dark
+  24, // 10: Darkest (near black)
+] as const
+
+/**
+ * Chroma modulation function
+ *
+ * Reduces chroma at extreme lightness values (L > 90 or L < 30) to stay
+ * within sRGB gamut and avoid color clipping.
+ *
+ * @param lightness - OKLCH lightness value (0-100)
+ * @param baseChroma - Base chroma value
+ * @returns Modulated chroma value
+ */
+function getChroma(lightness: number, baseChroma: number): number {
+  if (lightness > 90 || lightness < 30) {
+    return baseChroma * 0.7 // Reduce 30% at extremes
+  }
+  return baseChroma
+}
+
+/**
+ * Neutral color primitives using OKLCH
+ *
+ * Generated at build-time using Culori's oklch() function.
+ * These are Culori color objects, NOT CSS strings.
+ * Layer 2 will convert to OKLCH CSS strings using formatCss().
+ */
+export const neutralColors = {
+  0: oklch({
+    mode: 'oklch',
+    l: lightnessScale[0] / 100,
+    c: getChroma(lightnessScale[0], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  1: oklch({
+    mode: 'oklch',
+    l: lightnessScale[1] / 100,
+    c: getChroma(lightnessScale[1], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  2: oklch({
+    mode: 'oklch',
+    l: lightnessScale[2] / 100,
+    c: getChroma(lightnessScale[2], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  3: oklch({
+    mode: 'oklch',
+    l: lightnessScale[3] / 100,
+    c: getChroma(lightnessScale[3], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  4: oklch({
+    mode: 'oklch',
+    l: lightnessScale[4] / 100,
+    c: getChroma(lightnessScale[4], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  5: oklch({
+    mode: 'oklch',
+    l: lightnessScale[5] / 100,
+    c: getChroma(lightnessScale[5], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  6: oklch({
+    mode: 'oklch',
+    l: lightnessScale[6] / 100,
+    c: getChroma(lightnessScale[6], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  7: oklch({
+    mode: 'oklch',
+    l: lightnessScale[7] / 100,
+    c: getChroma(lightnessScale[7], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  8: oklch({
+    mode: 'oklch',
+    l: lightnessScale[8] / 100,
+    c: getChroma(lightnessScale[8], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  9: oklch({
+    mode: 'oklch',
+    l: lightnessScale[9] / 100,
+    c: getChroma(lightnessScale[9], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  10: oklch({
+    mode: 'oklch',
+    l: lightnessScale[10] / 100,
+    c: getChroma(lightnessScale[10], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
 } as const

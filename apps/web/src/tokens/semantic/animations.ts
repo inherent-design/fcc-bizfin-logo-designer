@@ -14,50 +14,50 @@
 const slide = {
   /** Slide in from left */
   inLeft: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Slide in from right */
   inRight: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Slide in from top */
   inTop: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Slide in from bottom */
   inBottom: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Slide out to left */
   outLeft: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Slide out to right */
   outRight: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Slide out to top */
   outTop: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Slide out to bottom */
   outBottom: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 } as const
 
@@ -68,26 +68,26 @@ const slide = {
 const fade = {
   /** Fade in */
   in: {
-    duration: { value: '{durations.fast}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration100}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Fade out */
   out: {
-    duration: { value: '{durations.fast}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration100}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Fade in with scale */
   inScale: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Fade out with scale */
   outScale: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 } as const
 
@@ -98,26 +98,26 @@ const fade = {
 const scale = {
   /** Scale up */
   up: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Scale down */
   down: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Scale in (from 0.95 to 1.0) */
   in: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Scale out (from 1.0 to 0.95) */
   out: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 } as const
 
@@ -128,20 +128,20 @@ const scale = {
 const pulse = {
   /** Pulse animation */
   default: {
-    duration: { value: '{durations.slow}' },
-    easing: { value: '{easings.inOut}' },
+    duration: { value: '{durations.duration225}' },
+    easing: { value: '{easings.easingInOut}' },
   },
 
   /** Fast pulse */
   fast: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.inOut}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingInOut}' },
   },
 
   /** Slow pulse */
   slow: {
-    duration: { value: '{durations.verySlow}' },
-    easing: { value: '{easings.inOut}' },
+    duration: { value: '{durations.duration338}' },
+    easing: { value: '{easings.easingInOut}' },
   },
 } as const
 
@@ -152,20 +152,20 @@ const pulse = {
 const press = {
   /** Button press (scale down) */
   down: {
-    duration: { value: '{durations.fast}' },
-    easing: { value: '{easings.in}' },
+    duration: { value: '{durations.duration100}' },
+    easing: { value: '{easings.easingIn}' },
   },
 
   /** Button release (scale up) */
   up: {
-    duration: { value: '{durations.fast}' },
-    easing: { value: '{easings.out}' },
+    duration: { value: '{durations.duration100}' },
+    easing: { value: '{easings.easingOut}' },
   },
 
   /** Press active state */
   active: {
-    duration: { value: '{durations.fast}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration100}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 } as const
 
@@ -176,20 +176,20 @@ const press = {
 const checkMark = {
   /** Checkmark appear */
   appear: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Checkmark disappear */
   disappear: {
-    duration: { value: '{durations.fast}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration100}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Indeterminate state */
   indeterminate: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 } as const
 
@@ -200,14 +200,14 @@ const checkMark = {
 const shake = {
   /** Error shake animation */
   error: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Warning shake */
   warning: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 } as const
 
@@ -218,14 +218,14 @@ const shake = {
 const hover = {
   /** Default hover transition */
   default: {
-    duration: { value: '{durations.fast}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration100}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Slow hover transition */
   slow: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 } as const
 
@@ -236,26 +236,26 @@ const hover = {
 const transition = {
   /** Fast transition (all properties) */
   fast: {
-    duration: { value: '{durations.fast}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration100}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Normal transition (all properties) */
   normal: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Color-only transition */
   colors: {
-    duration: { value: '{durations.fast}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration100}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 
   /** Transform-only transition */
   transform: {
-    duration: { value: '{durations.normal}' },
-    easing: { value: '{easings.smooth}' },
+    duration: { value: '{durations.duration150}' },
+    easing: { value: '{easings.easingSmooth}' },
   },
 } as const
 

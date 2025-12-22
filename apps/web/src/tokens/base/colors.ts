@@ -1,57 +1,46 @@
 /**
  * Base Color Tokens
  *
- * Layer 2: CSS values with units
- * - Format: { value: '#hex' }
+ * Layer 2: CSS values with OKLCH color space
+ * - Format: { value: 'oklch(L% C H)' }
  * - NO token references
- * - NO semantic names (palette-based names only)
+ * - Magnitude-based naming (gray.0-10, not semantic)
+ *
+ * Color space: OKLCH (perceptually uniform)
+ * - L (Lightness): 0-100%
+ * - C (Chroma): 0-0.4 (saturation)
+ * - H (Hue): 0-360 degrees
+ *
+ * Browser support: 92%+ (Chrome 111+, Firefox 113+, Safari 15.4+)
+ *
+ * @see ~/production/.atlas/connector-outputs/color-perception-palette-generation-2025-12-21.md
  */
 
-/**
- * Neo-brutalist palette
- * For UI controls and interface elements
- */
-const neo = {
-  fg: { value: '#1a1a1a' },
-  bg: { value: '#fef6e4' },
-  primary: { value: '#f582ae' },
-  secondary: { value: '#8bd3dd' },
-  accent: { value: '#00FF00' },
-  warning: { value: '#ff6b6b' },
-} as const
+import { formatCss } from 'culori'
+import { neutralColors } from '../primitives'
 
 /**
- * High-fantasy palette
- * For backgrounds, gradients, and atmospheric effects
- */
-const fantasy = {
-  void: {
-    start: { value: '#0a0514' },
-    mid: { value: '#0f0820' },
-    end: { value: '#1a0f2e' },
-  },
-  aether: {
-    start: { value: '#fdfdfb' },
-    mid: { value: '#f5faf6' },
-    end: { value: '#d7f2ddff' },
-  },
-  arcana: {
-    primary: { value: '#a78bfa' },
-    secondary: { value: '#60a5fa' },
-    tertiary: { value: '#34d399' },
-    glow: { value: 'rgba(167, 139, 250, 0.3)' },
-  },
-  gold: {
-    base: { value: '#d7913a' },
-    dark: { value: '#5f4c0c' },
-    shimmer: { value: '#ffd700' },
-  },
-} as const
-
-/**
- * All base color tokens
+ * Neutral gray palette (blue-gray hue)
+ *
+ * Generated from OKLCH primitives with:
+ * - Hue: 240° (blue-gray)
+ * - Chroma: 0.05 (low saturation, reduced at extremes)
+ * - Lightness: 11-step perceptually uniform scale
+ *
+ * Naming: gray.0 (lightest) to gray.10 (darkest)
  */
 export const colors = {
-  neo,
-  fantasy,
+  gray: {
+    0: { value: formatCss(neutralColors[0]) },   // oklch(97% 0.035 240) - lightest
+    1: { value: formatCss(neutralColors[1]) },   // oklch(95% 0.035 240)
+    2: { value: formatCss(neutralColors[2]) },   // oklch(93% 0.035 240)
+    3: { value: formatCss(neutralColors[3]) },   // oklch(88% 0.05 240)
+    4: { value: formatCss(neutralColors[4]) },   // oklch(80% 0.05 240)
+    5: { value: formatCss(neutralColors[5]) },   // oklch(72% 0.05 240)
+    6: { value: formatCss(neutralColors[6]) },   // oklch(60% 0.05 240)
+    7: { value: formatCss(neutralColors[7]) },   // oklch(50% 0.05 240)
+    8: { value: formatCss(neutralColors[8]) },   // oklch(40% 0.05 240)
+    9: { value: formatCss(neutralColors[9]) },   // oklch(32% 0.035 240)
+    10: { value: formatCss(neutralColors[10]) }, // oklch(24% 0.035 240) - darkest
+  },
 } as const

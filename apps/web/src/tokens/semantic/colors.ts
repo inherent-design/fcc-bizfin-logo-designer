@@ -19,14 +19,14 @@
 const surface = {
   bg: {
     value: {
-      _light: '{colors.neo.bg}',
-      _dark: '{colors.neo.fg}',
+      _light: '{colors.gray.0}',  // Lightest gray (near white)
+      _dark: '{colors.gray.10}',  // Darkest gray (near black)
     },
   },
   fg: {
     value: {
-      _light: '{colors.neo.fg}',
-      _dark: '{colors.neo.bg}',
+      _light: '{colors.gray.10}', // Darkest gray (near black)
+      _dark: '{colors.gray.0}',   // Lightest gray (near white)
     },
   },
 } as const
@@ -37,11 +37,16 @@ const surface = {
 const world = {
   bg: {
     value: {
-      _light: '{gradients.fantasy.aether.radial}',
-      _dark: '{gradients.fantasy.void.radial}',
+      _light: '{gradients.radialGray0to2}',   // Light gradient
+      _dark: '{gradients.radialGray10to8}',   // Dark gradient
     },
   },
-  glow: { value: '{colors.fantasy.arcana.glow}' },
+  glow: {
+    value: {
+      _light: 'color-mix(in oklch, {colors.gray.5} 30%, transparent)',
+      _dark: 'color-mix(in oklch, {colors.gray.5} 30%, transparent)',
+    },
+  },
 } as const
 
 // ============================================================================
@@ -59,32 +64,32 @@ const text = {
   /** Secondary text - 80% opacity (~1.25^-1) */
   secondary: {
     value: {
-      _light: 'color-mix(in srgb, {colors.surface.fg} 80%, transparent)',
-      _dark: 'color-mix(in srgb, {colors.surface.bg} 80%, transparent)',
+      _light: 'color-mix(in oklch, {colors.surface.fg} 80%, transparent)',
+      _dark: 'color-mix(in oklch, {colors.surface.bg} 80%, transparent)',
     },
   },
 
   /** Tertiary text - 67% opacity (~1.5^-1) */
   tertiary: {
     value: {
-      _light: 'color-mix(in srgb, {colors.surface.fg} 67%, transparent)',
-      _dark: 'color-mix(in srgb, {colors.surface.bg} 67%, transparent)',
+      _light: 'color-mix(in oklch, {colors.surface.fg} 67%, transparent)',
+      _dark: 'color-mix(in oklch, {colors.surface.bg} 67%, transparent)',
     },
   },
 
   /** Quaternary text - 57% opacity (~1.75^-1) */
   quaternary: {
     value: {
-      _light: 'color-mix(in srgb, {colors.surface.fg} 57%, transparent)',
-      _dark: 'color-mix(in srgb, {colors.surface.bg} 57%, transparent)',
+      _light: 'color-mix(in oklch, {colors.surface.fg} 57%, transparent)',
+      _dark: 'color-mix(in oklch, {colors.surface.bg} 57%, transparent)',
     },
   },
 
   /** Disabled text - Subharmonic fourth (0.25) */
   disabled: {
     value: {
-      _light: 'color-mix(in srgb, {colors.surface.fg} 25%, transparent)',
-      _dark: 'color-mix(in srgb, {colors.surface.bg} 25%, transparent)',
+      _light: 'color-mix(in oklch, {colors.surface.fg} 25%, transparent)',
+      _dark: 'color-mix(in oklch, {colors.surface.bg} 25%, transparent)',
     },
   },
 
@@ -101,13 +106,13 @@ const text = {
   onAccent: { value: '{colors.surface.fg}' },
 
   /** Error text */
-  error: { value: '{colors.neo.warning}' },
+  error: { value: '{colors.gray.8}' },  // Dark gray for contrast
 
   /** Success text */
-  success: { value: '{colors.neo.secondary}' },
+  success: { value: '{colors.gray.6}' }, // Mid-dark gray
 
   /** Info text */
-  info: { value: '{colors.neo.accent}' },
+  info: { value: '{colors.gray.7}' },    // Mid-dark gray
 
   /** Label text */
   label: { value: '{colors.surface.fg}' },
@@ -130,7 +135,7 @@ const icon = {
   default: { value: '{colors.surface.fg}' },
   secondary: { value: '{colors.text.secondary}' },
   muted: { value: '{colors.text.tertiary}' },
-  primary: { value: '{colors.neo.primary}' },
+  primary: { value: '{colors.gray.7}' },     // Mid-dark gray
   disabled: { value: '{colors.text.disabled}' },
 } as const
 
@@ -145,27 +150,30 @@ const border = {
   /** Subtle border - 30% opacity */
   subtle: {
     value: {
-      _light: 'color-mix(in srgb, {colors.surface.fg} 30%, transparent)',
-      _dark: 'color-mix(in srgb, {colors.surface.bg} 30%, transparent)',
+      _light: 'color-mix(in oklch, {colors.surface.fg} 30%, transparent)',
+      _dark: 'color-mix(in oklch, {colors.surface.bg} 30%, transparent)',
     },
   },
 
   /** Moderate border - 60% opacity */
   moderate: {
     value: {
-      _light: 'color-mix(in srgb, {colors.surface.fg} 60%, transparent)',
-      _dark: 'color-mix(in srgb, {colors.surface.bg} 60%, transparent)',
+      _light: 'color-mix(in oklch, {colors.surface.fg} 60%, transparent)',
+      _dark: 'color-mix(in oklch, {colors.surface.bg} 60%, transparent)',
     },
   },
 
+  /** Emphasis border (for focus, active states) */
+  emphasis: { value: '{colors.gray.8}' },
+
   /** Focus border */
-  focus: { value: '{colors.neo.accent}' },
+  focus: { value: '{colors.gray.8}' },
 
   /** Error border */
-  error: { value: '{colors.neo.warning}' },
+  error: { value: '{colors.gray.8}' },
 
   /** Success border */
-  success: { value: '{colors.neo.secondary}' },
+  success: { value: '{colors.gray.6}' },
 } as const
 
 // ============================================================================
@@ -179,47 +187,73 @@ const bg = {
   /** Subtle background - 50% opacity */
   subtle: {
     value: {
-      _light: 'color-mix(in srgb, {colors.surface.bg} 50%, transparent)',
-      _dark: 'color-mix(in srgb, {colors.surface.fg} 50%, transparent)',
+      _light: 'color-mix(in oklch, {colors.surface.bg} 50%, transparent)',
+      _dark: 'color-mix(in oklch, {colors.surface.fg} 50%, transparent)',
     },
   },
 
   /** Hover background - 10% foreground mix */
   hover: {
     value: {
-      _light: 'color-mix(in srgb, {colors.surface.fg} 10%, {colors.surface.bg})',
-      _dark: 'color-mix(in srgb, {colors.surface.bg} 15%, {colors.surface.fg})',
+      _light: 'color-mix(in oklch, {colors.surface.fg} 10%, {colors.surface.bg})',
+      _dark: 'color-mix(in oklch, {colors.surface.bg} 15%, {colors.surface.fg})',
     },
   },
 
   /** Active background - 15% foreground mix */
   active: {
     value: {
-      _light: 'color-mix(in srgb, {colors.surface.fg} 15%, {colors.surface.bg})',
-      _dark: 'color-mix(in srgb, {colors.surface.bg} 20%, {colors.surface.fg})',
+      _light: 'color-mix(in oklch, {colors.surface.fg} 15%, {colors.surface.bg})',
+      _dark: 'color-mix(in oklch, {colors.surface.bg} 20%, {colors.surface.fg})',
     },
   },
 
   /** Selected background */
-  selected: { value: '{colors.neo.primary}' },
+  selected: { value: '{colors.gray.8}' },
 
   /** Primary background */
-  primary: { value: '{colors.neo.primary}' },
+  primary: { value: '{colors.gray.7}' },
 
   /** Secondary background */
-  secondary: { value: '{colors.neo.secondary}' },
+  secondary: { value: '{colors.gray.6}' },
 
   /** Accent background */
-  accent: { value: '{colors.neo.accent}' },
+  accent: { value: '{colors.gray.8}' },
 
   /** Danger background */
-  danger: { value: '{colors.neo.warning}' },
+  danger: { value: '{colors.gray.8}' },
 
   /** Success background */
-  success: { value: '{colors.neo.secondary}' },
+  success: { value: '{colors.gray.6}' },
 
   /** Transparent background */
   transparent: { value: 'transparent' },
+
+  /** Elevated surface background (for dialogs, popovers, menus) */
+  elevated: {
+    value: {
+      _light: '{colors.surface.bg}',
+      _dark: '{colors.surface.bg}',
+    },
+  },
+
+  /** Interactive element backgrounds */
+  interactive: {
+    default: { value: '{colors.surface.bg}' },
+    primary: { value: '{colors.gray.7}' },
+    secondary: { value: '{colors.gray.6}' },
+    hover: {
+      value: {
+        _light: 'color-mix(in oklch, {colors.surface.fg} 5%, {colors.surface.bg})',
+        _dark: 'color-mix(in oklch, {colors.surface.bg} 8%, {colors.surface.fg})',
+      },
+    },
+  },
+
+  /** Overlay background (for modals, dialogs) */
+  overlay: {
+    value: 'color-mix(in oklch, {colors.surface.fg} 40%, transparent)',
+  },
 } as const
 
 // ============================================================================
@@ -247,39 +281,39 @@ const input = {
 // ============================================================================
 
 const accent = {
-  primary: { value: '{colors.neo.primary}' },
-  secondary: { value: '{colors.neo.secondary}' },
-  tertiary: { value: '{colors.neo.accent}' },
+  primary: { value: '{colors.gray.7}' },
+  secondary: { value: '{colors.gray.6}' },
+  tertiary: { value: '{colors.gray.8}' },
 
   /** Muted accent - 20% opacity */
   muted: {
     value: {
-      _light: 'color-mix(in srgb, {colors.neo.primary} 20%, transparent)',
-      _dark: 'color-mix(in srgb, {colors.neo.primary} 30%, transparent)',
+      _light: 'color-mix(in oklch, {colors.gray.7} 20%, transparent)',
+      _dark: 'color-mix(in oklch, {colors.gray.7} 30%, transparent)',
     },
   },
 
   /** Success accent */
   success: {
     value: {
-      _light: '{colors.neo.accent}',
-      _dark: '{colors.neo.accent}',
+      _light: '{colors.gray.6}',
+      _dark: '{colors.gray.6}',
     },
   },
 
   /** Error accent */
   error: {
     value: {
-      _light: '{colors.neo.warning}',
-      _dark: '{colors.neo.warning}',
+      _light: '{colors.gray.8}',
+      _dark: '{colors.gray.8}',
     },
   },
 
   /** Warning accent */
   warning: {
     value: {
-      _light: '{colors.neo.warning}',
-      _dark: '{colors.neo.warning}',
+      _light: '{colors.gray.7}',
+      _dark: '{colors.gray.7}',
     },
   },
 } as const
@@ -291,17 +325,17 @@ const accent = {
 const overlay = {
   /** Default overlay - 42% opacity */
   default: {
-    value: 'color-mix(in srgb, {colors.surface.bg} 42%, transparent)',
+    value: 'color-mix(in oklch, {colors.surface.bg} 42%, transparent)',
   },
 
   /** Light overlay - 15% opacity */
   light: {
-    value: 'color-mix(in srgb, {colors.surface.bg} 15%, transparent)',
+    value: 'color-mix(in oklch, {colors.surface.bg} 15%, transparent)',
   },
 
   /** Heavy overlay - 88% opacity */
   heavy: {
-    value: 'color-mix(in srgb, {colors.surface.bg} 88%, transparent)',
+    value: 'color-mix(in oklch, {colors.surface.bg} 88%, transparent)',
   },
 } as const
 
@@ -310,16 +344,16 @@ const overlay = {
 // ============================================================================
 
 const focus = {
-  ring: { value: '{colors.neo.accent}' },
+  ring: { value: '{colors.gray.8}' },
 
   /** Primary focus ring variant */
-  primary: { value: '{colors.neo.primary}' },
+  primary: { value: '{colors.gray.7}' },
 
   /** Error focus ring variant */
-  error: { value: '{colors.neo.warning}' },
+  error: { value: '{colors.gray.8}' },
 
   /** Success focus ring variant */
-  success: { value: '{colors.neo.secondary}' },
+  success: { value: '{colors.gray.6}' },
 } as const
 
 // ============================================================================
@@ -328,7 +362,7 @@ const focus = {
 
 const loading = {
   /** Loading spinner color */
-  spinner: { value: '{colors.neo.primary}' },
+  spinner: { value: '{colors.gray.7}' },
 
   /** Skeleton loading background */
   skeleton: { value: '{colors.bg.subtle}' },
@@ -336,8 +370,8 @@ const loading = {
   /** Skeleton shimmer color */
   shimmer: {
     value: {
-      _light: 'color-mix(in srgb, {colors.surface.bg} 70%, {colors.surface.fg})',
-      _dark: 'color-mix(in srgb, {colors.surface.fg} 70%, {colors.surface.bg})',
+      _light: 'color-mix(in oklch, {colors.surface.bg} 70%, {colors.surface.fg})',
+      _dark: 'color-mix(in oklch, {colors.surface.fg} 70%, {colors.surface.bg})',
     },
   },
 } as const
@@ -349,7 +383,7 @@ const loading = {
 const interaction = {
   /** Disabled state opacity */
   disabled: {
-    opacity: { value: '{opacity.disabled}' },
+    opacity: { value: '{opacity.opacity25}' },
     bg: { value: '{colors.bg.subtle}' },
     text: { value: '{colors.text.disabled}' },
   },
@@ -363,18 +397,18 @@ const drag = {
   /** Active drag state */
   active: {
     value: {
-      _light: 'color-mix(in srgb, {colors.neo.primary} 20%, transparent)',
-      _dark: 'color-mix(in srgb, {colors.neo.primary} 30%, transparent)',
+      _light: 'color-mix(in oklch, {colors.gray.7} 20%, transparent)',
+      _dark: 'color-mix(in oklch, {colors.gray.7} 30%, transparent)',
     },
   },
 
   /** Drag ghost/preview */
   ghost: {
-    value: 'color-mix(in srgb, {colors.surface.bg} 60%, transparent)',
+    value: 'color-mix(in oklch, {colors.surface.bg} 60%, transparent)',
   },
 
   /** Drop target indicator */
-  dropTarget: { value: '{colors.neo.accent}' },
+  dropTarget: { value: '{colors.gray.8}' },
 } as const
 
 // ============================================================================
@@ -383,16 +417,16 @@ const drag = {
 
 const progress = {
   /** Progress bar fill */
-  bar: { value: '{colors.neo.primary}' },
+  bar: { value: '{colors.gray.7}' },
 
   /** Progress track background */
   track: { value: '{colors.bg.subtle}' },
 
   /** Success progress */
-  success: { value: '{colors.neo.secondary}' },
+  success: { value: '{colors.gray.6}' },
 
   /** Warning progress */
-  warning: { value: '{colors.neo.warning}' },
+  warning: { value: '{colors.gray.8}' },
 } as const
 
 // ============================================================================

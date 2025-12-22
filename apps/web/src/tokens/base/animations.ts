@@ -13,17 +13,17 @@ import { durationBase, durationRatios } from '../constants'
 // ============================================================================
 
 export const durations = {
-  /** 100ms - Fast animation */
-  fast: { value: `${Math.round(durationBase * durationRatios.fast)}ms` },
+  /** 100ms */
+  duration100: { value: `${Math.round(durationBase * durationRatios.ratio67)}ms` },
 
-  /** 150ms - Normal animation */
-  normal: { value: `${Math.round(durationBase * durationRatios.normal)}ms` },
+  /** 150ms */
+  duration150: { value: `${Math.round(durationBase * durationRatios.ratio100)}ms` },
 
-  /** 225ms - Slow animation (perfect fifth ratio) */
-  slow: { value: `${Math.round(durationBase * durationRatios.slow)}ms` },
+  /** 225ms */
+  duration225: { value: `${Math.round(durationBase * durationRatios.ratio150)}ms` },
 
-  /** 338ms - Very slow animation (perfect fifth squared) */
-  verySlow: { value: `${Math.round(durationBase * durationRatios.verySlow)}ms` },
+  /** 338ms */
+  duration338: { value: `${Math.round(durationBase * durationRatios.ratio225)}ms` },
 } as const
 
 // ============================================================================
@@ -31,20 +31,20 @@ export const durations = {
 // ============================================================================
 
 export const easings = {
-  /** Default ease */
-  default: { value: 'ease' },
+  /** Ease (browser default) */
+  easingDefault: { value: 'ease' },
 
-  /** Smooth cubic-bezier */
-  smooth: { value: 'cubic-bezier(0.4, 0, 0.2, 1)' },
+  /** Smooth cubic-bezier (0.4, 0, 0.2, 1) */
+  easingSmooth: { value: 'cubic-bezier(0.4, 0, 0.2, 1)' },
 
   /** Ease-in */
-  in: { value: 'ease-in' },
+  easingIn: { value: 'ease-in' },
 
   /** Ease-out */
-  out: { value: 'ease-out' },
+  easingOut: { value: 'ease-out' },
 
   /** Ease-in-out */
-  inOut: { value: 'ease-in-out' },
+  easingInOut: { value: 'ease-in-out' },
 } as const
 
 // ============================================================================
@@ -52,21 +52,21 @@ export const easings = {
 // ============================================================================
 
 export const transitions = {
-  /** Fast transition - all properties */
-  fast: { value: `all ${Math.round(durationBase * durationRatios.fast)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+  /** 100ms transition - all properties */
+  transitionFast100: { value: `all ${Math.round(durationBase * durationRatios.ratio67)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
 
-  /** Normal transition - all properties */
-  normal: { value: `all ${Math.round(durationBase * durationRatios.normal)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+  /** 150ms transition - all properties */
+  transitionBase150: { value: `all ${Math.round(durationBase * durationRatios.ratio100)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
 
-  /** Slow transition - all properties */
-  slow: { value: `all ${Math.round(durationBase * durationRatios.slow)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+  /** 225ms transition - all properties */
+  transitionSlow225: { value: `all ${Math.round(durationBase * durationRatios.ratio150)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
 
-  /** Colors only transition */
-  colors: { value: `color, background-color, border-color ${Math.round(durationBase * durationRatios.fast)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+  /** Colors-only 100ms transition */
+  transitionColors100: { value: `color, background-color, border-color ${Math.round(durationBase * durationRatios.ratio67)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
 
-  /** Transform only transition */
-  transform: { value: `transform ${Math.round(durationBase * durationRatios.normal)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+  /** Transform-only 150ms transition */
+  transitionTransform150: { value: `transform ${Math.round(durationBase * durationRatios.ratio100)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
 
-  /** Opacity only transition */
-  opacity: { value: `opacity ${Math.round(durationBase * durationRatios.fast)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
+  /** Opacity-only 100ms transition */
+  transitionOpacity100: { value: `opacity ${Math.round(durationBase * durationRatios.ratio67)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
 } as const

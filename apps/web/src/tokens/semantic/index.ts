@@ -9,6 +9,7 @@ export { borders } from './borders'
 export { colors } from './colors'
 export { shadows } from './effects'
 export { layout } from './layout'
+export { sizes } from './sizes'
 export { spacing } from './spacing'
 export { typography } from './typography'
 
@@ -20,6 +21,7 @@ import { borders } from './borders'
 import { colors } from './colors'
 import { shadows } from './effects'
 import { layout } from './layout'
+import { sizes } from './sizes'
 import { spacing } from './spacing'
 import { typography } from './typography'
 
@@ -31,4 +33,5 @@ export const semanticTokens = {
   borders,
   animations,
   layout,
+  sizes,
 } as const

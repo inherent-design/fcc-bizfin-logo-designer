@@ -7,7 +7,7 @@
  * - NO token references
  */
 
-import { radiusPrimitives, borderWidthPrimitives } from '../primitives'
+import { borderWidthPrimitives, radiusPrimitives } from '../primitives'
 
 /**
  * Convert pixel value to rem
@@ -16,61 +16,46 @@ import { radiusPrimitives, borderWidthPrimitives } from '../primitives'
 const pxToRem = (px: number): string => `${px / 16}rem`
 
 // ============================================================================
-// BORDER RADII
+// BORDER RADII (Magnitude-based naming)
 // ============================================================================
 
 export const radii = {
   /** 0 - No rounding */
-  none: { value: '0' },
+  radius0: { value: '0' },
 
-  /** 0.25rem (4px) - Small radius */
-  sm: { value: pxToRem(radiusPrimitives.sm) },
+  /** 0.25rem (4px) - 4px radius */
+  radius4: { value: pxToRem(radiusPrimitives.sm) },
 
-  /** 0.5rem (8px) - Medium radius */
-  md: { value: pxToRem(radiusPrimitives.md) },
+  /** 0.5rem (8px) - 8px radius */
+  radius8: { value: pxToRem(radiusPrimitives.md) },
 
-  /** 0.75rem (12px) - Large radius */
-  lg: { value: pxToRem(radiusPrimitives.lg) },
+  /** 0.75rem (12px) - 12px radius */
+  radius12: { value: pxToRem(radiusPrimitives.lg) },
 
-  /** 1rem (16px) - Extra large radius */
-  xl: { value: pxToRem(radiusPrimitives.xl) },
+  /** 1rem (16px) - 16px radius */
+  radius16: { value: pxToRem(radiusPrimitives.xl) },
 
   /** 999.9rem - Full rounding (pill shape) */
-  full: { value: '999.9rem' },
+  radiusFull: { value: '999.9rem' },
 } as const
 
 // ============================================================================
-// BORDER WIDTHS
+// BORDER WIDTHS (Magnitude-based naming - neo-brutalist emphasis)
 // ============================================================================
 
 export const borderWidths = {
   /** 1px - Hairline border */
-  hairline: { value: '1px' },
+  border1: { value: '1px' },
 
   /** 2px - Thin border */
-  thin: { value: '2px' },
+  border2: { value: '2px' },
 
-  /** 0.25rem (4px) - Base border */
-  base: { value: pxToRem(borderWidthPrimitives.base) },
+  /** 0.1875rem (3px) - Neo-brutalist default */
+  border3: { value: '3px' },
 
-  /** 0.5rem (8px) - Medium border */
-  medium: { value: pxToRem(borderWidthPrimitives.medium) },
+  /** 0.25rem (4px) - Neo-brutalist medium */
+  border4: { value: pxToRem(borderWidthPrimitives.base) },
 
-  /** 0.75rem (12px) - Thick border */
-  thick: { value: pxToRem(borderWidthPrimitives.thick) },
-
-  /** 1rem (16px) - Extra thick border */
-  extraThick: { value: pxToRem(borderWidthPrimitives.extraThick) },
-
-  /** Neo-brutalist borders */
-  brutal: {
-    /** 0.5rem (8px) - Small brutal */
-    sm: { value: pxToRem(borderWidthPrimitives.medium) },
-
-    /** 0.75rem (12px) - Medium brutal */
-    md: { value: pxToRem(borderWidthPrimitives.thick) },
-
-    /** 1rem (16px) - Large brutal */
-    lg: { value: pxToRem(borderWidthPrimitives.extraThick) },
-  },
+  /** 0.3125rem (5px) - Neo-brutalist thick */
+  border5: { value: '5px' },
 } as const
