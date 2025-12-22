@@ -11,9 +11,15 @@ import { useUIStore } from '@/stores/uiStore'
 // Components
 import { GalleryActions } from '../gallery/GalleryActions'
 import { GalleryGrid } from '../gallery/GalleryGrid'
-import { Button } from '../ui/Button/Button'
-import { Icon } from '../ui/Icon/Icon'
-import { Panel } from '../ui/Panel/Panel'
+
+// Base UI
+import { Button } from '@base-ui/react/button'
+
+// Recipes
+import { buttonRecipe } from '@/recipes/button.recipe'
+
+// Icons
+import { Folder, X, Heart } from 'lucide-react'
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -67,6 +73,12 @@ const drawerPanelStyles = css({
   width: '100%',
   maxHeight: { base: '80vh', desktop: '400px' },
   overflowY: { base: 'auto' },
+  bg: 'bg.elevated',
+  borderWidth: 'brutal',
+  borderStyle: 'solid',
+  borderColor: 'border.default',
+  borderRadius: 'none',
+  boxShadow: 'elevation.raised',
 })
 
 const drawerContentStyles = css({
@@ -112,7 +124,13 @@ const filtersRowStyles = css({
  */
 function FilterButton({ filter, currentFilter, onClick, children }: FilterButtonProps) {
   return (
-    <Button variant={currentFilter === filter ? 'primary' : 'ghost'} size='md' onClick={onClick}>
+    <Button
+      className={buttonRecipe({
+        variant: currentFilter === filter ? 'primary' : 'ghost',
+        size: 'md',
+      })}
+      onClick={onClick}
+    >
       {children}
     </Button>
   )
@@ -125,12 +143,12 @@ function GalleryHeader({ onClose }: { onClose: () => void }) {
   return (
     <div className={headerStyles}>
       <div className={headerTitleRowStyles}>
-        <Icon className={headerIconStyles} name='folder' size='3xl' />
+        <Folder className={headerIconStyles} size={48} />
         <h2 className={headerTitleStyles}>Design Gallery</h2>
       </div>
 
-      <Button variant='ghost' size='md' onClick={onClose}>
-        <Icon name='xmark' size='lg' />
+      <Button className={buttonRecipe({ variant: 'ghost', size: 'md' })} onClick={onClose}>
+        <X size={24} />
       </Button>
     </div>
   )
@@ -161,7 +179,7 @@ function GalleryFilters({
         onClick={() => onFilterChange('favorites')}
         filter='favorites'
       >
-        <Icon name='heart' size='lg' />
+        <Heart size={24} />
         Favorites
       </FilterButton>
 
@@ -213,8 +231,11 @@ export function DesignGalleryDrawer() {
   // Closed state: Floating button
   if (!isGalleryOpen) {
     return (
-      <Button className={floatingButtonStyles} variant='primary' onClick={toggleGallery}>
-        <Icon name='folder' size='md' />
+      <Button
+        className={`${buttonRecipe({ variant: 'primary' })} ${floatingButtonStyles}`}
+        onClick={toggleGallery}
+      >
+        <Folder size={20} />
         Gallery
       </Button>
     )
@@ -228,7 +249,7 @@ export function DesignGalleryDrawer() {
         if (e.target === e.currentTarget) toggleGallery()
       }}
     >
-      <Panel className={drawerPanelStyles}>
+      <div className={drawerPanelStyles}>
         <div className={drawerContentStyles}>
           {/* Header */}
           <GalleryHeader onClose={toggleGallery} />
@@ -242,7 +263,7 @@ export function DesignGalleryDrawer() {
           {/* Gallery Grid */}
           <GalleryGrid />
         </div>
-      </Panel>
+      </div>
     </div>
   )
 }

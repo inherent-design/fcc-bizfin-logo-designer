@@ -1,0 +1,89 @@
+/**
+ * Section Header Recipe (sva - multi-slot)
+ *
+ * Purpose: Reusable settings section header with optional actions
+ * Layer: 5 (Recipes)
+ * References: Layer 3 (semantic tokens) only
+ *
+ * Slots:
+ * - root: Container wrapper
+ * - title: Section title (h3)
+ * - actions: Optional action area (buttons, checkboxes)
+ *
+ * Usage:
+ * ```tsx
+ * import { sectionHeaderRecipe } from '@/recipes/sectionHeader.recipe'
+ *
+ * const classes = sectionHeaderRecipe()
+ *
+ * <div className={classes.root}>
+ *   <h3 className={classes.title}>Section Title</h3>
+ *   <div className={classes.actions}>
+ *     <button>Action</button>
+ *   </div>
+ * </div>
+ * ```
+ */
+
+import { sva } from 'styled-system/css'
+
+export const sectionHeaderRecipe = sva({
+  slots: ['root', 'title', 'actions'],
+
+  base: {
+    root: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 'inline.normal',
+      mb: 'stack.tight',
+    },
+
+    title: {
+      fontSize: 'xs',
+      fontFamily: 'brutalist',
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      letterSpacing: 'wider',
+      color: 'text.primary',
+      opacity: 'subtle',
+    },
+
+    actions: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 'inline.tight',
+    },
+  },
+
+  variants: {
+    size: {
+      sm: {
+        root: {
+          mb: 'micro3',
+        },
+        title: {
+          fontSize: '2xs',
+        },
+      },
+      md: {
+        root: {
+          mb: 'stack.tight',
+        },
+        title: {
+          fontSize: 'xs',
+        },
+      },
+    },
+  },
+
+  defaultVariants: {
+    size: 'md',
+  },
+})
+
+/**
+ * TypeScript types for section header recipe variants
+ */
+export type SectionHeaderRecipeVariants = Parameters<typeof sectionHeaderRecipe>[0]

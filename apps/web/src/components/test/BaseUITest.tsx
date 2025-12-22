@@ -56,7 +56,7 @@ export function BaseUITest() {
               position: 'fixed',
               inset: 0,
               bg: 'bg.overlay',
-              backdropFilter: 'blur(8px)',
+              backdropBlur: 'dropdown',
             })}
           />
           <Dialog.Popup
@@ -72,7 +72,7 @@ export function BaseUITest() {
               borderRadius: 'none',
               boxShadow: 'elevation.modal',
               p: 'inset.comfortable',
-              minW: '300px',
+              minW: 'sizes.dialog.min',
 
               '&[data-starting-style]': {
                 opacity: 0,

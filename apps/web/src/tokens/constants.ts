@@ -25,6 +25,21 @@ export const BASES = {
 } as const
 
 // ============================================================================
+// ACCESSIBILITY CONSTANTS
+// ============================================================================
+
+/**
+ * Minimum touch target dimension per WCAG 2.2 (Level AAA) and Apple HIG
+ *
+ * WCAG Success Criterion 2.5.5 (Level AAA): Target size of at least 44 by 44 CSS pixels
+ * Apple HIG: Provide ample touch targets for interactive elements (minimum 44×44 points)
+ *
+ * @see https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html
+ * @see https://developer.apple.com/design/human-interface-guidelines/layout
+ */
+export const MIN_TOUCH_TARGET = 44 as const
+
+// ============================================================================
 // MUSICAL RATIOS (Just Intonation)
 // ============================================================================
 

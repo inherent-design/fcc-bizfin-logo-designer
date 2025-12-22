@@ -14,12 +14,18 @@ import { componentLogger } from '@/utils/logger'
 // Components
 import { ColorPicker } from '@/components/ui/ColorPicker'
 
+// Recipes
+import { sectionHeaderRecipe } from '@/recipes/sectionHeader.recipe'
+
+// Zustand
+import { useLogoStore } from '@/stores/logoStore'
+
 // ============================================================================
 // TYPES & INTERFACES
 // ============================================================================
 
 /**
- * ColorSettings component props using hybrid pattern
+ * ColorSettings internal component props
  */
 interface ColorSettingsProps {
   /** Current base color value */
@@ -62,27 +68,9 @@ interface ColorSettingsProps {
   }
 }
 
-/**
- * Section header props
- */
-interface SectionHeaderProps {
-  title: string
-  children?: React.ReactNode
-}
-
 // ============================================================================
 // STYLES
 // ============================================================================
-
-const sectionHeaderTitleStyles = css({
-  fontSize: 'xs',
-  fontFamily: 'brutalist',
-  fontWeight: 'bold',
-  textTransform: 'uppercase',
-  letterSpacing: 'wider',
-  color: 'surface.fg',
-  opacity: 'subtle',
-})
 
 const checkboxStyles = css({
   cursor: 'pointer',
@@ -99,23 +87,7 @@ const colorPickerGroupStyles = css({
 // ============================================================================
 
 /**
- * Section header with optional child content (e.g., toggle checkbox)
- */
-function SectionHeader({ title, children }: SectionHeaderProps) {
-  return (
-    <div>
-      <h3 className={sectionHeaderTitleStyles}>{title}</h3>
-      {children}
-    </div>
-  )
-}
-
-// ============================================================================
-// MAIN COMPONENT
-// ============================================================================
-
-/**
- * ColorSettings - Color configuration panel for logo design
+ * ColorSettings - Internal color configuration panel
  *
  * Features:
  * - Base color control (shield & laurel)
@@ -127,21 +99,8 @@ function SectionHeader({ title, children }: SectionHeaderProps) {
  * - 1-tone: Single fill color, 2 element colors
  * - 2-tone: Two fill colors (TL/BR quadrants), 2-3 element colors
  * - 2-tone + unique: Two fill colors, 3 element colors (per quadrant)
- *
- * @example
- * ```tsx
- * <ColorSettings
- *   baseColor={{ h: 210, s: 100, l: 50 }}
- *   baseDesign={...}
- *   twoToneDesign={null}
- *   actions={{
- *     setBaseColor: (color) => setState({ baseColor: color }),
- *     // ... other actions
- *   }}
- * />
- * ```
  */
-export function ColorSettings({
+function ColorSettings({
   baseColor,
   baseDesign,
   twoToneDesign,
@@ -149,15 +108,24 @@ export function ColorSettings({
 }: ColorSettingsProps) {
   const isTwoTone = !!twoToneDesign
   const hasUniqueElementColors = !!twoToneDesign?.uniqueElementColors
+  const sectionClasses = sectionHeaderRecipe()
 
   return (
-    <div>
+    <div
+      className={css({
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 'stack.loose',
+      })}
+    >
       {/* Base Color */}
       <div>
-        <SectionHeader title='Base // Shield + Laurel + Handshake' />
+        <div className={sectionClasses.root}>
+          <h3 className={sectionClasses.title}>Base // Shield + Laurel + Handshake</h3>
+        </div>
         <ColorPicker
           label='Shield & Laurel'
-          onChange={(newColor) => {
+          onChange={(newColor: HSLColor) => {
             componentLogger.debug({ from: baseColor, to: newColor }, 'Base color changed')
             actions.setBaseColor(newColor)
           }}
@@ -167,35 +135,38 @@ export function ColorSettings({
 
       {/* Quadrant Fills */}
       <div>
-        <SectionHeader title='Quadrant'>
-          <input
-            id='two-tone-checkbox'
-            name='two-tone-mode'
-            type='checkbox'
-            checked={isTwoTone}
-            onChange={(e) => {
-              componentLogger.debug(
-                {
-                  enabled: e.target.checked,
-                },
-                'Two-tone mode toggled'
-              )
-              if (e.target.checked) {
-                actions.enableTwoTone()
-              } else {
-                actions.disableTwoTone()
-              }
-            }}
-            aria-label='Enable 2-tone mode'
-            className={checkboxStyles}
-          />
-        </SectionHeader>
+        <div className={sectionClasses.root}>
+          <h3 className={sectionClasses.title}>Quadrant</h3>
+          <div className={sectionClasses.actions}>
+            <input
+              id='two-tone-checkbox'
+              name='two-tone-mode'
+              type='checkbox'
+              checked={isTwoTone}
+              onChange={(e) => {
+                componentLogger.debug(
+                  {
+                    enabled: e.target.checked,
+                  },
+                  'Two-tone mode toggled'
+                )
+                if (e.target.checked) {
+                  actions.enableTwoTone()
+                } else {
+                  actions.disableTwoTone()
+                }
+              }}
+              aria-label='Enable 2-tone mode'
+              className={checkboxStyles}
+            />
+          </div>
+        </div>
 
         {!isTwoTone ? (
           // 1-tone mode: single fill color
           <ColorPicker
             label='Fill'
-            onChange={(newColor) => {
+            onChange={(newColor: HSLColor) => {
               componentLogger.debug({ to: newColor }, 'Fill color changed')
               actions.setBaseFillColor(newColor)
             }}
@@ -206,7 +177,7 @@ export function ColorSettings({
           <div className={colorPickerGroupStyles}>
             <ColorPicker
               label='Quad 1 (TL)'
-              onChange={(newColor) => {
+              onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ quadrant: 0, to: newColor }, 'Two-tone fill color changed')
                 actions.setTwoToneFillColor(0, newColor)
               }}
@@ -214,7 +185,7 @@ export function ColorSettings({
             />
             <ColorPicker
               label='Quad 2 (BR)'
-              onChange={(newColor) => {
+              onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ quadrant: 3, to: newColor }, 'Two-tone fill color changed')
                 actions.setTwoToneFillColor(3, newColor)
               }}
@@ -226,38 +197,41 @@ export function ColorSettings({
 
       {/* Element Colors */}
       <div>
-        <SectionHeader title='Element'>
+        <div className={sectionClasses.root}>
+          <h3 className={sectionClasses.title}>Element</h3>
           {isTwoTone && (
-            <input
-              id='unique-element-colors-checkbox'
-              name='unique-element-colors'
-              type='checkbox'
-              checked={hasUniqueElementColors}
-              onChange={(e) => {
-                componentLogger.debug(
-                  {
-                    enabled: e.target.checked,
-                  },
-                  'Unique element colors toggled'
-                )
-                if (e.target.checked) {
-                  actions.enableUniqueElementColors()
-                } else {
-                  actions.disableUniqueElementColors()
-                }
-              }}
-              aria-label='Enable unique element colors'
-              className={checkboxStyles}
-            />
+            <div className={sectionClasses.actions}>
+              <input
+                id='unique-element-colors-checkbox'
+                name='unique-element-colors'
+                type='checkbox'
+                checked={hasUniqueElementColors}
+                onChange={(e) => {
+                  componentLogger.debug(
+                    {
+                      enabled: e.target.checked,
+                    },
+                    'Unique element colors toggled'
+                  )
+                  if (e.target.checked) {
+                    actions.enableUniqueElementColors()
+                  } else {
+                    actions.disableUniqueElementColors()
+                  }
+                }}
+                aria-label='Enable unique element colors'
+                className={checkboxStyles}
+              />
+            </div>
           )}
-        </SectionHeader>
+        </div>
 
         {!isTwoTone ? (
           // 1-tone mode: 2 element colors
           <div className={colorPickerGroupStyles}>
             <ColorPicker
               label='Over Base'
-              onChange={(newColor) => {
+              onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over base changed')
                 actions.setBaseElementColorOverBase(newColor)
               }}
@@ -265,7 +239,7 @@ export function ColorSettings({
             />
             <ColorPicker
               label='Over Filled'
-              onChange={(newColor) => {
+              onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over filled changed')
                 actions.setBaseElementColorOverFilledQuadrants(newColor)
               }}
@@ -277,7 +251,7 @@ export function ColorSettings({
           <div className={colorPickerGroupStyles}>
             <ColorPicker
               label='Over Base'
-              onChange={(newColor) => {
+              onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over base changed')
                 actions.setBaseElementColorOverBase(newColor)
               }}
@@ -285,7 +259,7 @@ export function ColorSettings({
             />
             <ColorPicker
               label='Over Filled'
-              onChange={(newColor) => {
+              onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over filled changed')
                 actions.setBaseElementColorOverFilledQuadrants(newColor)
               }}
@@ -297,7 +271,7 @@ export function ColorSettings({
           <div className={colorPickerGroupStyles}>
             <ColorPicker
               label='Over Base'
-              onChange={(newColor) => {
+              onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over base changed')
                 actions.setBaseElementColorOverBase(newColor)
               }}
@@ -305,7 +279,7 @@ export function ColorSettings({
             />
             <ColorPicker
               label='Over Quad 1'
-              onChange={(newColor) => {
+              onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ quadrant: 0, to: newColor }, 'Unique element color changed')
                 actions.setUniqueElementColor(0, newColor)
               }}
@@ -313,7 +287,7 @@ export function ColorSettings({
             />
             <ColorPicker
               label='Over Quad 2'
-              onChange={(newColor) => {
+              onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ quadrant: 3, to: newColor }, 'Unique element color changed')
                 actions.setUniqueElementColor(3, newColor)
               }}
@@ -323,5 +297,52 @@ export function ColorSettings({
         )}
       </div>
     </div>
+  )
+}
+
+// ============================================================================
+// MAIN COMPONENT (Container)
+// ============================================================================
+
+/**
+ * ColorTab - Production color configuration panel for logo designer
+ *
+ * Connects to Zustand logoStore for state management.
+ * Renders ColorSettings with store data and actions.
+ *
+ * @example
+ * ```tsx
+ * <ColorTab />
+ * ```
+ */
+export function ColorTab() {
+  // Zustand selectors
+  const baseColor = useLogoStore((state) => state.baseColor)
+  const baseDesign = useLogoStore((state) => state.baseDesign)
+  const twoToneDesign = useLogoStore((state) => state.twoToneDesign)
+
+  // Actions
+  const actions = {
+    setBaseColor: useLogoStore((state) => state.setBaseColor),
+    setBaseFillColor: useLogoStore((state) => state.setBaseFillColor),
+    setBaseElementColorOverBase: useLogoStore((state) => state.setBaseElementColorOverBase),
+    setBaseElementColorOverFilledQuadrants: useLogoStore(
+      (state) => state.setBaseElementColorOverFilledQuadrants
+    ),
+    enableTwoTone: useLogoStore((state) => state.enableTwoTone),
+    disableTwoTone: useLogoStore((state) => state.disableTwoTone),
+    setTwoToneFillColor: useLogoStore((state) => state.setTwoToneFillColor),
+    enableUniqueElementColors: useLogoStore((state) => state.enableUniqueElementColors),
+    disableUniqueElementColors: useLogoStore((state) => state.disableUniqueElementColors),
+    setUniqueElementColor: useLogoStore((state) => state.setUniqueElementColor),
+  }
+
+  return (
+    <ColorSettings
+      baseColor={baseColor}
+      baseDesign={baseDesign}
+      twoToneDesign={twoToneDesign}
+      actions={actions}
+    />
   )
 }

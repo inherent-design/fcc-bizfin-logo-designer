@@ -2,15 +2,20 @@
 // IMPORTS
 // ============================================================================
 
+// Base UI
+import { Button } from '@base-ui/react/button'
+
 // Panda CSS
 import { css } from 'styled-system/css'
+
+// Recipes
+import { buttonRecipe } from '@/recipes/button.recipe'
 
 // Store
 import { useLogoStore } from '@/stores/logoStore'
 
 // Components
-import { Button } from '../ui/Button/Button'
-import { AdvancedColorPicker } from '../ui/ColorPicker/ColorPicker'
+import { ColorPicker } from '../../ui/ColorPicker'
 
 // ============================================================================
 // STYLES
@@ -21,10 +26,6 @@ const containerStyles = css({
   flexDirection: 'column',
   gap: 'stack.loose',
   pt: 'stack.normal',
-})
-
-const buttonStyles = css({
-  width: '100%',
 })
 
 // ============================================================================
@@ -38,6 +39,7 @@ const buttonStyles = css({
  * - Base color picker
  * - Two-tone mode toggle
  * - Quadrant-specific color pickers (when two-tone enabled)
+ * - Base UI Button integration
  *
  * @example
  * ```tsx
@@ -63,14 +65,15 @@ export function ColorTab() {
   return (
     <div className={containerStyles}>
       {/* Base Color */}
-      <AdvancedColorPicker label='Base Color' onChange={setBaseColor} color={baseColor} />
+      <ColorPicker label='Base Color' onChange={setBaseColor} color={baseColor} />
 
       {/* Two-Tone Toggle */}
       <div>
         <Button
-          className={buttonStyles}
-          variant={isTwoTone ? 'primary' : 'secondary'}
-          size='sm'
+          className={buttonRecipe({
+            variant: isTwoTone ? 'primary' : 'secondary',
+            size: 'sm',
+          })}
           onClick={() => (isTwoTone ? disableTwoTone() : enableTwoTone())}
         >
           {isTwoTone ? 'Disable' : 'Enable'} Two-Tone
@@ -80,12 +83,12 @@ export function ColorTab() {
       {/* Two-Tone Colors */}
       {isTwoTone && (
         <>
-          <AdvancedColorPicker
+          <ColorPicker
             label='Fill Color (Top-Left)'
             onChange={(color) => setTwoToneFillColor(0, color)}
             color={fillColorQ0}
           />
-          <AdvancedColorPicker
+          <ColorPicker
             label='Fill Color (Bottom-Right)'
             onChange={(color) => setTwoToneFillColor(3, color)}
             color={fillColorQ3}

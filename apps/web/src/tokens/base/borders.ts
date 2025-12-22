@@ -8,12 +8,7 @@
  */
 
 import { borderWidthPrimitives, radiusPrimitives } from '../primitives'
-
-/**
- * Convert pixel value to rem
- * 1rem = 16px (browser default)
- */
-const pxToRem = (px: number): string => `${px / 16}rem`
+import { pxToRem } from '../utils'
 
 // ============================================================================
 // BORDER RADII (Magnitude-based naming)

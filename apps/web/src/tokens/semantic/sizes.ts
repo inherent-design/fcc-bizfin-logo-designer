@@ -1,10 +1,10 @@
 /**
  * Semantic Size Tokens
  *
- * Layer 3: Token references for component sizing
- * - Component-specific dimensions
- * - Layout constraints
- * - NO direct CSS values in components
+ * Layer 3: Token references ONLY
+ * - Maps semantic component size names to base size tokens
+ * - NO direct CSS values
+ * - ALL values reference base tokens using {category.name} syntax
  */
 
 // ============================================================================
@@ -12,77 +12,55 @@
 // ============================================================================
 
 /**
- * Component-specific size tokens
+ * Dialog/Modal component sizes
  */
-const component = {
-  /** Modal dialog widths */
-  modal: {
-    compact: { value: '{sizes.container4}' },
-    default: { value: '{sizes.component32}' },
-    spacious: { value: '{sizes.component48}' },
-  },
+const dialog = {
+  /** Minimum dialog width (300px) */
+  min: { value: '18.75rem' },
 
-  /** Drawer panel dimensions */
-  drawer: {
-    width: { value: '{sizes.component24}' },
-    height: { value: '{sizes.component24}' },
-  },
+  /** Small dialog (400px) */
+  sm: { value: '25rem' },
 
-  /** Toast notification constraints */
-  toast: {
-    min: { value: '{sizes.container4}' },
-    max: { value: '{sizes.component24}' },
-  },
+  /** Default/medium dialog (500px) */
+  default: { value: '31.25rem' },
 
-  /** Popover content constraints */
-  popover: {
-    min: { value: '{sizes.component12}' },
-    max: { value: '{sizes.container4}' },
-  },
+  /** Large dialog (640px) */
+  lg: { value: '40rem' },
 
-  /** Floating UI arrow sizing */
-  arrow: {
-    size: { value: '{spacing.base}' },
-    offset: { value: '{spacing.micro4}' },
-  },
-
-  /** Switch toggle dimensions by size variant */
-  switch: {
-    compact: {
-      width: { value: '2.5rem' },
-      height: { value: '1.25rem' },
-      thumb: { value: '{spacing.octave}' },
-      padding: { value: '{spacing.micro2}' },
-    },
-    default: {
-      width: { value: '{spacing.harmonic6}' },
-      height: { value: '{spacing.harmonic3}' },
-      thumb: { value: '1.25rem' },
-      padding: { value: '{spacing.micro2}' },
-    },
-    spacious: {
-      width: { value: '3.5rem' },
-      height: { value: '1.75rem' },
-      thumb: { value: '{spacing.harmonic3}' },
-      padding: { value: '{spacing.micro2}' },
-    },
-  },
+  /** Extra large dialog (800px) */
+  xl: { value: '50rem' },
 } as const
 
-// ============================================================================
-// LAYOUT CONSTRAINTS
-// ============================================================================
+/**
+ * Drawer component sizes
+ */
+const drawer = {
+  /** Standard drawer width (400px) */
+  width: { value: '25rem' },
+
+  /** Standard drawer height (500px) */
+  height: { value: '31.25rem' },
+} as const
 
 /**
- * Layout constraint tokens for scrollable areas
+ * Popover component sizes
  */
-const constraints = {
-  /** Scrollable container heights */
-  scrollable: {
-    compact: { value: '{sizes.component12}' },
-    default: { value: '{spacing.harmonic16}' },
-    spacious: { value: '{sizes.component24}' },
-  },
+const popover = {
+  /** Minimum popover width (200px) */
+  min: { value: '12.5rem' },
+
+  /** Maximum popover width (400px) */
+  max: { value: '25rem' },
+} as const
+
+/**
+ * Touch target component sizes (accessibility)
+ *
+ * Ensures interactive elements meet WCAG 2.2 Level AAA and Apple HIG requirements
+ */
+const touch = {
+  /** Minimum touch target size (44×44px) - WCAG 2.5.5 Level AAA */
+  min: { value: '{sizes.touchTarget44}' },
 } as const
 
 // ============================================================================
@@ -90,6 +68,8 @@ const constraints = {
 // ============================================================================
 
 export const sizes = {
-  component,
-  constraints,
+  dialog,
+  drawer,
+  popover,
+  touch,
 } as const

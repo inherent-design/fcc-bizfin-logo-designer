@@ -12,8 +12,8 @@ import type { SavedDesign } from '@/stores/presetsStore'
 import { usePresetsStore } from '@/stores/presetsStore'
 import { useUIStore } from '@/stores/uiStore'
 
-// Components
-import { Icon } from '../ui/Icon/Icon'
+// Icons
+import { Heart, Copy, Trash2 } from 'lucide-react'
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -154,14 +154,10 @@ const deleteButtonStyles = css({
 })
 
 const iconStyles = css({
-  width: 4,
-  height: 4,
   color: 'border.default',
 })
 
 const favoriteIconActiveStyles = css({
-  width: 4,
-  height: 4,
   color: 'surface.bg',
 })
 
@@ -270,9 +266,10 @@ export function DesignThumbnail({ design }: DesignThumbnailProps) {
           className={`${favoriteButtonStyles} ${design.isFavorite ? favoriteButtonActiveStyles : ''}`}
           title='Toggle Favorite'
         >
-          <Icon
+          <Heart
             className={design.isFavorite ? favoriteIconActiveStyles : iconStyles}
-            name='heart'
+            size={16}
+            fill={design.isFavorite ? 'currentColor' : 'none'}
           />
         </button>
 
@@ -283,7 +280,7 @@ export function DesignThumbnail({ design }: DesignThumbnailProps) {
               className={actionButtonStyles}
               title='Duplicate'
             >
-              <Icon className={iconStyles} name='documentduplicate' />
+              <Copy className={iconStyles} size={16} />
             </button>
 
             <button
@@ -295,7 +292,7 @@ export function DesignThumbnail({ design }: DesignThumbnailProps) {
               className={deleteButtonStyles}
               title='Delete'
             >
-              <Icon className={iconStyles} name='trash' />
+              <Trash2 className={iconStyles} size={16} />
             </button>
           </>
         )}

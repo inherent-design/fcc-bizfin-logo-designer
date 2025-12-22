@@ -9,12 +9,7 @@
  */
 
 import { spacingPrimitives, containerPrimitives } from '../primitives'
-
-/**
- * Convert pixel value to rem
- * 1rem = 16px (browser default)
- */
-const pxToRem = (px: number): string => `${px / 16}rem`
+import { pxToRem } from '../utils'
 
 // ============================================================================
 // SPACING SCALE
@@ -215,4 +210,11 @@ export const sizes = {
   min: { value: 'min-content' },
   max: { value: 'max-content' },
   fit: { value: 'fit-content' },
+
+  // ========================================
+  // Interaction sizes (touch targets)
+  // ========================================
+
+  /** 2.75rem (44px) - WCAG minimum touch target (Level AAA) */
+  touchTarget44: { value: pxToRem(spacingPrimitives.touchTarget44) },
 } as const

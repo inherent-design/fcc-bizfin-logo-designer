@@ -16,10 +16,14 @@ import { useLogoStore } from '@/stores/logoStore'
 import { usePresetsStore } from '@/stores/presetsStore'
 import { useUIStore } from '@/stores/uiStore'
 
-// Components
-import { Button } from '../ui/Button/Button'
-import { Icon } from '../ui/Icon/Icon'
-import { Input } from '../ui/Input/Input'
+// Base UI
+import { Button } from '@base-ui/react/button'
+
+// Recipes
+import { buttonRecipe } from '@/recipes/button.recipe'
+
+// Icons
+import { Plus, Download, Upload } from 'lucide-react'
 
 // ============================================================================
 // STYLES
@@ -39,6 +43,21 @@ const saveRowStyles = css({
 
 const nameInputStyles = css({
   flex: 1,
+  px: 'inset.tight',
+  py: 'inset.tight',
+  borderWidth: 'brutal',
+  borderStyle: 'solid',
+  borderColor: 'border.default',
+  borderRadius: 'none',
+  bg: 'bg.input',
+  color: 'text.primary',
+  fontSize: 'sm',
+
+  '&:focus': {
+    outline: '2px solid',
+    outlineColor: 'border.focus',
+    outlineOffset: '0',
+  },
 })
 
 const exportImportRowStyles = css({
@@ -48,11 +67,6 @@ const exportImportRowStyles = css({
 
 const actionButtonStyles = css({
   flex: 1,
-})
-
-const iconStyles = css({
-  width: 4,
-  height: 4,
 })
 
 const hiddenFileInputStyles = css({
@@ -191,14 +205,14 @@ export function GalleryActions() {
     <div className={containerStyles}>
       {/* Save New Design Row */}
       <div className={saveRowStyles}>
-        <Input
+        <input
           ref={nameInputRef}
           className={nameInputStyles}
           type='text'
           placeholder='Design name...'
         />
-        <Button variant='primary' size='sm' onClick={handleSave}>
-          <Icon className={iconStyles} name='plus' />
+        <Button className={buttonRecipe({ variant: 'primary', size: 'sm' })} onClick={handleSave}>
+          <Plus size={16} />
           Save
         </Button>
       </div>
@@ -206,24 +220,20 @@ export function GalleryActions() {
       {/* Export/Import Row */}
       <div className={exportImportRowStyles}>
         <Button
-          className={actionButtonStyles}
-          variant='secondary'
-          size='sm'
+          className={`${buttonRecipe({ variant: 'secondary', size: 'sm' })} ${actionButtonStyles}`}
           onClick={handleExport}
           disabled={!activeDesignId || isExporting}
         >
-          <Icon className={iconStyles} name='arrowdowntray' />
+          <Download size={16} />
           {isExporting ? 'Exporting...' : 'Export'}
         </Button>
 
         <Button
-          className={actionButtonStyles}
-          variant='secondary'
-          size='sm'
+          className={`${buttonRecipe({ variant: 'secondary', size: 'sm' })} ${actionButtonStyles}`}
           onClick={handleImportClick}
           disabled={isImporting}
         >
-          <Icon className={iconStyles} name='arrowuptray' />
+          <Upload size={16} />
           {isImporting ? 'Importing...' : 'Import'}
         </Button>
 

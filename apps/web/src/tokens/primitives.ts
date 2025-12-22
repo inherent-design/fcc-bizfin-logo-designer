@@ -22,24 +22,13 @@ import {
   radianAngles,
   opacityRatios,
   colorSeeds,
+  MIN_TOUCH_TARGET,
 } from './constants'
+import { rhythmToPx } from './utils'
 
 // ============================================================================
 // SPACING PRIMITIVES (pixels as numbers)
 // ============================================================================
-
-/**
- * Convert rhythm ratio to pixel value (unitless)
- *
- * Formula: BASES.rhythm × 2 × ratio
- * - BASES.rhythm = 4 (quarter notes)
- * - × 2 converts to pixels (8px base)
- * - × ratio scales the value
- *
- * @param ratio - Musical or harmonic ratio
- * @returns Pixel value as number (e.g., 12 for 12px)
- */
-const rhythmToPx = (ratio: number): number => BASES.rhythm * 2 * ratio
 
 export const spacingPrimitives = {
   // ========================================
@@ -141,6 +130,13 @@ export const spacingPrimitives = {
 
   /** Negative harmonic3 - -24px */
   negHarmonic3: -rhythmToPx(harmonicSeries.third), // -24px
+
+  // ========================================
+  // Accessibility (touch targets)
+  // ========================================
+
+  /** 44px - WCAG minimum touch target (2.5.5 Target Size Level AAA) */
+  touchTarget44: MIN_TOUCH_TARGET,
 } as const
 
 // ============================================================================

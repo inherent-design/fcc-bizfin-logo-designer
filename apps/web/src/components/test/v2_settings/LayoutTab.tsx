@@ -5,15 +5,13 @@
 // Panda CSS
 import { css } from 'styled-system/css'
 
+// Recipes
+import { badgeRecipe } from '@/recipes/badge.recipe'
+import { sliderRecipe } from '@/recipes/slider.recipe'
+import { inputRecipe } from '@/recipes/input.recipe'
+
 // Store
 import { useLogoStore } from '@/stores/logoStore'
-
-// Components
-import { Badge } from '../ui/Badge/Badge'
-import { FormLabel } from '../ui/FormLabel/FormLabel'
-import { Input } from '../ui/Input/Input'
-import { QuadrantCard } from '../ui/QuadrantCard/QuadrantCard'
-import { Slider } from '../ui/Slider/Slider'
 
 // ============================================================================
 // CONSTANTS
@@ -36,7 +34,15 @@ const containerStyles = css({
   pt: 'stack.normal',
 })
 
-// quadrantCardStyles removed - now using QuadrantCard component
+const quadrantCardStyles = css({
+  p: 'inset.comfortable',
+  bg: 'bg.elevated',
+  borderWidth: 'brutal',
+  borderStyle: 'solid',
+  borderColor: 'border.default',
+  borderRadius: 'none',
+  boxShadow: 'elevation.raised',
+})
 
 const headerStyles = css({
   display: 'flex',
@@ -47,24 +53,17 @@ const headerStyles = css({
 
 const titleStyles = css({
   textStyle: 'brutalistLabel',
-  color: 'surface.fg', // Override: brutalistLabel uses text.label
+  color: 'text.primary',
 })
-
-// badgeStyles removed - now using Badge component with cva recipe
 
 const elementLabelStyles = css({
   textStyle: 'brutalistText',
-  fontSize: 'xs', // Override: brutalistText uses sm
+  fontSize: 'xs',
   mb: 'stack.tight',
-  color: 'surface.fg',
+  color: 'text.primary',
   opacity: 'medium',
-  textTransform: 'capitalize', // Override: different from uppercase
+  textTransform: 'capitalize',
 })
-
-// TODO: Extract to dedicated textStyle variant 'elementLabel' in config
-// Multiple semantic overrides (fontSize, color, opacity, textTransform) warrant a custom textStyle token
-
-// Slider styles removed - now using Slider component with sva recipe
 
 const offsetGridStyles = css({
   display: 'grid',
@@ -72,17 +71,55 @@ const offsetGridStyles = css({
   gap: 'inline.tight',
 })
 
-const fullWidthStyles = css({
-  width: '100%',
-})
-
 // ============================================================================
 // SUB-COMPONENTS
 // ============================================================================
 
-// QuadrantFillBadge removed - replaced with Badge component
+/**
+ * Badge component for fill status
+ */
+function Badge({ variant, children }: { variant: 'filled' | 'unfilled'; children: React.ReactNode }) {
+  return <span className={badgeRecipe({ variant, size: 'sm' })}>{children}</span>
+}
 
-// ScaleSlider removed - replaced with Slider component
+/**
+ * Slider component for scale control
+ */
+function Slider({
+  label,
+  value,
+  min,
+  max,
+  step,
+  onChange,
+}: {
+  label: string
+  value: number
+  min: number
+  max: number
+  step: number
+  onChange: (value: number) => void
+}) {
+  const classes = sliderRecipe()
+
+  return (
+    <div className={classes.container}>
+      <label className={classes.label}>{label}</label>
+      <div className={classes.wrapper}>
+        <input
+          type='range'
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+          className={classes.track}
+        />
+        <span className={classes.value}>{value.toFixed(1)}</span>
+      </div>
+    </div>
+  )
+}
 
 /**
  * OffsetInputs - X and Y position offset controls
@@ -102,30 +139,35 @@ function OffsetInputs({
 }) {
   const xId = `offset-x-q${quadrantIndex}`
   const yId = `offset-y-q${quadrantIndex}`
+  const classes = inputRecipe({ size: 'md', type: 'number' })
 
   return (
     <div className={offsetGridStyles}>
       <div>
-        <FormLabel htmlFor={xId}>X Offset</FormLabel>
-        <Input
-          className={fullWidthStyles}
+        <label htmlFor={xId} className={classes.label}>
+          X Offset
+        </label>
+        <input
           id={xId}
           name={xId}
           type='number'
           value={offsetX}
           onChange={(e) => onChangeX(Number(e.target.value))}
+          className={classes.input}
         />
       </div>
 
       <div>
-        <FormLabel htmlFor={yId}>Y Offset</FormLabel>
-        <Input
-          className={fullWidthStyles}
+        <label htmlFor={yId} className={classes.label}>
+          Y Offset
+        </label>
+        <input
           id={yId}
           name={yId}
           type='number'
           value={offsetY}
           onChange={(e) => onChangeY(Number(e.target.value))}
+          className={classes.input}
         />
       </div>
     </div>
@@ -144,6 +186,7 @@ function OffsetInputs({
  * - X/Y offset inputs for element positioning
  * - Fill status indicators
  * - Element type display
+ * - Semantic token styling throughout
  *
  * Quadrants:
  * - 0: Top-Left
@@ -164,7 +207,7 @@ export function LayoutTab() {
   return (
     <div className={containerStyles}>
       {quadrants.map((quadrant, index) => (
-        <QuadrantCard key={index}>
+        <div key={index} className={quadrantCardStyles}>
           {/* Header with label and fill status */}
           <div className={headerStyles}>
             <h3 className={titleStyles}>{QUADRANT_LABELS[index]}</h3>
@@ -204,7 +247,7 @@ export function LayoutTab() {
               })
             }
           />
-        </QuadrantCard>
+        </div>
       ))}
     </div>
   )
