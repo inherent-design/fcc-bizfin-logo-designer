@@ -6,14 +6,6 @@
       "DOM",
       "DOM.Iterable"
     ],
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "styled-system/*": [
-        "./styled-system/*"
-      ]
-    },
     "types": [
       "vite/client"
     ],
