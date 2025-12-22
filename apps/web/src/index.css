@@ -1,1 +1,10 @@
 @layer reset, base, tokens, recipes, utilities;
+
+/* Base UI Portal Requirements */
+#root {
+  isolation: isolate; /* Required for Base UI portal z-index stacking */
+}
+
+body {
+  position: relative; /* Required for iOS 26+ Safari portal positioning */
+}
