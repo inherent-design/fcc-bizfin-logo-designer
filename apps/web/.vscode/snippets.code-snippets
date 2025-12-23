@@ -11,7 +11,7 @@
       "import { type ReactNode } from 'react'",
       "",
       "// Panda CSS",
-      "import { css } from 'styled-system/css'",
+      "import { css } from '@styled-system/css'",
       "",
       "// Types",
       "$1",
@@ -70,7 +70,11 @@
   "Panda CSS Style": {
     "prefix": "pcss",
     "scope": "typescript,typescriptreact",
-    "body": ["const ${1:name}Styles = css({", "  ${0}", "})"],
+    "body": [
+      "const ${1:name}Styles = css({",
+      "  ${0}",
+      "})"
+    ],
     "description": "Panda CSS style object"
   },
   "Sub-component": {
@@ -106,7 +110,7 @@
     "prefix": "precipe",
     "scope": "typescript,typescriptreact",
     "body": [
-      "import { ${1:recipeName}, type ${1/(.*)/${1:/capitalize}/}VariantProps } from 'styled-system/recipes'",
+      "import { ${1:recipeName}, type ${1/(.*)/${1:/capitalize}/}VariantProps } from '@styled-system/recipes'",
       "",
       "interface ${2:ComponentName}Props extends ComponentProps<'${3:div}'>, ${1/(.*)/${1:/capitalize}/}VariantProps {",
       "  ${0}",
@@ -129,7 +133,7 @@
       "import { ${1:useState} } from 'react'",
       "",
       "// Panda CSS",
-      "import { css } from 'styled-system/css'",
+      "import { css } from '@styled-system/css'",
       "",
       "// Types",
       "${2}",

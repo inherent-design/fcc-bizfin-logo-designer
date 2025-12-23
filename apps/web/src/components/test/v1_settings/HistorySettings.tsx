@@ -3,7 +3,7 @@
 // ============================================================================
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Utils
 import { componentLogger } from '@/utils/logger'
@@ -47,30 +47,30 @@ interface HistorySettingsProps {
 
 const containerStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.normal',
+  flexDirection: 'column',
 })
 
 const sectionContainerStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.tight',
+  flexDirection: 'column',
 })
 
 const sectionHeaderStyles = css({
-  fontSize: 'xs',
-  fontFamily: 'brutalist',
-  fontWeight: 'bold',
-  textTransform: 'uppercase',
-  letterSpacing: 'wider',
   color: 'surface.fg',
+  fontFamily: 'brutalist',
+  fontSize: 'xs',
+  fontWeight: 'bold',
+  letterSpacing: 'wider',
+  textTransform: 'uppercase',
   opacity: 'subtle',
 })
 
 const buttonListStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.tight',
+  flexDirection: 'column',
 })
 
 const activeDesignButtonStyles = css({

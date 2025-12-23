@@ -22,6 +22,7 @@ import {
   radianAngles,
   opacityRatios,
   colorSeeds,
+  darknessScale,
   MIN_TOUCH_TARGET,
 } from './constants'
 import { rhythmToPx } from './utils'
@@ -367,22 +368,28 @@ export const radiusPrimitives = {
  * Border width values
  */
 export const borderWidthPrimitives = {
-  /** Hairline - 1px */
-  hairline: 1,
+  /** Hairline - 1px (1/8 of base rhythm = 8px) */
+  hairline: rhythmToPx(subharmonicSeries.eighth), // 1px
 
-  /** Thin - 2px */
-  thin: 2,
+  /** Thin - 2px (1/4 of base rhythm) */
+  thin: rhythmToPx(subharmonicSeries.fourth), // 2px
 
-  /** Base - 4px */
+  /** Neo-brutalist default - 3px (3/8 of base rhythm) */
+  brutal: rhythmToPx(harmonicSeries.third / harmonicSeries.eighth), // 3px
+
+  /** Base - 4px (1/2 of base rhythm) */
   base: rhythmToPx(subharmonicSeries.second), // 4px
 
-  /** Medium - 8px */
+  /** Neo-brutalist thick - 5px (5/8 of base rhythm) */
+  brutalThick: rhythmToPx(harmonicSeries.fifth / harmonicSeries.eighth), // 5px
+
+  /** Medium - 8px (base rhythm = unison ratio) */
   medium: rhythmToPx(musicalRatios.unison), // 8px
 
-  /** Thick - 12px */
+  /** Thick - 12px (perfect fifth ratio) */
   thick: rhythmToPx(musicalRatios.perfectFifth), // 12px
 
-  /** Extra thick - 16px */
+  /** Extra thick - 16px (octave ratio) */
   extraThick: rhythmToPx(musicalRatios.octave), // 16px
 } as const
 
@@ -503,6 +510,40 @@ export const neutralColors = {
     mode: 'oklch',
     l: lightnessScale[10] / 100,
     c: getChroma(lightnessScale[10], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+} as const
+
+/**
+ * Dark color primitives for shadows
+ *
+ * Separate from neutralColors because:
+ * - Different purpose: Visual depth (shadows) vs content (neutrals)
+ * - Different range: L=10-20% (dark) vs L=24-97% (neutral)
+ */
+export const darkColors = {
+  0: oklch({
+    mode: 'oklch',
+    l: darknessScale[0] / 100, // 0.20 (20%)
+    c: getChroma(darknessScale[0], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue, // 240°
+  }),
+  1: oklch({
+    mode: 'oklch',
+    l: darknessScale[1] / 100, // 0.16 (16%)
+    c: getChroma(darknessScale[1], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  2: oklch({
+    mode: 'oklch',
+    l: darknessScale[2] / 100, // 0.12 (12%)
+    c: getChroma(darknessScale[2], colorSeeds.baseChroma),
+    h: colorSeeds.neutralHue,
+  }),
+  3: oklch({
+    mode: 'oklch',
+    l: darknessScale[3] / 100, // 0.10 (10% - #1a1a1a)
+    c: getChroma(darknessScale[3], colorSeeds.baseChroma),
     h: colorSeeds.neutralHue,
   }),
 } as const

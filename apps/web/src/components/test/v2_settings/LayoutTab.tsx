@@ -3,10 +3,10 @@
 // ============================================================================
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Recipes
-import { badgeRecipe, inputRecipe, sliderControlRecipe } from 'styled-system/recipes'
+import { badgeRecipe, inputRecipe, sliderControlRecipe } from '@styled-system/recipes'
 
 // Store
 import { useLogoStore } from '@/stores/logoStore'
@@ -27,19 +27,19 @@ const QUADRANT_LABELS = ['Top-Left', 'Top-Right', 'Bottom-Right', 'Bottom-Left']
 
 const containerStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.loose',
+  flexDirection: 'column',
   pt: 'stack.normal',
 })
 
 const quadrantCardStyles = css({
-  p: 'inset.comfortable',
-  bg: 'bg.elevated',
-  borderWidth: 'brutal',
-  borderStyle: 'solid',
   borderColor: 'border.default',
   borderRadius: 'none',
+  borderWidth: 'brutal',
+  p: 'inset.comfortable',
+  bg: 'bg.elevated',
   boxShadow: 'elevation.raised',
+  borderStyle: 'solid',
 })
 
 const headerStyles = css({
@@ -56,17 +56,17 @@ const titleStyles = css({
 
 const elementLabelStyles = css({
   textStyle: 'brutalistText',
-  fontSize: 'xs',
   mb: 'stack.tight',
   color: 'text.primary',
-  opacity: 'medium',
+  fontSize: 'xs',
   textTransform: 'capitalize',
+  opacity: 'medium',
 })
 
 const offsetGridStyles = css({
   display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
   gap: 'inline.tight',
+  gridTemplateColumns: '1fr 1fr',
 })
 
 // ============================================================================

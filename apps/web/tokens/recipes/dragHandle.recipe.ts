@@ -29,8 +29,8 @@ export const dragHandleRecipe = defineRecipe({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '44px', // WCAG 2.2 touch target minimum
-    height: '44px',
+    width: 'sizes.touch.min', // WCAG 2.2 touch target minimum (44px)
+    height: 'sizes.touch.min',
     bg: 'bg.interactive.default',
     color: 'text.secondary',
     cursor: 'grab',
@@ -38,9 +38,9 @@ export const dragHandleRecipe = defineRecipe({
     touchAction: 'none', // Disable browser touch gestures
 
     '&:hover': {
-      bg: 'bg.hover',
+      bg: 'bg.interactive.hover',
+      color: 'text.interactive.hover',
       boxShadow: 'interaction.hover',
-      color: 'text.primary',
     },
 
     '&:active': {

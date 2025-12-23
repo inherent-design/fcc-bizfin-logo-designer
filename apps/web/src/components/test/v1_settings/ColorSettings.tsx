@@ -3,7 +3,7 @@
 // ============================================================================
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Types
 import type { HSLColor } from '@/schemas/logoState.schema'
@@ -75,12 +75,12 @@ interface SectionHeaderProps {
 // ============================================================================
 
 const sectionHeaderTitleStyles = css({
-  fontSize: 'xs',
-  fontFamily: 'brutalist',
-  fontWeight: 'bold',
-  textTransform: 'uppercase',
-  letterSpacing: 'wider',
   color: 'surface.fg',
+  fontFamily: 'brutalist',
+  fontSize: 'xs',
+  fontWeight: 'bold',
+  letterSpacing: 'wider',
+  textTransform: 'uppercase',
   opacity: 'subtle',
 })
 
@@ -90,8 +90,8 @@ const checkboxStyles = css({
 
 const colorPickerGroupStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.normal',
+  flexDirection: 'column',
 })
 
 // ============================================================================

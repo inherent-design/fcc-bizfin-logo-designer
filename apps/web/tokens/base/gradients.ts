@@ -3,9 +3,12 @@
  *
  * Layer 2: CSS values with gradient definitions
  * - Format: { value: 'radial-gradient(...)' } or { value: 'linear-gradient(...)' }
- * - References base color tokens only (not semantic)
+ * - References primitives directly (not base tokens)
  * - Magnitude/appearance-based naming
  */
+
+import { formatCss } from 'culori'
+import { neutralColors } from '../primitives'
 
 /**
  * Radial gradients using gray scale
@@ -18,7 +21,7 @@ const radialGradients = {
    * For light theme backgrounds
    */
   radialGray0to2: {
-    value: 'radial-gradient(ellipse at center, {colors.gray.1} 0%, {colors.gray.0} 50%, {colors.gray.2} 100%)',
+    value: `radial-gradient(ellipse at center, ${formatCss(neutralColors[1])} 0%, ${formatCss(neutralColors[0])} 50%, ${formatCss(neutralColors[2])} 100%)`,
   },
 
   /**
@@ -26,7 +29,7 @@ const radialGradients = {
    * For dark theme backgrounds
    */
   radialGray10to8: {
-    value: 'radial-gradient(ellipse at center, {colors.gray.9} 0%, {colors.gray.10} 50%, {colors.gray.8} 100%)',
+    value: `radial-gradient(ellipse at center, ${formatCss(neutralColors[9])} 0%, ${formatCss(neutralColors[10])} 50%, ${formatCss(neutralColors[8])} 100%)`,
   },
 } as const
 

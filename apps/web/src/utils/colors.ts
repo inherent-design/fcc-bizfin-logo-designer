@@ -1,5 +1,7 @@
 import Color from 'color'
-import type { HSLColor } from '../schemas/logoState.schema'
+
+import type { HSLColor } from '@/schemas/logoState.schema'
+import { componentLogger } from './logger'
 
 /**
  * Convert HSL to hex string (for color inputs that need hex)
@@ -17,7 +19,12 @@ export function hslToHex(color: HSLColor): string {
       .padStart(2, '0')
   }
 
-  return `#${f(0)}${f(8)}${f(4)}`
+  const hex = `#${f(0)}${f(8)}${f(4)}`
+  componentLogger.trace(
+    { from: 'HSL', to: 'HEX', input: color, output: hex },
+    'HSL to HEX conversion'
+  )
+  return hex
 }
 
 /**
@@ -54,11 +61,16 @@ export function hexToHSL(hex: string): HSLColor {
     }
   }
 
-  return {
+  const hsl = {
     h: Math.round(h * 360),
     s: Math.round(s * 100),
     l: Math.round(l * 100),
   }
+  componentLogger.trace(
+    { from: 'HEX', to: 'HSL', input: hex, output: hsl },
+    'HEX to HSL conversion'
+  )
+  return hsl
 }
 
 /**
@@ -109,11 +121,16 @@ export interface RGBColor {
  */
 export function hslToRgb(color: HSLColor): RGBColor {
   const rgb = Color.hsl(color.h, color.s, color.l).rgb().object()
-  return {
+  const result = {
     r: Math.round(rgb.r),
     g: Math.round(rgb.g),
     b: Math.round(rgb.b),
   }
+  componentLogger.trace(
+    { from: 'HSL', to: 'RGB', input: color, output: result },
+    'HSL to RGB conversion'
+  )
+  return result
 }
 
 /**
@@ -121,11 +138,16 @@ export function hslToRgb(color: HSLColor): RGBColor {
  */
 export function rgbToHsl(color: RGBColor): HSLColor {
   const hsl = Color.rgb(color.r, color.g, color.b).hsl().object()
-  return {
+  const result = {
     h: Math.round(hsl.h),
     s: Math.round(hsl.s),
     l: Math.round(hsl.l),
   }
+  componentLogger.trace(
+    { from: 'RGB', to: 'HSL', input: color, output: result },
+    'RGB to HSL conversion'
+  )
+  return result
 }
 
 /**
@@ -133,6 +155,19 @@ export function rgbToHsl(color: RGBColor): HSLColor {
  */
 export function hslToString(color: HSLColor): string {
   return `hsl(${color.h}, ${color.s}%, ${color.l}%)`
+}
+
+/**
+ * Convert RGB to hex (for additional conversion path)
+ */
+export function rgbToHex(color: RGBColor): string {
+  const toHex = (n: number) => Math.round(n).toString(16).padStart(2, '0')
+  const hex = `#${toHex(color.r)}${toHex(color.g)}${toHex(color.b)}`
+  componentLogger.trace(
+    { from: 'RGB', to: 'HEX', input: color, output: hex },
+    'RGB to HEX conversion'
+  )
+  return hex
 }
 
 /**
@@ -154,7 +189,11 @@ export function parseColorString(colorString: string): HSLColor | null {
       s: Math.round(hsl.s),
       l: Math.round(hsl.l),
     }
-  } catch {
+  } catch (error) {
+    componentLogger.warn(
+      { colorString, error: error instanceof Error ? error.message : String(error) },
+      'Failed to parse color string'
+    )
     return null
   }
 }

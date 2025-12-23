@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react'
-import { MAX_LOGO_ROTATION, ROTATION_DAMPING } from '../constants/world'
-import { useWorldStore } from '../stores/worldStore'
-import { clamp, smoothDamp } from '../utils/animations'
-import { componentLogger } from '../utils/logger'
+
+import { MAX_LOGO_ROTATION, ROTATION_DAMPING } from '@/constants/world'
+import { useWorldStore } from '@/stores/worldStore'
+import { clamp, smoothDamp } from '@/utils/animations'
+import { componentLogger } from '@/utils/logger'
 
 // Module-specific logger
 const gyroLogger = componentLogger.child({ module: 'gyroscope' })
@@ -18,6 +19,9 @@ export function useGyroscopeTilt(maxRotation: number = MAX_LOGO_ROTATION) {
   const targetRotation = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
+    // Early return if disabled (maxRotation=0 on desktop)
+    if (maxRotation === 0) return
+
     // Check if DeviceOrientationEvent is supported
     if (typeof DeviceOrientationEvent === 'undefined') {
       return

@@ -1,13 +1,6 @@
 import { defineConfig, defineLayerStyles, defineTextStyles } from '@pandacss/dev'
 
-import {
-  baseTokens,
-  breakpoints,
-  layerStyles,
-  recipes,
-  semanticTokens,
-  textStyles,
-} from './src/tokens'
+import { baseTokens, breakpoints, layerStyles, recipes, semanticTokens, textStyles } from './tokens'
 
 export default defineConfig({
   // ============================================================================
@@ -52,34 +45,6 @@ export default defineConfig({
   // Uses semantic tokens for theme-aware styling
 
   globalCss: {
-    // react-colorful component styling
-    '.react-colorful': {
-      width: '100%',
-      height: '200px',
-    },
-    '.react-colorful__saturation': {
-      borderRadius: 'none',
-      borderWidth: 'brutal',
-      borderStyle: 'solid',
-      borderColor: 'border.default',
-      marginBottom: 'stack.tight',
-    },
-    '.react-colorful__hue': {
-      borderRadius: 'none',
-      height: 'sizes.touch.min',
-      borderWidth: 'brutal',
-      borderStyle: 'solid',
-      borderColor: 'border.default',
-    },
-    '.react-colorful__pointer': {
-      width: '24px',
-      height: '24px',
-      borderWidth: 'brutal',
-      borderStyle: 'solid',
-      borderColor: 'border.default',
-      borderRadius: 'none',
-    },
-
     // dnd-kit drag overlay styling
     '[data-dnd-dragging="true"]': {
       bg: 'drag.active',

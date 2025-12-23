@@ -102,16 +102,16 @@ export const sliderControlRecipe = defineSlotRecipe({
         ...neoInteractiveBase,
         WebkitAppearance: 'none',
         appearance: 'none',
-        width: '20px',
-        height: '20px',
+        width: 'sizes.touch.min', // 44px - WCAG 2.2 compliant
+        height: 'sizes.touch.min', // 44px
         bg: 'bg.interactive.default',
         cursor: 'pointer',
-        marginTop: '-7px', // Center on track
+        marginTop: '-18px', // Center on track: (44px - 8px track) / 2 = 18px
       },
       '&::-moz-range-thumb': {
         ...neoInteractiveBase,
-        width: '20px',
-        height: '20px',
+        width: 'sizes.touch.min', // 44px - WCAG 2.2 compliant
+        height: 'sizes.touch.min', // 44px
         bg: 'bg.interactive.default',
         cursor: 'pointer',
       },

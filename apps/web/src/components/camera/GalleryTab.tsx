@@ -3,7 +3,7 @@
 // ============================================================================
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Store
 import { useUIStore } from '@/stores/uiStore'
@@ -16,7 +16,7 @@ import { GalleryGrid } from '../gallery/GalleryGrid'
 import { Button } from '@base-ui/react/button'
 
 // Recipes
-import { buttonRecipe } from 'styled-system/recipes'
+import { buttonRecipe } from '@styled-system/recipes'
 
 // Icons
 import { Heart } from 'lucide-react'
@@ -51,14 +51,14 @@ interface FilterButtonProps {
 const filtersRowStyles = css({
   display: 'flex',
   gap: 'inline.tight',
-  flexWrap: 'wrap',
   mb: 'stack.normal',
+  flexWrap: 'wrap',
 })
 
 const contentStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.normal',
+  flexDirection: 'column',
 })
 
 // ============================================================================

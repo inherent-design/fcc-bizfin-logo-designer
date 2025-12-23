@@ -3,19 +3,19 @@
 // ============================================================================
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // ============================================================================
 // STYLES
 // ============================================================================
 
 const containerStyles = css({
-  fontSize: 'xs',
-  color: 'surface.fg',
-  opacity: 'subtle',
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.tight',
+  flexDirection: 'column',
+  color: 'surface.fg',
+  fontSize: 'xs',
+  opacity: 'subtle',
 })
 
 const linkStyles = css({

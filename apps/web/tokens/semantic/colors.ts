@@ -125,6 +125,28 @@ const text = {
 
   /** Helper text */
   helper: { value: '{colors.text.tertiary}' },
+
+  /** Interactive element text states */
+  interactive: {
+    default: {
+      value: {
+        _light: '{colors.surface.fg}',
+        _dark: '{colors.surface.fg}',
+      },
+    },
+    hover: {
+      value: {
+        _light: '{colors.surface.bg}', // Full inversion on hover
+        _dark: '{colors.surface.bg}',
+      },
+    },
+    active: {
+      value: {
+        _light: '{colors.surface.bg}',
+        _dark: '{colors.surface.bg}',
+      },
+    },
+  },
 } as const
 
 // ============================================================================
@@ -239,13 +261,24 @@ const bg = {
 
   /** Interactive element backgrounds */
   interactive: {
-    default: { value: '{colors.surface.bg}' },
+    default: {
+      value: {
+        _light: '{colors.surface.bg}',
+        _dark: '{colors.surface.bg}',
+      },
+    },
     primary: { value: '{colors.gray.7}' },
     secondary: { value: '{colors.gray.6}' },
     hover: {
       value: {
-        _light: 'color-mix(in oklch, {colors.surface.fg} 5%, {colors.surface.bg})',
-        _dark: 'color-mix(in oklch, {colors.surface.bg} 8%, {colors.surface.fg})',
+        _light: '{colors.surface.fg}', // Full inversion: hover bg = fg
+        _dark: '{colors.surface.fg}',
+      },
+    },
+    active: {
+      value: {
+        _light: '{colors.surface.fg}',
+        _dark: '{colors.surface.fg}',
       },
     },
   },

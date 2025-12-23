@@ -31,7 +31,7 @@ export const badgeRecipe = defineRecipe({
     alignItems: 'center',
     justifyContent: 'center',
     px: 'inset.tight',
-    py: 'micro2',
+    py: 'inset.tight', // Migrated from micro2 base token
     fontSize: 'xs',
     fontWeight: 'bold',
     textTransform: 'uppercase',
@@ -69,7 +69,7 @@ export const badgeRecipe = defineRecipe({
     size: {
       sm: {
         px: 'inset.tight',
-        py: 'micro2',
+        py: 'inset.tight', // Migrated from micro2 base token
         fontSize: 'xs',
       },
       md: {

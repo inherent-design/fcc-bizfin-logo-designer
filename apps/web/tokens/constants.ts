@@ -195,6 +195,9 @@ export const subharmonicSeries = {
 
   /** 8th subharmonic - Three octaves down (0.125) */
   eighth: 1 / 8,
+
+  /** 10th subharmonic (0.1) */
+  tenth: 1 / 10,
 } as const
 
 // ============================================================================
@@ -359,8 +362,8 @@ export const opacityRatios = {
   /** 0.75 (3/4) */
   ratio75: 1 - subharmonicSeries.fourth,
 
-  /** 0.90 (9/10) */
-  ratio90: 0.9,
+  /** 0.90 (9/10 = 1 - 1/10 subharmonic) */
+  ratio90: 1 - subharmonicSeries.tenth,
 
   /** 1.0 (full) */
   ratio100: subharmonicSeries.fundamental,
@@ -384,6 +387,19 @@ export const colorSeeds = {
   /** Base chroma for neutral colors - Low saturation (0.05) */
   baseChroma: 0.05,
 } as const
+
+/**
+ * Darkness scale for shadow color primitives
+ *
+ * Lightness values BELOW neutralColors range (which starts at 24%).
+ * Used for neo-brutalist hard shadows requiring strong visual separation.
+ */
+export const darknessScale = [
+  20,  // 0: Darkest shadow (strongest depth)
+  16,  // 1: Very dark shadow
+  12,  // 2: Dark shadow
+  10,  // 3: Shadow base (#1a1a1a equivalent)
+] as const
 
 // ============================================================================
 // BREAKPOINTS

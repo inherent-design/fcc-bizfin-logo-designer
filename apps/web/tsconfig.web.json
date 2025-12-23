@@ -1,4 +1,4 @@
-{
+{ // react-colorful component styling
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
@@ -22,7 +22,7 @@
       "@/*": [
         "./src/*"
       ],
-      "styled-system/*": [
+      "@styled-system/*": [
         "./styled-system/*"
       ]
     },
@@ -38,6 +38,7 @@
   },
   "include": [
     "src",
-    "styled-system"
+    "styled-system",
+    "tokens"
   ]
 }

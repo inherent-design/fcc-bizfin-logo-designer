@@ -40,17 +40,17 @@ export const radii = {
 
 export const borderWidths = {
   /** 1px - Hairline border */
-  border1: { value: '1px' },
+  border1: { value: pxToRem(borderWidthPrimitives.hairline) },
 
   /** 2px - Thin border */
-  border2: { value: '2px' },
+  border2: { value: pxToRem(borderWidthPrimitives.thin) },
 
   /** 0.1875rem (3px) - Neo-brutalist default */
-  border3: { value: '3px' },
+  border3: { value: pxToRem(borderWidthPrimitives.brutal) },
 
   /** 0.25rem (4px) - Neo-brutalist medium */
   border4: { value: pxToRem(borderWidthPrimitives.base) },
 
   /** 0.3125rem (5px) - Neo-brutalist thick */
-  border5: { value: '5px' },
+  border5: { value: pxToRem(borderWidthPrimitives.brutalThick) },
 } as const

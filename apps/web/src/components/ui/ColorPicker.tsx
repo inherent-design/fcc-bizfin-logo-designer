@@ -10,10 +10,10 @@ import { HslColorPicker } from 'react-colorful'
 import { Button } from '@base-ui/react/button'
 
 // Panda CSS
-import { css, cx } from 'styled-system/css'
+import { css, cx } from '@styled-system/css'
 
 // Recipes
-import { buttonRecipe, colorPickerRecipe, inputRecipe } from 'styled-system/recipes'
+import { buttonRecipe, colorPickerRecipe, inputRecipe } from '@styled-system/recipes'
 
 // Types
 import type { HSLColor } from '../../schemas/logoState.schema'
@@ -28,6 +28,7 @@ import {
   rgbToString,
   type RGBColor,
 } from '../../utils/colors'
+import { componentLogger } from '../../utils/logger'
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -321,13 +322,11 @@ function ColorPickerContent({
     <div className={classes.gridLayout}>
       {/* Left column: Visual color picker */}
       <div className={classes.pickerColumn}>
-        <div className={classes.pickerWrapper}>
-          <HslColorPicker
-            onChange={(newColor) => onChange(fromPickerFormat(newColor))}
-            style={{ width: '100%' }}
-            color={toPickerFormat(color)}
-          />
-        </div>
+        <HslColorPicker
+          className='color-picker'
+          onChange={(newColor) => onChange(fromPickerFormat(newColor))}
+          color={toPickerFormat(color)}
+        />
       </div>
 
       {/* Right column: Input fields */}
@@ -430,7 +429,19 @@ export function ColorPicker({ color, onChange, label }: ColorPickerProps) {
 
       {/* Mobile: Color preview button (opens modal) */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          const newOpenState = !isOpen
+          componentLogger.debug(
+            {
+              component: 'ColorPicker',
+              action: newOpenState ? 'modal.open' : 'modal.close',
+              color,
+              label,
+            },
+            newOpenState ? 'Color picker modal opened' : 'Color picker modal closed'
+          )
+          setIsOpen(newOpenState)
+        }}
         className={classes.trigger}
         style={{
           backgroundColor: `hsl(${color.h}, ${color.s}%, ${color.l}%)`,
@@ -459,7 +470,13 @@ export function ColorPicker({ color, onChange, label }: ColorPickerProps) {
             />
             <Button
               className={buttonRecipe({ variant: 'primary', size: 'sm' })}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                componentLogger.debug(
+                  { component: 'ColorPicker', action: 'modal.done', color },
+                  'User clicked Done button'
+                )
+                setIsOpen(false)
+              }}
             >
               Done
             </Button>

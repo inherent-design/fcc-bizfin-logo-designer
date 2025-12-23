@@ -3,7 +3,7 @@
 // ============================================================================
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Types
 import type { SavedDesign } from '@/stores/presetsStore'
@@ -13,7 +13,7 @@ import { usePresetsStore } from '@/stores/presetsStore'
 import { useUIStore } from '@/stores/uiStore'
 
 // Icons
-import { Heart, Copy, Trash2 } from 'lucide-react'
+import { Copy, Heart, Trash2 } from 'lucide-react'
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -32,15 +32,15 @@ interface DesignThumbnailProps {
 // ============================================================================
 
 const containerStyles = css({
+  cursor: 'pointer',
   position: 'relative',
-  borderWidth: 'brutal',
-  borderStyle: 'solid',
   borderColor: 'border.default',
+  borderWidth: 'brutal',
   bg: 'surface.bg',
   overflow: 'hidden',
-  cursor: 'pointer',
   transitionDuration: 'fast',
   transitionProperty: 'all',
+  borderStyle: 'solid',
   _hover: {
     transform: 'scale(1.02)',
     borderColor: 'accent.primary',
@@ -52,59 +52,59 @@ const containerActiveStyles = css({
 })
 
 const thumbnailAreaStyles = css({
-  width: '100%',
-  aspectRatio: '1/1',
-  bg: 'world.bg',
   display: 'flex',
-  alignItems: 'center',
   justifyContent: 'center',
+  alignItems: 'center',
+  aspectRatio: '1/1',
+  width: '100%',
+  bg: 'world.bg',
   overflow: 'hidden',
 })
 
 const thumbnailImageStyles = css({
+  objectFit: 'contain',
   width: '80%',
   height: '80%',
-  objectFit: 'contain',
 })
 
 const noPreviewStyles = css({
-  fontFamily: 'brutalist',
-  fontSize: 'typeMinus2',
   color: 'surface.fg',
+  fontFamily: 'brutalist',
+  fontSize: 'xs', // Migrated from typeMinus2 base token
   opacity: 'disabled',
 })
 
 const infoSectionStyles = css({
+  borderColor: 'border.default',
+  borderTopWidth: 'hairline',
   p: 'inline.tight',
   bg: 'surface.bg',
-  borderTopWidth: 'hairline',
   borderTopStyle: 'solid',
-  borderColor: 'border.default',
 })
 
 const nameStyles = css({
-  fontFamily: 'brutalist',
-  fontWeight: 'bold',
-  fontSize: 'typeMinus2',
+  mb: 'stack.tight',
   color: 'surface.fg',
+  fontFamily: 'brutalist',
+  fontSize: 'xs', // Migrated from typeMinus2 base token
+  fontWeight: 'bold',
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
-  mb: 'stack.tight',
 })
 
 const timestampStyles = css({
-  fontFamily: 'brutalist',
-  fontSize: 'typeMinus3',
   color: 'surface.fg',
+  fontFamily: 'brutalist',
+  fontSize: 'xxs', // Migrated from typeMinus3 base token
   opacity: 'subtle',
 })
 
 const actionsContainerStyles = css({
+  display: 'flex',
   position: 'absolute',
   top: '3xs',
   right: '3xs',
-  display: 'flex',
   gap: 'inline.tight',
   opacity: 0,
   transitionDuration: 'fast',
@@ -115,23 +115,23 @@ const actionsContainerStyles = css({
 })
 
 const actionButtonStyles = css({
+  cursor: 'pointer',
+  borderColor: 'border',
+  borderWidth: 'default', // Migrated from 'base' (non-existent semantic) to 'default'
   p: 'inline.tight',
   bg: 'surface.bg',
-  borderWidth: 'base',
   borderStyle: 'solid',
-  borderColor: 'border',
-  cursor: 'pointer',
   _hover: {
     bg: 'bg.hover',
   },
 })
 
 const favoriteButtonStyles = css({
-  p: 'inline.tight',
-  borderWidth: 'base',
-  borderStyle: 'solid',
-  borderColor: 'border',
   cursor: 'pointer',
+  borderColor: 'border',
+  borderWidth: 'default', // Migrated from 'base' (non-existent semantic) to 'default'
+  p: 'inline.tight',
+  borderStyle: 'solid',
   _hover: {
     bg: 'accent.solid',
   },
@@ -142,12 +142,12 @@ const favoriteButtonActiveStyles = css({
 })
 
 const deleteButtonStyles = css({
+  cursor: 'pointer',
+  borderColor: 'border',
+  borderWidth: 'default', // Migrated from 'base' (non-existent semantic) to 'default'
   p: 'inline.tight',
   bg: 'surface.bg',
-  borderWidth: 'base',
   borderStyle: 'solid',
-  borderColor: 'border',
-  cursor: 'pointer',
   _hover: {
     bg: 'accent.solid',
   },
@@ -165,34 +165,34 @@ const activeBadgeStyles = css({
   position: 'absolute',
   top: '3xs',
   left: '3xs',
-  px: 'inline.tight',
-  py: 'inline.tight',
-  bg: 'accent.primary',
-  borderWidth: 'base',
-  borderStyle: 'solid',
   borderColor: 'border.default',
-  fontFamily: 'brutalist',
-  fontWeight: 'brutal',
-  fontSize: 'typeMinus3',
-  textTransform: 'uppercase',
+  borderWidth: 'default', // Migrated from 'base' (non-existent semantic) to 'default'
+  py: 'inline.tight',
+  px: 'inline.tight',
   color: 'surface.bg',
+  fontFamily: 'brutalist',
+  fontSize: 'xxs', // Migrated from typeMinus3 base token
+  fontWeight: 'brutal',
+  textTransform: 'uppercase',
+  bg: 'accent.primary',
+  borderStyle: 'solid',
 })
 
 const systemBadgeStyles = css({
   position: 'absolute',
-  bottom: 'sm',
   left: '3xs',
-  px: 'inline.tight',
-  py: 'inline.tight',
-  bg: 'accent.primary',
-  borderWidth: 'base',
-  borderStyle: 'solid',
+  bottom: 'sm',
   borderColor: 'border',
-  fontFamily: 'brutalist',
-  fontWeight: 'brutal',
-  fontSize: 'typeMinus3',
-  textTransform: 'uppercase',
+  borderWidth: 'default', // Migrated from 'base' (non-existent semantic) to 'default'
+  py: 'inline.tight',
+  px: 'inline.tight',
   color: 'text',
+  fontFamily: 'brutalist',
+  fontSize: 'xxs', // Migrated from typeMinus3 base token
+  fontWeight: 'brutal',
+  textTransform: 'uppercase',
+  bg: 'accent.primary',
+  borderStyle: 'solid',
 })
 
 // ============================================================================

@@ -7,16 +7,16 @@
  * - NO token references
  */
 
+import { letterSpacingRatios, musicalRatios } from '../constants'
 import { typePrimitives } from '../primitives'
-import { musicalRatios, letterSpacingRatios } from '../constants'
 
 // ============================================================================
 // FONT FAMILIES
 // ============================================================================
 
 export const fonts = {
-  brutalist: { value: 'Space Grotesk, system-ui, sans-serif' },
-  mono: { value: 'Fira Code, Consolas, Monaco, monospace' },
+  space_grotesk: { value: 'Space Grotesk, system-ui, sans-serif' },
+  fira_code: { value: 'Fira Code, Consolas, Monaco, monospace' },
 } as const
 
 // ============================================================================

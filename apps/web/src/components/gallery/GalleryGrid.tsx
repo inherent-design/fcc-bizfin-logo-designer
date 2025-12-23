@@ -3,7 +3,7 @@
 // ============================================================================
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Store
 import { usePresetsStore } from '@/stores/presetsStore'
@@ -17,11 +17,11 @@ import { DesignThumbnail } from './DesignThumbnail'
 // ============================================================================
 
 const emptyStateStyles = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  minHeight: 'container2',
   textStyle: 'brutalistText',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  minHeight: 'sizes.container.min', // Migrated from container2 base token
   color: 'surface.fg',
   opacity: 'muted',
 })

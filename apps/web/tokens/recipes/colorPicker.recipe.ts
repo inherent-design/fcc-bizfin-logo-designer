@@ -11,7 +11,7 @@
  * - trigger: Mobile color preview button
  * - modalOverlay: Mobile modal backdrop
  * - modalContent: Mobile modal container
- * - pickerWrapper: Visual picker border/background
+ * - pickerColumn: Visual picker container
  * - inputsColumn: Inputs container
  * - sectionContainer: Input section wrapper
  * - inputGrid: Grid layout for HSL/RGB inputs
@@ -43,7 +43,6 @@ export const colorPickerRecipe = defineSlotRecipe({
     'desktopContainer',
     'gridLayout',
     'pickerColumn',
-    'pickerWrapper',
     'inputsColumn',
     'sectionContainer',
     'inputGrid',
@@ -56,31 +55,28 @@ export const colorPickerRecipe = defineSlotRecipe({
   base: {
     container: {
       display: 'flex',
-      flexDirection: 'column',
       gap: 'stack.tight',
+      flexDirection: 'column',
     },
 
     label: {
       ...neoTextBase,
+      display: 'block',
+      color: 'text.primary',
       fontSize: 'sm',
       fontWeight: 'bold',
-      color: 'text.primary',
-      display: 'block',
-      textTransform: 'uppercase',
       letterSpacing: 'wider',
+      textTransform: 'uppercase',
     },
 
     trigger: {
       ...neoInteractiveBase,
-      display: 'block',
+      cursor: 'pointer',
+
+      display: { base: 'block', md: 'none' },
       width: '100%',
       minHeight: 'sizes.touch.min',
       boxShadow: 'elevation.raised',
-      cursor: 'pointer',
-
-      '@media screen and (min-width: 48rem)': {
-        display: 'none',
-      },
 
       '&:hover': {
         transform: 'translate(2px, 2px)',
@@ -94,79 +90,63 @@ export const colorPickerRecipe = defineSlotRecipe({
     },
 
     modalOverlay: {
-      display: 'flex',
-      position: 'fixed',
-      inset: 0,
+      display: { base: 'flex', md: 'none' },
       zIndex: 'modal',
-      alignItems: 'center',
+      inset: 0,
+      position: 'fixed',
       justifyContent: 'center',
+      alignItems: 'center',
       bg: 'bg.overlay',
-
-      '@media screen and (min-width: 48rem)': {
-        display: 'none',
-      },
     },
 
     modalContent: {
       ...neoInteractiveBase,
+      width: '100%',
+      maxWidth: 'sizes.dialog.default',
+      maxHeight: '90vh',
+      m: 'inset.normal',
+      p: 'inset.spacious',
       bg: 'bg.elevated',
       boxShadow: 'elevation.modal',
-      p: 'inset.spacious',
-      m: 'inset.normal',
-      maxWidth: 'sizes.dialog.default',
-      width: '100%',
-      maxHeight: '90vh',
       overflowY: 'auto',
     },
 
     desktopContainer: {
-      display: 'none',
-
-      '@media screen and (min-width: 48rem)': {
-        display: 'block',
-      },
+      display: { base: 'none', md: 'block' },
     },
 
     gridLayout: {
       display: 'grid',
-      gridTemplateColumns: { base: '1fr', md: '1fr 1fr' },
       gap: 'stack.spacious',
+      gridTemplateColumns: { base: '1fr', md: '1fr 1fr' },
       maxWidth: '100%',
     },
 
     pickerColumn: {
       display: 'flex',
-      alignItems: 'start',
       position: 'relative',
+      alignItems: 'center',
       minWidth: 0,
-    },
-
-    pickerWrapper: {
-      ...neoInteractiveBase,
-      width: '100%',
-      maxWidth: '300px',
-      boxShadow: 'elevation.inset',
-      p: 'inset.tight',
-      bg: 'bg.subtle',
+      p: 'inset.spacious',
     },
 
     inputsColumn: {
       display: 'flex',
-      flexDirection: 'column',
       gap: 'stack.normal',
+      flexDirection: 'column',
       minWidth: 0,
     },
 
     sectionContainer: {
       display: 'flex',
-      flexDirection: 'column',
       gap: 'stack.tight',
+      flexDirection: 'column',
     },
 
     inputGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(3, 1fr)',
       gap: 'inline.tight',
+      gridTemplateColumns: 'repeat(3, 1fr)',
     },
 
     fullWidthInput: {
@@ -185,8 +165,8 @@ export const colorPickerRecipe = defineSlotRecipe({
     },
 
     doneButton: {
-      mt: 'stack.normal',
       width: '100%',
+      mt: 'stack.normal',
     },
   },
 })

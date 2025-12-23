@@ -6,7 +6,7 @@
 import { type ReactNode } from 'react'
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Types
 import type { Vec2 } from '@/schemas/logoState.schema'
@@ -92,39 +92,39 @@ const ELEMENT_BASE_POSITIONS: Vec2[] = [
 // ============================================================================
 
 const containerStyles = css({
-  // Mobile: 60% height (column layout)
-  height: { base: '60%', tablet: '100%' },
-  // Tablet+: 60% width (row layout)
-  width: { base: '100%', tablet: '60%' },
+  position: 'relative',
   // Flex shrink to maintain size (removed flex: 1 to respect explicit sizes)
   flexShrink: 0,
-  position: 'relative',
+  // Tablet+: 60% width (row layout)
+  width: { base: '100%', tablet: '60%' },
+  // Mobile: 60% height (column layout)
+  height: { base: '60%', tablet: '100%' },
 })
 
 const sceneContainerStyles = css({
+  display: 'flex',
   position: 'relative',
+  justifyContent: 'center',
+  alignItems: 'center',
   width: '100%',
   height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
   perspective: '1000px',
 })
 
 const logoContainerStyles = css({
   position: 'relative',
+  transformStyle: 'preserve-3d',
+  aspectRatio: '1/1',
   width: '80%',
   maxWidth: '600px',
-  aspectRatio: '1/1',
-  transformStyle: 'preserve-3d',
 })
 
 const parallaxLayerStyles = css({
-  position: 'absolute',
-  inset: 0,
   display: 'flex',
-  alignItems: 'center',
+  inset: 0,
+  position: 'absolute',
   justifyContent: 'center',
+  alignItems: 'center',
 })
 
 const svgStyles = css({

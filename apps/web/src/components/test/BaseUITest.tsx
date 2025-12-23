@@ -9,8 +9,8 @@
 
 import { Button } from '@base-ui/react/button'
 import { Dialog } from '@base-ui/react/dialog'
+import { css } from '@styled-system/css'
 import { useState } from 'react'
-import { css } from 'styled-system/css'
 
 export function BaseUITest() {
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -24,13 +24,13 @@ export function BaseUITest() {
       {/* Test 1: Button with semantic tokens */}
       <Button
         className={css({
-          bg: 'bg.interactive.primary',
           textStyle: 'brutalistLabel',
-          color: 'text.onPrimary',
-          boxShadow: 'elevation.raised',
-          px: 'inset.normal',
-          py: 'inset.tight',
           cursor: 'pointer',
+          py: 'inset.tight',
+          px: 'inset.normal',
+          color: 'text.onPrimary',
+          bg: 'bg.interactive.primary',
+          boxShadow: 'elevation.raised',
           transitionDuration: 'fast',
           transitionProperty: 'all',
 
@@ -39,8 +39,8 @@ export function BaseUITest() {
           },
 
           '&[data-disabled]': {
-            opacity: 'disabled',
             cursor: 'not-allowed',
+            opacity: 'disabled',
           },
         })}
         onClick={() => setDialogOpen(true)}
@@ -53,8 +53,8 @@ export function BaseUITest() {
         <Dialog.Portal>
           <Dialog.Backdrop
             className={css({
-              position: 'fixed',
               inset: 0,
+              position: 'fixed',
               bg: 'bg.overlay',
               backdropBlur: 'dropdown',
             })}
@@ -65,31 +65,31 @@ export function BaseUITest() {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              bg: 'bg.elevated',
-              borderWidth: 'brutal',
-              borderStyle: 'solid',
               borderColor: 'border.default',
               borderRadius: 'none',
-              boxShadow: 'elevation.modal',
-              p: 'inset.comfortable',
+              borderWidth: 'brutal',
               minW: 'sizes.dialog.min',
 
+              p: 'inset.comfortable',
+              bg: 'bg.elevated',
+              boxShadow: 'elevation.modal',
+              borderStyle: 'solid',
               '&[data-starting-style]': {
-                opacity: 0,
                 scale: 0.95,
+                opacity: 0,
               },
 
               '&[data-ending-style]': {
-                opacity: 0,
                 scale: 0.95,
+                opacity: 0,
               },
             })}
           >
             <Dialog.Title
               className={css({
                 textStyle: 'brutalistLabel',
-                color: 'text.primary',
                 mb: 'stack.tight',
+                color: 'text.primary',
               })}
             >
               Base UI Dialog Test
@@ -97,8 +97,8 @@ export function BaseUITest() {
 
             <Dialog.Description
               className={css({
-                color: 'text.secondary',
                 mb: 'stack.normal',
+                color: 'text.secondary',
               })}
             >
               This dialog demonstrates Base UI integration with our token system.
@@ -106,16 +106,16 @@ export function BaseUITest() {
 
             <Dialog.Close
               className={css({
-                bg: 'bg.interactive.default',
-                color: 'text.primary',
-                borderWidth: 'brutal',
-                borderStyle: 'solid',
-                borderColor: 'border.default',
-                borderRadius: 'none',
-                px: 'inset.normal',
-                py: 'inset.tight',
                 cursor: 'pointer',
 
+                borderColor: 'border.default',
+                borderRadius: 'none',
+                borderWidth: 'brutal',
+                py: 'inset.tight',
+                px: 'inset.normal',
+                color: 'text.primary',
+                bg: 'bg.interactive.default',
+                borderStyle: 'solid',
                 '&:hover': {
                   bg: 'bg.hover',
                 },
@@ -132,7 +132,7 @@ export function BaseUITest() {
         <p className={css({ color: 'text.tertiary', fontSize: 'sm' })}>
           Current theme: {document.documentElement.getAttribute('data-theme')}
         </p>
-        <p className={css({ color: 'text.quaternary', fontSize: 'xs', mt: 'stack.tight' })}>
+        <p className={css({ mt: 'stack.tight', color: 'text.quaternary', fontSize: 'xs' })}>
           Toggle theme to test swappable aesthetics
         </p>
       </div>

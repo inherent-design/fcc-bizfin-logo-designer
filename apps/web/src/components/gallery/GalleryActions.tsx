@@ -6,7 +6,7 @@
 import { useRef } from 'react'
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Utils
 import { componentLogger } from '@/utils/logger'
@@ -20,7 +20,7 @@ import { useUIStore } from '@/stores/uiStore'
 import { Button } from '@base-ui/react/button'
 
 // Recipes
-import { buttonRecipe } from 'styled-system/recipes'
+import { buttonRecipe } from '@styled-system/recipes'
 
 // Icons
 import { Download, Plus, Upload } from 'lucide-react'
@@ -31,8 +31,8 @@ import { Download, Plus, Upload } from 'lucide-react'
 
 const containerStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.normal',
+  flexDirection: 'column',
   mb: 'stack.normal',
 })
 
@@ -43,20 +43,20 @@ const saveRowStyles = css({
 
 const nameInputStyles = css({
   flex: 1,
-  px: 'inset.tight',
-  py: 'inset.tight',
-  borderWidth: 'brutal',
-  borderStyle: 'solid',
   borderColor: 'border.default',
   borderRadius: 'none',
-  bg: 'bg.input',
+  borderWidth: 'brutal',
+  py: 'inset.tight',
+  px: 'inset.tight',
   color: 'text.primary',
   fontSize: 'sm',
 
+  bg: 'bg.input',
+  borderStyle: 'solid',
   '&:focus': {
     outline: '2px solid',
-    outlineColor: 'border.focus',
     outlineOffset: '0',
+    outlineColor: 'border.focus',
   },
 })
 
@@ -150,10 +150,18 @@ export function GalleryActions() {
   const handleSave = () => {
     const name = nameInputRef.current?.value.trim()
     if (!name) {
+      componentLogger.warn(
+        { component: 'GalleryActions', action: 'save', reason: 'empty_name' },
+        'User attempted to save design with empty name'
+      )
       alert('Please enter a design name')
       return
     }
 
+    componentLogger.info(
+      { component: 'GalleryActions', action: 'save', name },
+      'User clicked Save button'
+    )
     saveDesign(name, currentState)
     if (nameInputRef.current) {
       nameInputRef.current.value = ''
@@ -165,6 +173,11 @@ export function GalleryActions() {
       alert('No design selected to export')
       return
     }
+
+    componentLogger.info(
+      { component: 'GalleryActions', action: 'export', designId: activeDesignId },
+      'User clicked Export button'
+    )
 
     setExporting(true)
     try {
@@ -178,6 +191,10 @@ export function GalleryActions() {
   }
 
   const handleImportClick = () => {
+    componentLogger.debug(
+      { component: 'GalleryActions', action: 'import.trigger' },
+      'User clicked Import button'
+    )
     fileInputRef.current?.click()
   }
 

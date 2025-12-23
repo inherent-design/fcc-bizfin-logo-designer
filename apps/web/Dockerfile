@@ -32,7 +32,7 @@ WORKDIR /app
 
 # Copy workspace configuration
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
-COPY apps/web/package.json ./apps/web/
+COPY apps/web/package.json apps/web/panda.config.ts apps/web/tokens ./apps/web/
 
 # Install all dependencies (including dev, needed for build)
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \

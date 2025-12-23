@@ -6,7 +6,7 @@
 import type { ReactNode } from 'react'
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Types
 import type { Vec2 } from '@/schemas/logoState.schema'
@@ -84,19 +84,19 @@ const QUADRANT_LABELS = ['Top-Left', 'Top-Right', 'Bottom-Left', 'Bottom-Right']
 // ============================================================================
 
 const sectionHeaderStyles = css({
-  fontSize: 'typeMinus2',
-  fontFamily: 'brutalist',
-  fontWeight: 'bold',
-  textTransform: 'uppercase',
-  letterSpacing: 'wider',
   color: 'surface.fg',
+  fontFamily: 'brutalist',
+  fontSize: 'xs', // Migrated from typeMinus2 base token
+  fontWeight: 'bold',
+  letterSpacing: 'wider',
+  textTransform: 'uppercase',
   opacity: 'subtle',
 })
 
 const sliderContainerStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.tight',
+  flexDirection: 'column',
 })
 
 const sliderHeaderStyles = css({
@@ -106,28 +106,28 @@ const sliderHeaderStyles = css({
 })
 
 const sliderLabelStyles = css({
-  fontSize: 'typeMinus1',
-  fontFamily: 'brutalist',
   color: 'surface.fg',
+  fontFamily: 'brutalist',
+  fontSize: 'small', // Migrated from typeMinus1 base token
   opacity: 'medium',
 })
 
 const sliderValueContainerStyles = css({
   display: 'flex',
-  alignItems: 'center',
   gap: 'inline.tight',
+  alignItems: 'center',
 })
 
 const sliderValueStyles = css({
-  fontSize: 'typeMinus2',
-  fontFamily: 'mono',
   color: 'surface.fg',
+  fontFamily: 'mono',
+  fontSize: 'xs', // Migrated from typeMinus2 base token
   opacity: 'muted',
 })
 
 const sliderInputStyles = css({
-  width: '100%',
   cursor: 'pointer',
+  width: '100%',
 })
 
 // ============================================================================

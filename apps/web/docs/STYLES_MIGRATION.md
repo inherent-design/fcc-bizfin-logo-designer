@@ -68,7 +68,7 @@ pnpm panda codegen
 Components use the generated utilities via `css()`:
 
 ```typescript
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 const styles = css({
   textStyle: 'brutalistLabel',  // Text style

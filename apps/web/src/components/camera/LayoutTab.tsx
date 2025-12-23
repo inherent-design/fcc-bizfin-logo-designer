@@ -3,10 +3,10 @@
 // ============================================================================
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Types
-import type { Vec2, Quadrant } from '@/schemas/logoState.schema'
+import type { Quadrant, Vec2 } from '@/schemas/logoState.schema'
 
 // Utils
 import { componentLogger } from '@/utils/logger'
@@ -16,7 +16,7 @@ import { Button } from '@base-ui/react/button'
 import { DraggableElementList } from './DraggableElementList'
 
 // Recipes
-import { buttonRecipe, sliderControlRecipe, sectionHeaderRecipe } from 'styled-system/recipes'
+import { buttonRecipe, sectionHeaderRecipe, sliderControlRecipe } from '@styled-system/recipes'
 
 // Zustand
 import { useLogoStore } from '@/stores/logoStore'
@@ -184,19 +184,19 @@ function LayoutSettings({ quadrants, fullQuadrants, actions }: LayoutSettingsPro
     <div
       className={css({
         display: 'flex',
-        flexDirection: 'column',
         gap: 'stack.loose',
+        flexDirection: 'column',
       })}
     >
       {/* Element Reordering Section */}
       <div>
         <h3
           className={css({
-            fontSize: 'sm',
-            fontFamily: 'brutalist',
-            fontWeight: 'bold',
-            color: 'text.primary',
             mb: 'stack.tight',
+            color: 'text.primary',
+            fontFamily: 'brutalist',
+            fontSize: 'sm',
+            fontWeight: 'bold',
           })}
         >
           Element Order
@@ -208,11 +208,11 @@ function LayoutSettings({ quadrants, fullQuadrants, actions }: LayoutSettingsPro
       <div>
         <h3
           className={css({
-            fontSize: 'sm',
-            fontFamily: 'brutalist',
-            fontWeight: 'bold',
-            color: 'text.primary',
             mb: 'stack.tight',
+            color: 'text.primary',
+            fontFamily: 'brutalist',
+            fontSize: 'sm',
+            fontWeight: 'bold',
           })}
         >
           Element Transforms
@@ -242,8 +242,8 @@ function LayoutSettings({ quadrants, fullQuadrants, actions }: LayoutSettingsPro
             <div
               className={css({
                 display: 'flex',
-                flexDirection: 'column',
                 gap: 'stack.normal',
+                flexDirection: 'column',
               })}
             >
               <SliderControl

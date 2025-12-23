@@ -1,7 +1,7 @@
 # Base UI Comprehensive Reference
 
-**Purpose:** Axiomatic knowledge for developing ANY components/features with Base UI  
-**Date:** 2025-12-21  
+**Purpose:** Axiomatic knowledge for developing ANY components/features with Base UI
+**Date:** 2025-12-21
 **Source:** https://base-ui.com (@base-ui/react)
 
 ---
@@ -10,80 +10,80 @@
 
 ### Form Controls
 
-| Component | Purpose | Providers | Key Features | Accessibility | Key Data Attributes |
-|-----------|---------|-----------|--------------|---------------|---------------------|
-| **Button** | Accessible button | None | Render as different element, focusable when disabled | ARIA button role | `data-disabled` |
-| **Checkbox** | Boolean checkbox | None | Controlled/uncontrolled, indeterminate state | ARIA checkbox | `data-checked`, `data-unchecked`, `data-indeterminate` |
-| **Checkbox Group** | Group of checkboxes | None | Shared state, value array | ARIA group | `data-disabled` |
-| **Input** | Text input | None | Standard input with Base UI integration | ARIA textbox | `data-disabled`, `data-invalid` |
-| **Number Field** | Numeric input with spinners | None | Min/max/step, scrub area, Intl.NumberFormat | ARIA spinbutton | `data-disabled`, `data-invalid` |
-| **Radio** | Single-choice option | RadioGroup | Must be in group | ARIA radio | `data-checked`, `data-unchecked` |
-| **Slider** | Range input | None | Single/multiple thumbs, min/max/step, format | ARIA slider | `data-disabled`, `data-direction` |
-| **Switch** | On/off toggle | None | Controlled/uncontrolled | ARIA switch | `data-checked`, `data-unchecked` |
-| **Toggle** | Pressed/unpressed button | None | Button-styled switch | ARIA button | `data-pressed`, `data-unpressed` |
-| **Toggle Group** | Group of toggles | None | Single/multiple selection | ARIA group | `data-disabled` |
-| **Select** | Dropdown selection | None | Keyboard search, scroll arrows | ARIA listbox | `data-popup-open`, `data-filled` |
+| Component          | Purpose                     | Providers  | Key Features                                         | Accessibility    | Key Data Attributes                                    |
+| ------------------ | --------------------------- | ---------- | ---------------------------------------------------- | ---------------- | ------------------------------------------------------ |
+| **Button**         | Accessible button           | None       | Render as different element, focusable when disabled | ARIA button role | `data-disabled`                                        |
+| **Checkbox**       | Boolean checkbox            | None       | Controlled/uncontrolled, indeterminate state         | ARIA checkbox    | `data-checked`, `data-unchecked`, `data-indeterminate` |
+| **Checkbox Group** | Group of checkboxes         | None       | Shared state, value array                            | ARIA group       | `data-disabled`                                        |
+| **Input**          | Text input                  | None       | Standard input with Base UI integration              | ARIA textbox     | `data-disabled`, `data-invalid`                        |
+| **Number Field**   | Numeric input with spinners | None       | Min/max/step, scrub area, Intl.NumberFormat          | ARIA spinbutton  | `data-disabled`, `data-invalid`                        |
+| **Radio**          | Single-choice option        | RadioGroup | Must be in group                                     | ARIA radio       | `data-checked`, `data-unchecked`                       |
+| **Slider**         | Range input                 | None       | Single/multiple thumbs, min/max/step, format         | ARIA slider      | `data-disabled`, `data-direction`                      |
+| **Switch**         | On/off toggle               | None       | Controlled/uncontrolled                              | ARIA switch      | `data-checked`, `data-unchecked`                       |
+| **Toggle**         | Pressed/unpressed button    | None       | Button-styled switch                                 | ARIA button      | `data-pressed`, `data-unpressed`                       |
+| **Toggle Group**   | Group of toggles            | None       | Single/multiple selection                            | ARIA group       | `data-disabled`                                        |
+| **Select**         | Dropdown selection          | None       | Keyboard search, scroll arrows                       | ARIA listbox     | `data-popup-open`, `data-filled`                       |
 
 ### Advanced Form
 
-| Component | Purpose | Providers | Key Features | Accessibility | Key Data Attributes |
-|-----------|---------|-----------|--------------|---------------|---------------------|
-| **Autocomplete** | Input with suggestion list | None | Mode: both/list/inline, custom rendering | ARIA combobox | `data-popup-open`, `data-highlighted` |
-| **Combobox** | Input + selection list | None | Search + select, clear button | ARIA combobox | `data-popup-open`, `data-highlighted`, `data-selected` |
-| **Field** | Label + validation wrapper | None | Validation modes, dirty/touched tracking | ARIA label/description | `data-valid`, `data-invalid`, `data-dirty`, `data-touched`, `data-filled`, `data-focused` |
-| **Fieldset** | Group with legend | None | Stylable legend (vs native) | ARIA group | `data-disabled` |
-| **Form** | Form wrapper | None | onFormSubmit with typed values | ARIA form | `data-valid`, `data-invalid` |
+| Component        | Purpose                    | Providers | Key Features                             | Accessibility          | Key Data Attributes                                                                       |
+| ---------------- | -------------------------- | --------- | ---------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------- |
+| **Autocomplete** | Input with suggestion list | None      | Mode: both/list/inline, custom rendering | ARIA combobox          | `data-popup-open`, `data-highlighted`                                                     |
+| **Combobox**     | Input + selection list     | None      | Search + select, clear button            | ARIA combobox          | `data-popup-open`, `data-highlighted`, `data-selected`                                    |
+| **Field**        | Label + validation wrapper | None      | Validation modes, dirty/touched tracking | ARIA label/description | `data-valid`, `data-invalid`, `data-dirty`, `data-touched`, `data-filled`, `data-focused` |
+| **Fieldset**     | Group with legend          | None      | Stylable legend (vs native)              | ARIA group             | `data-disabled`                                                                           |
+| **Form**         | Form wrapper               | None      | onFormSubmit with typed values           | ARIA form              | `data-valid`, `data-invalid`                                                              |
 
 ### Overlays
 
-| Component | Purpose | Portal | Positioning | Focus Trap | Esc Close | Key Data Attributes |
-|-----------|---------|--------|-------------|------------|-----------|---------------------|
-| **Dialog** | Modal dialog | Yes | Fixed center | Yes | Yes | `data-open`, `data-starting-style`, `data-ending-style`, `data-nested-dialog-open` |
-| **Alert Dialog** | Requires response | Yes | Fixed center | Yes | No | `data-open`, `data-starting-style`, `data-ending-style` |
-| **Popover** | Anchored popup | Yes | Positioner | Yes | Yes | `data-open`, `data-side`, `data-starting-style`, `data-ending-style` |
-| **Tooltip** | Hover hint | Yes | Positioner | No | Yes | `data-open`, `data-side`, `data-instant` |
-| **Menu** | Action dropdown | Yes | Positioner | Yes | Yes | `data-open`, `data-highlighted`, `data-side` |
-| **Context Menu** | Right-click menu | Yes | Positioner (at pointer) | Yes | Yes | `data-open`, `data-highlighted`, `data-side` |
-| **Preview Card** | Link hover preview | Yes | Positioner | No | Yes | `data-open`, `data-side` |
+| Component        | Purpose            | Portal | Positioning             | Focus Trap | Esc Close | Key Data Attributes                                                                |
+| ---------------- | ------------------ | ------ | ----------------------- | ---------- | --------- | ---------------------------------------------------------------------------------- |
+| **Dialog**       | Modal dialog       | Yes    | Fixed center            | Yes        | Yes       | `data-open`, `data-starting-style`, `data-ending-style`, `data-nested-dialog-open` |
+| **Alert Dialog** | Requires response  | Yes    | Fixed center            | Yes        | No        | `data-open`, `data-starting-style`, `data-ending-style`                            |
+| **Popover**      | Anchored popup     | Yes    | Positioner              | Yes        | Yes       | `data-open`, `data-side`, `data-starting-style`, `data-ending-style`               |
+| **Tooltip**      | Hover hint         | Yes    | Positioner              | No         | Yes       | `data-open`, `data-side`, `data-instant`                                           |
+| **Menu**         | Action dropdown    | Yes    | Positioner              | Yes        | Yes       | `data-open`, `data-highlighted`, `data-side`                                       |
+| **Context Menu** | Right-click menu   | Yes    | Positioner (at pointer) | Yes        | Yes       | `data-open`, `data-highlighted`, `data-side`                                       |
+| **Preview Card** | Link hover preview | Yes    | Positioner              | No         | Yes       | `data-open`, `data-side`                                                           |
 
 ### Navigation
 
-| Component | Purpose | Providers | Key Features | Accessibility | Key Data Attributes |
-|-----------|---------|-----------|--------------|---------------|---------------------|
-| **Tabs** | Panel switcher | None | Horizontal/vertical, auto/manual activation | ARIA tabs | `data-selected`, `data-orientation` |
-| **Accordion** | Collapsible panels | None | Single/multiple expansion | ARIA accordion | `data-open`, `data-index` |
-| **Collapsible** | Single panel | None | Controlled/uncontrolled | ARIA region | `data-open`, `data-starting-style`, `data-ending-style` |
-| **Navigation Menu** | Website nav | None | Nested menus | ARIA navigation | `data-open`, `data-highlighted` |
-| **Menubar** | App menubar | None | F10/Alt activation | ARIA menubar | `data-open`, `data-highlighted` |
+| Component           | Purpose            | Providers | Key Features                                | Accessibility   | Key Data Attributes                                     |
+| ------------------- | ------------------ | --------- | ------------------------------------------- | --------------- | ------------------------------------------------------- |
+| **Tabs**            | Panel switcher     | None      | Horizontal/vertical, auto/manual activation | ARIA tabs       | `data-selected`, `data-orientation`                     |
+| **Accordion**       | Collapsible panels | None      | Single/multiple expansion                   | ARIA accordion  | `data-open`, `data-index`                               |
+| **Collapsible**     | Single panel       | None      | Controlled/uncontrolled                     | ARIA region     | `data-open`, `data-starting-style`, `data-ending-style` |
+| **Navigation Menu** | Website nav        | None      | Nested menus                                | ARIA navigation | `data-open`, `data-highlighted`                         |
+| **Menubar**         | App menubar        | None      | F10/Alt activation                          | ARIA menubar    | `data-open`, `data-highlighted`                         |
 
 ### Content Display
 
-| Component | Purpose | Providers | Key Features | Accessibility | Key Data Attributes |
-|-----------|---------|-----------|--------------|---------------|---------------------|
-| **Avatar** | User image | None | Loading states, fallback | ARIA img | `data-loading`, `data-loaded` |
-| **Progress** | Task indicator | None | Determinate/indeterminate | ARIA progressbar | `data-indeterminate` |
-| **Meter** | Value gauge | None | Min/max/optimum, semantic states | ARIA meter | `data-optimum`, `data-suboptimal`, `data-critical` |
-| **Separator** | Visual divider | None | Horizontal/vertical | ARIA separator | `data-orientation` |
-| **Scroll Area** | Custom scrollbars | None | Native scroll, custom styling | Native behavior | `data-orientation`, `data-scrolling` |
+| Component       | Purpose           | Providers | Key Features                     | Accessibility    | Key Data Attributes                                |
+| --------------- | ----------------- | --------- | -------------------------------- | ---------------- | -------------------------------------------------- |
+| **Avatar**      | User image        | None      | Loading states, fallback         | ARIA img         | `data-loading`, `data-loaded`                      |
+| **Progress**    | Task indicator    | None      | Determinate/indeterminate        | ARIA progressbar | `data-indeterminate`                               |
+| **Meter**       | Value gauge       | None      | Min/max/optimum, semantic states | ARIA meter       | `data-optimum`, `data-suboptimal`, `data-critical` |
+| **Separator**   | Visual divider    | None      | Horizontal/vertical              | ARIA separator   | `data-orientation`                                 |
+| **Scroll Area** | Custom scrollbars | None      | Native scroll, custom styling    | Native behavior  | `data-orientation`, `data-scrolling`               |
 
 ### Notifications
 
-| Component | Purpose | Providers | Key Features | Accessibility | Key Data Attributes |
-|-----------|---------|-----------|--------------|---------------|---------------------|
+| Component | Purpose       | Providers      | Key Features                                    | Accessibility      | Key Data Attributes                                                    |
+| --------- | ------------- | -------------- | ----------------------------------------------- | ------------------ | ---------------------------------------------------------------------- |
 | **Toast** | Notifications | Toast.Provider | Stacked/anchored, swipe-dismiss, global manager | ARIA live, F6 jump | `data-expanded`, `data-swipe-direction`, `data-limited`, `data-behind` |
 
 ### Layout
 
-| Component | Purpose | Providers | Key Features | Accessibility | Key Data Attributes |
-|-----------|---------|-----------|--------------|---------------|---------------------|
-| **Toolbar** | Button group | None | Horizontal actions | ARIA toolbar | `data-orientation` |
+| Component   | Purpose      | Providers | Key Features       | Accessibility | Key Data Attributes |
+| ----------- | ------------ | --------- | ------------------ | ------------- | ------------------- |
+| **Toolbar** | Button group | None      | Horizontal actions | ARIA toolbar  | `data-orientation`  |
 
 ### Utilities
 
-| Utility | Purpose | Use Case |
-|---------|---------|----------|
-| **Direction Provider** | RTL/LTR context | Internationalization (Arabic, Hebrew) |
-| **useRender** | Custom render hook | Building components with render prop pattern |
+| Utility                | Purpose            | Use Case                                     |
+| ---------------------- | ------------------ | -------------------------------------------- |
+| **Direction Provider** | RTL/LTR context    | Internationalization (Arabic, Hebrew)        |
+| **useRender**          | Custom render hook | Building components with render prop pattern |
 
 ---
 
@@ -354,10 +354,10 @@ Base UI is **completely unstyled**. Three styling methods:
 ### className Function Pattern
 
 ```jsx
-<Switch.Thumb 
-  className={(state) => 
+<Switch.Thumb
+  className={(state) =>
     state.checked ? 'bg-blue-500' : 'bg-gray-300'
-  } 
+  }
 />
 ```
 
@@ -397,7 +397,7 @@ Base UI is **completely unstyled**. Three styling methods:
 
 **Strategy 1: Direct Patterns** (One-off styling)
 ```tsx
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 <Dialog.Popup className={css({
   bg: 'white',
@@ -409,7 +409,7 @@ import { css } from 'styled-system/css'
 
 **Strategy 2: Recipes** (Reusable components)
 ```typescript
-import { cva } from 'styled-system/css'
+import { cva } from '@styled-system/css'
 
 const buttonRecipe = cva({
   base: {
@@ -431,7 +431,7 @@ const buttonRecipe = cva({
 
 **Strategy 3: Multi-Slot Recipes** (Complex components)
 ```typescript
-import { sva } from 'styled-system/css'
+import { sva } from '@styled-system/css'
 
 const dialogRecipe = sva({
   slots: ['backdrop', 'popup', 'title'],

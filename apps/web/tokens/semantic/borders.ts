@@ -48,3 +48,53 @@ export const outline = {
     normal: { value: '{borderWidths.border2}' },
   },
 } as const
+
+// ============================================================================
+// BORDER STYLE TOKENS
+// ============================================================================
+
+/**
+ * Semantic border style tokens
+ * Intent: Consistent border rendering styles
+ */
+export const borderStyle = {
+  /** Solid line (default for neo-brutalist aesthetic) */
+  solid: { value: 'solid' },
+
+  /** Dashed line (utility for focus indicators, dividers) */
+  dashed: { value: 'dashed' },
+
+  /** Dotted line (utility for secondary borders) */
+  dotted: { value: 'dotted' },
+
+  /** No border (utility for reset states) */
+  none: { value: 'none' },
+} as const
+
+// ============================================================================
+// BORDER RADIUS TOKENS
+// ============================================================================
+
+/**
+ * Semantic border radius tokens
+ * Intent: Consistent corner rounding
+ */
+export const borderRadius = {
+  /** No radius (neo-brutalist default) */
+  none: { value: '{radii.radius0}' },
+
+  /** Small radius (4px) */
+  sm: { value: '{radii.radius4}' },
+
+  /** Medium radius (8px) */
+  md: { value: '{radii.radius8}' },
+
+  /** Large radius (12px) */
+  lg: { value: '{radii.radius12}' },
+
+  /** Extra large radius (16px) */
+  xl: { value: '{radii.radius16}' },
+
+  /** Full radius (pill shape) */
+  full: { value: '{radii.radiusFull}' },
+} as const

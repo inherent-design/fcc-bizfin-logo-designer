@@ -4,13 +4,13 @@
 
 // External dependencies
 import type { ReactNode } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Constants
-import { MAX_LOGO_ROTATION, MOBILE_BREAKPOINT } from '@/constants/world'
+import { MAX_LOGO_ROTATION } from '@/constants/world'
 
 // Hooks
 import { useGyroscopeTilt } from '@/hooks/useGyroscopeTilt'
@@ -40,14 +40,14 @@ interface WorldSpaceProps {
 // ============================================================================
 
 const containerStyles = css({
-  width: '100vw',
-  height: '100vh',
-  bg: 'world.bg',
-  overflow: 'hidden',
   display: 'flex',
   // Mobile: column layout (40% controls top, 60% preview bottom)
   flexDirection: { base: 'column', tablet: 'row' },
   // Tablet+: row layout (40% controls left, 60% preview right)
+  width: '100vw',
+  height: '100vh',
+  bg: 'world.bg',
+  overflow: 'hidden',
 })
 
 // ============================================================================
@@ -90,12 +90,29 @@ export function WorldSpace({ children }: WorldSpaceProps) {
   // Enable mouse tracking (desktop)
   useMouseTracking()
 
-  // Enable logo tilt (desktop with mouse, mobile with gyroscope)
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < MOBILE_BREAKPOINT
+  // Detect device type based on pointer capability (reactive, SSR-safe)
+  const [deviceType, setDeviceType] = useState<'pointer' | 'touch'>(() => {
+    // Initial detection (SSR-safe)
+    if (typeof window === 'undefined') return 'pointer'
+    return window.matchMedia('(pointer: coarse)').matches ? 'touch' : 'pointer'
+  })
 
-  // Call hooks unconditionally, they'll handle their own logic
-  useLogoTilt(isMobile ? 0 : MAX_LOGO_ROTATION)
-  useGyroscopeTilt(isMobile ? MAX_LOGO_ROTATION : 0)
+  // Listen for device type changes (e.g., Chrome DevTools device emulation)
+  useEffect(() => {
+    const query = window.matchMedia('(pointer: coarse)')
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setDeviceType(e.matches ? 'touch' : 'pointer')
+    }
+
+    query.addEventListener('change', handleChange)
+    return () => query.removeEventListener('change', handleChange)
+  }, [])
+
+  // Enable logo tilt (desktop with mouse, mobile with gyroscope)
+  // Call hooks unconditionally (React Rules of Hooks), they handle early returns internally
+  useLogoTilt(deviceType === 'pointer' ? MAX_LOGO_ROTATION : 0)
+  useGyroscopeTilt(deviceType === 'touch' ? MAX_LOGO_ROTATION : 0)
 
   return <div className={containerStyles}>{children}</div>
 }

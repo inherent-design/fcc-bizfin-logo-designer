@@ -5,9 +5,10 @@
  */
 
 export { animations } from './animations'
-export { borderWidths, outline } from './borders'
+export { borderRadius, borderStyle, borderWidths, outline } from './borders'
 export { colors } from './colors'
-export { opacity, blur, backdropBlur, shadows } from './effects'
+export { backdropBlur, blur, opacity, shadows } from './effects'
+export { cursors } from './interaction'
 export { layout } from './layout'
 export { radii } from './radii'
 export { sizes } from './sizes'
@@ -18,9 +19,10 @@ export { typography } from './typography'
  * Combined semantic tokens object for Panda CSS config
  */
 import { animations } from './animations'
-import { borderWidths, outline } from './borders'
+import { borderRadius, borderStyle, borderWidths, outline } from './borders'
 import { colors } from './colors'
-import { opacity, blur, backdropBlur, shadows } from './effects'
+import { backdropBlur, blur, opacity, shadows } from './effects'
+import { cursors } from './interaction'
 import { layout } from './layout'
 import { radii } from './radii'
 import { sizes } from './sizes'
@@ -38,8 +40,15 @@ export const semanticTokens = {
 
   // Semantic groupings (nested structures for intent-based usage)
   outline,
+  borderStyle,
+  borderRadius,
+  cursors,
   spacing,
-  typography,
+  fonts: typography.fonts,
+  fontSizes: typography.fontSizes,
+  fontWeights: typography.fontWeights,
+  letterSpacings: typography.letterSpacings,
+  lineHeights: typography.lineHeights,
   shadows,
   animations,
   layout,

@@ -3,7 +3,7 @@
 // ============================================================================
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Types
 import type { HSLColor } from '@/schemas/logoState.schema'
@@ -15,7 +15,7 @@ import { componentLogger } from '@/utils/logger'
 import { ColorPicker } from '@/components/ui/ColorPicker'
 
 // Recipes
-import { sectionHeaderRecipe } from 'styled-system/recipes'
+import { sectionHeaderRecipe } from '@styled-system/recipes'
 
 // Zustand
 import { useLogoStore } from '@/stores/logoStore'
@@ -78,8 +78,8 @@ const checkboxStyles = css({
 
 const colorPickerGroupStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.normal',
+  flexDirection: 'column',
 })
 
 // ============================================================================
@@ -109,8 +109,8 @@ function ColorSettings({ baseColor, baseDesign, twoToneDesign, actions }: ColorS
     <div
       className={css({
         display: 'flex',
-        flexDirection: 'column',
         gap: 'stack.loose',
+        flexDirection: 'column',
       })}
     >
       {/* Base Color */}
@@ -171,7 +171,7 @@ function ColorSettings({ baseColor, baseDesign, twoToneDesign, actions }: ColorS
           // 2-tone mode: two separate fill colors
           <div className={colorPickerGroupStyles}>
             <ColorPicker
-              label='Quad 1 (TL)'
+              label='Top-Left'
               onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ quadrant: 0, to: newColor }, 'Two-tone fill color changed')
                 actions.setTwoToneFillColor(0, newColor)
@@ -179,7 +179,7 @@ function ColorSettings({ baseColor, baseDesign, twoToneDesign, actions }: ColorS
               color={twoToneDesign!.fillColorQuadrant0}
             />
             <ColorPicker
-              label='Quad 2 (BR)'
+              label='Bottom-Right'
               onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ quadrant: 3, to: newColor }, 'Two-tone fill color changed')
                 actions.setTwoToneFillColor(3, newColor)
@@ -225,7 +225,7 @@ function ColorSettings({ baseColor, baseDesign, twoToneDesign, actions }: ColorS
           // 1-tone mode: 2 element colors
           <div className={colorPickerGroupStyles}>
             <ColorPicker
-              label='Over Base'
+              label='Over Base/Shield'
               onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over base changed')
                 actions.setBaseElementColorOverBase(newColor)
@@ -233,7 +233,7 @@ function ColorSettings({ baseColor, baseDesign, twoToneDesign, actions }: ColorS
               color={baseDesign.elementColorOverBase}
             />
             <ColorPicker
-              label='Over Filled'
+              label='Over Quadrants'
               onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over filled changed')
                 actions.setBaseElementColorOverFilledQuadrants(newColor)
@@ -245,7 +245,7 @@ function ColorSettings({ baseColor, baseDesign, twoToneDesign, actions }: ColorS
           // 2-tone without unique colors: 2 element colors (shared for filled quadrants)
           <div className={colorPickerGroupStyles}>
             <ColorPicker
-              label='Over Base'
+              label='Over Base/Shield'
               onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over base changed')
                 actions.setBaseElementColorOverBase(newColor)
@@ -253,7 +253,7 @@ function ColorSettings({ baseColor, baseDesign, twoToneDesign, actions }: ColorS
               color={baseDesign.elementColorOverBase}
             />
             <ColorPicker
-              label='Over Filled'
+              label='Over Quadrants'
               onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over filled changed')
                 actions.setBaseElementColorOverFilledQuadrants(newColor)
@@ -265,7 +265,7 @@ function ColorSettings({ baseColor, baseDesign, twoToneDesign, actions }: ColorS
           // 2-tone with unique colors: 3 colors (separate for each filled quadrant)
           <div className={colorPickerGroupStyles}>
             <ColorPicker
-              label='Over Base'
+              label='Over Base/Shield'
               onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ to: newColor }, 'Element color over base changed')
                 actions.setBaseElementColorOverBase(newColor)
@@ -273,7 +273,7 @@ function ColorSettings({ baseColor, baseDesign, twoToneDesign, actions }: ColorS
               color={baseDesign.elementColorOverBase}
             />
             <ColorPicker
-              label='Over Quad 1'
+              label='Over Top-Left Quad.'
               onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ quadrant: 0, to: newColor }, 'Unique element color changed')
                 actions.setUniqueElementColor(0, newColor)
@@ -281,7 +281,7 @@ function ColorSettings({ baseColor, baseDesign, twoToneDesign, actions }: ColorS
               color={twoToneDesign!.uniqueElementColors!.elementColorOverQuadrant0Fill}
             />
             <ColorPicker
-              label='Over Quad 2'
+              label='Over Bottom-Right Quad.'
               onChange={(newColor: HSLColor) => {
                 componentLogger.debug({ quadrant: 3, to: newColor }, 'Unique element color changed')
                 actions.setUniqueElementColor(3, newColor)

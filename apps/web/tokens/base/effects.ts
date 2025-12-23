@@ -7,7 +7,8 @@
  * - NO token references (shadows defined here, semantic layer adds token refs)
  */
 
-import { opacityPrimitives } from '../primitives'
+import { formatCss } from 'culori'
+import { opacityPrimitives, darkColors } from '../primitives'
 
 // ============================================================================
 // OPACITY
@@ -97,7 +98,7 @@ export const shadows = {
         offsetY: '0.25rem',
         blur: '0',
         spread: '0',
-        color: '#1a1a1a',
+        color: formatCss(darkColors[3]),
       },
     },
 
@@ -108,7 +109,7 @@ export const shadows = {
         offsetY: '0.5rem',
         blur: '0',
         spread: '0',
-        color: '#1a1a1a',
+        color: formatCss(darkColors[3]),
       },
     },
 
@@ -119,7 +120,7 @@ export const shadows = {
         offsetY: '0.75rem',
         blur: '0',
         spread: '0',
-        color: '#1a1a1a',
+        color: formatCss(darkColors[3]),
       },
     },
   },
@@ -131,7 +132,7 @@ export const shadows = {
       offsetY: '0.125rem',
       blur: '0',
       spread: '0',
-      color: 'rgba(26, 26, 26, 0.2)',
+      color: formatCss({ ...darkColors[3], alpha: opacityPrimitives.opacity25 }),
       inset: true,
     },
   },

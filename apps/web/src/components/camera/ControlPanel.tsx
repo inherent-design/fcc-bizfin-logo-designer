@@ -7,10 +7,10 @@ import { Button } from '@base-ui/react/button'
 import { Tabs } from '@base-ui/react/tabs'
 
 // Panda CSS
-import { css, cx } from 'styled-system/css'
+import { css, cx } from '@styled-system/css'
 
 // Recipes
-import { buttonRecipe, tabsRecipe } from 'styled-system/recipes'
+import { buttonRecipe, tabsRecipe } from '@styled-system/recipes'
 
 // Utils
 import { useUIStore } from '@/stores/uiStore'
@@ -28,30 +28,30 @@ import { Folder, Grid2X2, Moon, Paintbrush, Palette, Sun } from 'lucide-react'
 // ============================================================================
 
 const containerStyles = css({
-  // Mobile: 40% height (column layout)
-  height: { base: '40%', tablet: '100%' },
-  // Tablet+: 40% width (row layout)
-  width: { base: '100%', tablet: '40%' },
   // Flex shrink to maintain size
   flexShrink: 0,
+  // Tablet+: 40% width (row layout)
+  width: { base: '100%', tablet: '40%' },
+  // Mobile: 40% height (column layout)
+  height: { base: '40%', tablet: '100%' },
   p: { base: 'inset.tight', tablet: 'inset.normal' },
-  overflowY: 'auto',
-  overflowX: 'hidden',
   bg: 'bg.elevated',
+  overflowX: 'hidden',
+  overflowY: 'auto',
 })
 
 const panelStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.normal',
-  p: { base: 'inset.tight', tablet: 'inset.normal' },
-  borderWidth: 'brutal',
-  borderStyle: 'solid',
+  flexDirection: 'column',
   borderColor: 'border.default',
   borderRadius: 'none',
+  borderWidth: 'brutal',
+  p: { base: 'inset.tight', tablet: 'inset.normal' },
   transitionDuration: 'fast',
   transitionProperty: 'all',
 
+  borderStyle: 'solid',
   '&:hover': {
     borderColor: 'border.moderate',
     boxShadow: 'interaction.hover',
@@ -65,40 +65,41 @@ const panelStyles = css({
 
 const headerStyles = css({
   display: 'flex',
-  alignItems: 'center',
   justifyContent: 'space-between',
+  alignItems: 'center',
   mb: 'stack.tight',
 })
 
 const titleContainerStyles = css({
   display: 'flex',
-  alignItems: 'center',
   gap: 'inline.normal',
+  alignItems: 'center',
 })
 
-const paletteIconStyles = css({
-  color: 'text.accent',
+const paintbrushIconStyles = css({
+  // Explicitly set to text.primary (not inheriting from ghost button variant)
+  color: 'text.primary',
 })
 
 const titleStyles = css({
   textStyle: 'brutalistLabel',
-  fontSize: 'xl',
   color: 'text.primary',
+  fontSize: 'heading',
 })
 
 const tabContentContainerStyles = css({
   flex: 1,
-  overflowY: 'auto',
-  overflowX: 'hidden',
   pr: 'inline.tight',
+  overflowX: 'hidden',
+  overflowY: 'auto',
 })
 
 const themeToggleStyles = css({
-  // Make button square by using equal padding
-  p: 'inset.tight',
   aspectRatio: '1',
   minWidth: 'sizes.touch.min',
   minHeight: 'sizes.touch.min',
+  // Make button square by using equal padding
+  p: 'inset.tight',
 })
 
 // ============================================================================
@@ -115,7 +116,7 @@ function ControlPanelHeader() {
   return (
     <div className={headerStyles}>
       <div className={titleContainerStyles}>
-        <Paintbrush className={paletteIconStyles} size={48} />
+        <Paintbrush className={paintbrushIconStyles} size={48} />
         <h1 className={titleStyles}>Logo Designer</h1>
       </div>
       <Button

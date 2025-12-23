@@ -1,6 +1,6 @@
-import type { HSLColor } from '../schemas/logoState.schema'
+import type { HSLColor } from '@/schemas/logoState.schema'
 import { hslToString } from './colors'
-import { componentLogger } from './logger'
+import { componentLogger } from '@/utils/logger'
 
 // Module-specific logger
 const svgLogger = componentLogger.child({ module: 'svg' })

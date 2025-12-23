@@ -8,3 +8,32 @@
 body {
   position: relative; /* Required for iOS 26+ Safari portal positioning */
 }
+
+
+.color-picker.react-colorful {
+  width: 100%;
+  aspect-ratio: 1;
+  height: auto;
+}
+.color-picker.react-colorful .react-colorful__saturation {
+  /* borderRadius: 'none';
+  borderWidth: 'brutal';
+  borderStyle: 'solid';
+  borderColor: 'border.default';
+  marginBottom: 'stack.tight'; */
+}
+.color-picker.react-colorful .react-colorful__hue {
+  /* borderRadius: 'none';
+  height: 'sizes.touch.min';
+  borderWidth: 'brutal';
+  borderStyle: 'solid';
+  borderColor: 'border.default'; */
+}
+.color-picker.react-colorful .react-colorful__pointer {
+  /* width: 'sizes.touch.min'; */ /* 44px - WCAG 2.2 compliant */
+  /* height: 'sizes.touch.min'; */ /* 44px */
+  /* borderWidth: 'brutal';
+  borderStyle: 'solid';
+  borderColor: 'border.default';
+  borderRadius: 'none'; */
+}

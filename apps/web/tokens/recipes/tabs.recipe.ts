@@ -68,7 +68,8 @@ export const tabsRecipe = defineSlotRecipe({
       marginBottom: '-3px', // Overlap with list border (brutal = 3px)
 
       '&:hover:not([data-selected])': {
-        bg: 'bg.hover',
+        bg: 'bg.interactive.hover',
+        color: 'text.interactive.hover',
       },
 
       '&[data-selected]': {

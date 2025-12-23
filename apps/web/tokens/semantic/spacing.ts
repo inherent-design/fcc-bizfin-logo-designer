@@ -86,6 +86,9 @@ const inset = {
  * Stack spacing for vertical rhythm
  */
 const stack = {
+  /** Micro - Minimal vertical spacing (2px) for badges/compact components */
+  micro: { value: '{spacing.micro2}' },
+
   /** Tight - Minimal vertical spacing */
   tight: { value: '{spacing.micro4}' },
 

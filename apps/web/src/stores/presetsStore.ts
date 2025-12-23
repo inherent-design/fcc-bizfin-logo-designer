@@ -59,6 +59,11 @@ export const usePresetsStore = create<PresetsStore>()(
           isSystemPreset: false,
         }
 
+        storeLogger.info(
+          { store: 'presetsStore', action: 'saveDesign', name, id: newDesign.id },
+          'Design saved'
+        )
+
         set((store) => ({
           designs: [...store.designs, newDesign],
           activeDesignId: newDesign.id,
@@ -68,13 +73,26 @@ export const usePresetsStore = create<PresetsStore>()(
       loadDesign: (id) => {
         const design = get().designs.find((d) => d.id === id)
         if (design) {
+          storeLogger.info(
+            { store: 'presetsStore', action: 'loadDesign', id, name: design.name },
+            'Design loaded'
+          )
           set({ activeDesignId: id })
           return design.state
         }
+        storeLogger.warn(
+          { store: 'presetsStore', action: 'loadDesign', id },
+          'Design not found'
+        )
         return null
       },
 
       deleteDesign: (id) => {
+        const design = get().designs.find((d) => d.id === id)
+        storeLogger.warn(
+          { store: 'presetsStore', action: 'deleteDesign', id, name: design?.name },
+          'Design deleted'
+        )
         set((state) => ({
           designs: state.designs.filter((d) => d.id !== id),
           activeDesignId: state.activeDesignId === id ? null : state.activeDesignId,
@@ -82,11 +100,19 @@ export const usePresetsStore = create<PresetsStore>()(
       },
 
       toggleFavorite: (id) => {
-        set((state) => ({
-          designs: state.designs.map((d) =>
-            d.id === id ? { ...d, isFavorite: !d.isFavorite } : d
-          ),
-        }))
+        set((state) => {
+          const design = state.designs.find((d) => d.id === id)
+          const newFavoriteState = design ? !design.isFavorite : false
+          storeLogger.debug(
+            { store: 'presetsStore', action: 'toggleFavorite', id, isFavorite: newFavoriteState },
+            'Favorite toggled'
+          )
+          return {
+            designs: state.designs.map((d) =>
+              d.id === id ? { ...d, isFavorite: !d.isFavorite } : d
+            ),
+          }
+        })
       },
 
       duplicateDesign: (id) => {
@@ -100,11 +126,31 @@ export const usePresetsStore = create<PresetsStore>()(
             isFavorite: false,
             isSystemPreset: false,
           }
+          storeLogger.info(
+            {
+              store: 'presetsStore',
+              action: 'duplicateDesign',
+              originalId: id,
+              duplicateId: duplicate.id,
+            },
+            'Design duplicated'
+          )
           set((state) => ({ designs: [...state.designs, duplicate] }))
         }
       },
 
       renameDesign: (id, newName) => {
+        const design = get().designs.find((d) => d.id === id)
+        storeLogger.debug(
+          {
+            store: 'presetsStore',
+            action: 'renameDesign',
+            id,
+            oldName: design?.name,
+            newName,
+          },
+          'Design renamed'
+        )
         set((state) => ({
           designs: state.designs.map((d) => (d.id === id ? { ...d, name: newName } : d)),
         }))
@@ -113,8 +159,23 @@ export const usePresetsStore = create<PresetsStore>()(
       exportDesign: (id) => {
         const design = get().designs.find((d) => d.id === id)
         if (design) {
-          return JSON.stringify(design.state, null, 2)
+          const jsonString = JSON.stringify(design.state, null, 2)
+          storeLogger.info(
+            {
+              store: 'presetsStore',
+              action: 'exportDesign',
+              id,
+              name: design.name,
+              jsonLength: jsonString.length,
+            },
+            'Design exported to JSON'
+          )
+          return jsonString
         }
+        storeLogger.warn(
+          { store: 'presetsStore', action: 'exportDesign', id },
+          'Design not found for export'
+        )
         return null
       },
 
@@ -132,6 +193,17 @@ export const usePresetsStore = create<PresetsStore>()(
             isFavorite: false,
             isSystemPreset: false,
           }
+
+          storeLogger.info(
+            {
+              store: 'presetsStore',
+              action: 'importDesign',
+              id: imported.id,
+              name: imported.name,
+              jsonLength: json.length,
+            },
+            'Design imported successfully'
+          )
 
           set((store) => ({
             designs: [...store.designs, imported],

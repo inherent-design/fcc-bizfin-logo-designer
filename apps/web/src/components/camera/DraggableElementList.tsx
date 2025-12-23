@@ -3,12 +3,12 @@
 // ============================================================================
 
 // React
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // dnd-kit
 import {
-  DndContext,
   closestCenter,
+  DndContext,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -25,16 +25,16 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Icons
 import { GripVertical } from 'lucide-react'
 
 // Recipes
-import { dragHandleRecipe } from 'styled-system/recipes'
+import { dragHandleRecipe } from '@styled-system/recipes'
 
 // Types
-import type { Quadrant, ElementId } from '@/schemas/logoState.schema'
+import type { ElementId, Quadrant } from '@/schemas/logoState.schema'
 
 // Utils
 import { componentLogger } from '@/utils/logger'
@@ -82,49 +82,49 @@ const ELEMENT_LABELS: Record<string, string> = {
 
 const listContainerStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.tight',
+  flexDirection: 'column',
   mb: 'stack.loose',
 })
 
 const itemContainerStyles = css({
   display: 'flex',
-  alignItems: 'center',
   gap: 'inline.tight',
-  bg: 'bg.subtle',
-  borderWidth: 'brutal',
-  borderStyle: 'solid',
+  alignItems: 'center',
   borderColor: 'border.default',
   borderRadius: 'none',
+  borderWidth: 'brutal',
   p: 'inset.tight',
+  bg: 'bg.subtle',
   transitionDuration: 'fast',
   transitionProperty: 'all',
 
+  borderStyle: 'solid',
   '&[data-dragging="true"]': {
+    transform: 'scale(1.02)',
     opacity: 'medium',
     boxShadow: 'interaction.dragging',
-    transform: 'scale(1.02)',
   },
 })
 
 const itemContentStyles = css({
-  flex: 1,
   display: 'flex',
+  flex: 1,
+  gap: 'stack.micro', // Migrated from micro2 base token
   flexDirection: 'column',
-  gap: 'micro2',
 })
 
 const elementLabelStyles = css({
-  fontSize: 'sm',
-  fontFamily: 'brutalist',
-  fontWeight: 'bold',
   color: 'text.primary',
+  fontFamily: 'brutalist',
+  fontSize: 'sm',
+  fontWeight: 'bold',
 })
 
 const quadrantLabelStyles = css({
-  fontSize: 'xs',
-  fontFamily: 'mono',
   color: 'text.secondary',
+  fontFamily: 'mono',
+  fontSize: 'xs',
   opacity: 'medium',
 })
 
@@ -146,12 +146,7 @@ function SortableElementItem({ id, position }: SortableElementItemProps) {
   }
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className={itemContainerStyles}
-      data-dragging={isDragging}
-    >
+    <div ref={setNodeRef} style={style} className={itemContainerStyles} data-dragging={isDragging}>
       <button
         className={dragHandleRecipe({ state: isDragging ? 'dragging' : 'default' })}
         {...attributes}

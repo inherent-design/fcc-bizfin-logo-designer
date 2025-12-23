@@ -6,10 +6,10 @@
 import { Button } from '@base-ui/react/button'
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css } from '@styled-system/css'
 
 // Recipes
-import { buttonRecipe } from 'styled-system/recipes'
+import { buttonRecipe } from '@styled-system/recipes'
 
 // Store
 import { useLogoStore } from '@/stores/logoStore'
@@ -23,8 +23,8 @@ import { ColorPicker } from '@/components/ui/ColorPicker'
 
 const containerStyles = css({
   display: 'flex',
-  flexDirection: 'column',
   gap: 'stack.loose',
+  flexDirection: 'column',
   pt: 'stack.normal',
 })
 

@@ -98,16 +98,25 @@ export const useLogoStore = create<LogoStore>()(
 
       setElementScale: (position, scale) =>
         set((state) => {
+          const clampedScale = Math.max(0.5, Math.min(2.0, scale))
+          storeLogger.debug(
+            { store: 'logoStore', action: 'setElementScale', position, scale: clampedScale },
+            'Element scale changed'
+          )
           const newQuadrants = [...state.quadrants] as [Quadrant, Quadrant, Quadrant, Quadrant]
           newQuadrants[position] = {
             ...newQuadrants[position],
-            elementScale: Math.max(0.5, Math.min(2.0, scale)),
+            elementScale: clampedScale,
           }
           return { quadrants: newQuadrants }
         }),
 
       setCenterOffset: (position, offset) =>
         set((state) => {
+          storeLogger.debug(
+            { store: 'logoStore', action: 'setCenterOffset', position, offset },
+            'Center offset changed'
+          )
           const newQuadrants = [...state.quadrants] as [Quadrant, Quadrant, Quadrant, Quadrant]
           newQuadrants[position] = {
             ...newQuadrants[position],

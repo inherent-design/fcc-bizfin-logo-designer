@@ -342,8 +342,8 @@ theme: {
 **Implementation**:
 
 ```typescript
-import { cx } from 'styled-system/css'
-import { neoButton, type NeoButtonVariantProps } from 'styled-system/recipes'
+import { cx } from '@styled-system/css'
+import { neoButton, type NeoButtonVariantProps } from '@styled-system/recipes'
 
 interface ButtonProps extends ComponentProps<'button'>, NeoButtonVariantProps {}
 

@@ -16,6 +16,9 @@ export function useLogoTilt(maxRotation: number = MAX_LOGO_ROTATION) {
   const rafId = useRef<number | undefined>(undefined)
 
   useEffect(() => {
+    // Early return if disabled (maxRotation=0 on mobile)
+    if (maxRotation === 0) return
+
     const animate = () => {
       // Calculate target rotation from mouse
       const targetRotation = calculateTiltFromMouse(mousePosition.x, mousePosition.y, maxRotation)

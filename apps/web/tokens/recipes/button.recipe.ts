@@ -39,7 +39,8 @@ export const buttonRecipe = defineRecipe({
     fontSize: 'sm',
 
     '&:hover': {
-      bg: 'bg.hover',
+      bg: 'bg.interactive.hover',
+      color: 'text.interactive.hover',
       boxShadow: 'interaction.hover',
     },
 
@@ -63,7 +64,8 @@ export const buttonRecipe = defineRecipe({
         borderColor: 'border.default',
 
         '&:hover': {
-          bg: 'bg.interactive.primaryHover',
+          bg: 'bg.interactive.hover',
+          color: 'text.interactive.hover',
           boxShadow: 'interaction.hover',
         },
       },
@@ -73,7 +75,8 @@ export const buttonRecipe = defineRecipe({
         borderColor: 'border.default',
 
         '&:hover': {
-          bg: 'bg.hover',
+          bg: 'bg.interactive.hover',
+          color: 'text.interactive.hover',
         },
       },
       ghost: {
@@ -82,7 +85,8 @@ export const buttonRecipe = defineRecipe({
         color: 'text.primary',
 
         '&:hover': {
-          bg: 'bg.hover',
+          bg: 'bg.interactive.hover',
+          color: 'text.interactive.hover',
           boxShadow: 'none',
         },
       },
@@ -91,7 +95,7 @@ export const buttonRecipe = defineRecipe({
     size: {
       sm: {
         px: 'inset.tight',
-        py: 'micro2',
+        py: 'inset.tight', // Migrated from micro2 base token
         fontSize: 'xs',
       },
       md: {

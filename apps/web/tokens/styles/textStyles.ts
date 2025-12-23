@@ -4,7 +4,7 @@ export const textStyles = {
     value: {
       fontFamily: 'brutalist',
       fontWeight: 'brutal',
-      fontSize: 'typeMinus1',
+      fontSize: 'small', // Migrated from typeMinus1 base token
       textTransform: 'uppercase',
       letterSpacing: 'wide',
     }
@@ -14,7 +14,7 @@ export const textStyles = {
     value: {
       fontFamily: 'brutalist',
       fontWeight: 'bold',
-      fontSize: 'typeMinus1',
+      fontSize: 'small', // Migrated from typeMinus1 base token
       textTransform: 'uppercase',
       letterSpacing: 'wider',
     }
@@ -23,7 +23,7 @@ export const textStyles = {
     description: 'Standard form field labels',
     value: {
       fontFamily: 'brutalist',
-      fontSize: 'typeMinus1',
+      fontSize: 'small', // Migrated from typeMinus1 base token
       fontWeight: 'medium',
     }
   },

@@ -35,7 +35,7 @@ export const inputRecipe = defineSlotRecipe({
       display: 'block',
       fontSize: 'xs',
       color: 'text.primary',
-      mb: 'micro2',
+      mb: 'stack.micro', // Migrated from micro2 base token
       textTransform: 'uppercase',
     },
 
@@ -75,14 +75,14 @@ export const inputRecipe = defineSlotRecipe({
         },
         input: {
           px: 'micro3',
-          py: 'micro2',
+          py: 'inset.tight', // Migrated from micro2 base token
           fontSize: 'xs',
         },
       },
       md: {
         label: {
           fontSize: 'xs',
-          mb: 'micro2',
+          mb: 'stack.micro', // Migrated from micro2 base token
         },
         input: {
           px: 'inset.tight',

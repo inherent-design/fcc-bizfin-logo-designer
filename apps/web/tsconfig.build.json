@@ -35,6 +35,6 @@
   },
   "include": [
     "panda.config.ts",
-    "src/tokens"
+    "tokens"
   ]
 }
