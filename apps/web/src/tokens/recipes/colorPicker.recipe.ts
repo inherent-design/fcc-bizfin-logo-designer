@@ -29,9 +29,11 @@
  * ```
  */
 
-import { sva } from 'styled-system/css'
+import { defineSlotRecipe } from '@pandacss/dev'
+import { neoInteractiveBase, neoTextBase } from './shared/base'
 
-export const colorPickerRecipe = sva({
+export const colorPickerRecipe = defineSlotRecipe({
+  className: 'colorPicker',
   slots: [
     'container',
     'label',
@@ -59,9 +61,9 @@ export const colorPickerRecipe = sva({
     },
 
     label: {
+      ...neoTextBase,
       fontSize: 'sm',
       fontWeight: 'bold',
-      fontFamily: 'brutalist',
       color: 'text.primary',
       display: 'block',
       textTransform: 'uppercase',
@@ -69,16 +71,16 @@ export const colorPickerRecipe = sva({
     },
 
     trigger: {
-      display: { base: 'block', desktop: 'none' },
+      ...neoInteractiveBase,
+      display: 'block',
       width: '100%',
       minHeight: 'sizes.touch.min',
-      borderWidth: 'borders.borderWidth.brutal',
-      borderStyle: 'solid',
-      borderColor: 'border.default',
       boxShadow: 'elevation.raised',
       cursor: 'pointer',
-      transitionDuration: 'animations.transition.fast.duration',
-      transitionProperty: 'all',
+
+      '@media screen and (min-width: 48rem)': {
+        display: 'none',
+      },
 
       '&:hover': {
         transform: 'translate(2px, 2px)',
@@ -92,20 +94,22 @@ export const colorPickerRecipe = sva({
     },
 
     modalOverlay: {
-      display: { base: 'flex', desktop: 'none' },
+      display: 'flex',
       position: 'fixed',
       inset: 0,
       zIndex: 'modal',
       alignItems: 'center',
       justifyContent: 'center',
       bg: 'bg.overlay',
+
+      '@media screen and (min-width: 48rem)': {
+        display: 'none',
+      },
     },
 
     modalContent: {
+      ...neoInteractiveBase,
       bg: 'bg.elevated',
-      borderWidth: 'borders.borderWidth.brutal',
-      borderStyle: 'solid',
-      borderColor: 'border.default',
       boxShadow: 'elevation.modal',
       p: 'inset.spacious',
       m: 'inset.normal',
@@ -116,7 +120,11 @@ export const colorPickerRecipe = sva({
     },
 
     desktopContainer: {
-      display: { base: 'none', desktop: 'block' },
+      display: 'none',
+
+      '@media screen and (min-width: 48rem)': {
+        display: 'block',
+      },
     },
 
     gridLayout: {
@@ -134,11 +142,9 @@ export const colorPickerRecipe = sva({
     },
 
     pickerWrapper: {
+      ...neoInteractiveBase,
       width: '100%',
       maxWidth: '300px',
-      borderWidth: 'borders.borderWidth.brutal',
-      borderStyle: 'solid',
-      borderColor: 'border.default',
       boxShadow: 'elevation.inset',
       p: 'inset.tight',
       bg: 'bg.subtle',
@@ -184,8 +190,3 @@ export const colorPickerRecipe = sva({
     },
   },
 })
-
-/**
- * TypeScript types for color picker recipe variants
- */
-export type ColorPickerRecipeVariants = Parameters<typeof colorPickerRecipe>[0]

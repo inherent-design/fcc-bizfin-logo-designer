@@ -10,18 +10,18 @@ import { useEffect } from 'react'
 import { css } from 'styled-system/css'
 
 // Constants
-import { MAX_LOGO_ROTATION, MOBILE_BREAKPOINT } from '../../constants/world'
+import { MAX_LOGO_ROTATION, MOBILE_BREAKPOINT } from '@/constants/world'
 
 // Hooks
-import { useGyroscopeTilt } from '../../hooks/useGyroscopeTilt'
-import { useLogoTilt } from '../../hooks/useLogoTilt'
-import { useMouseTracking } from '../../hooks/useMouseTracking'
+import { useGyroscopeTilt } from '@/hooks/useGyroscopeTilt'
+import { useLogoTilt } from '@/hooks/useLogoTilt'
+import { useMouseTracking } from '@/hooks/useMouseTracking'
 
 // Store
-import { useUIStore } from '../../stores/uiStore'
+import { useUIStore } from '@/stores/uiStore'
 
 // Utils
-import { componentLogger } from '../../utils/logger'
+import { componentLogger } from '@/utils/logger'
 
 // ============================================================================
 // TYPES & INTERFACES

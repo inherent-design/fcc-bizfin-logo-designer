@@ -3,25 +3,25 @@
 // ============================================================================
 
 // Base UI
-import { Tabs } from '@base-ui/react/tabs'
 import { Button } from '@base-ui/react/button'
+import { Tabs } from '@base-ui/react/tabs'
 
 // Panda CSS
-import { css } from 'styled-system/css'
+import { css, cx } from 'styled-system/css'
 
 // Recipes
-import { buttonRecipe } from '@/recipes/button.recipe'
-import { tabsRecipe } from '@/recipes/tabs.recipe'
+import { buttonRecipe, tabsRecipe } from 'styled-system/recipes'
 
 // Utils
 import { useUIStore } from '@/stores/uiStore'
 
 // Components
 import { ColorTab } from './ColorTab'
+import { GalleryTab } from './GalleryTab'
 import { LayoutTab } from './LayoutTab'
 
 // Icons
-import { Paintbrush, Palette, Grid2X2, Sun, Moon } from 'lucide-react'
+import { Folder, Grid2X2, Moon, Paintbrush, Palette, Sun } from 'lucide-react'
 
 // ============================================================================
 // STYLES
@@ -34,7 +34,7 @@ const containerStyles = css({
   width: { base: '100%', tablet: '40%' },
   // Flex shrink to maintain size
   flexShrink: 0,
-  p: { base: 4, tablet: 6 },
+  p: { base: 'inset.tight', tablet: 'inset.normal' },
   overflowY: 'auto',
   overflowX: 'hidden',
   bg: 'bg.elevated',
@@ -44,10 +44,23 @@ const panelStyles = css({
   display: 'flex',
   flexDirection: 'column',
   gap: 'stack.normal',
+  p: { base: 'inset.tight', tablet: 'inset.normal' },
   borderWidth: 'brutal',
   borderStyle: 'solid',
   borderColor: 'border.default',
   borderRadius: 'none',
+  transitionDuration: 'fast',
+  transitionProperty: 'all',
+
+  '&:hover': {
+    borderColor: 'border.moderate',
+    boxShadow: 'interaction.hover',
+  },
+
+  '&:focus-within': {
+    borderColor: 'border.focus',
+    boxShadow: 'elevation.floating',
+  },
 })
 
 const headerStyles = css({
@@ -80,6 +93,14 @@ const tabContentContainerStyles = css({
   pr: 'inline.tight',
 })
 
+const themeToggleStyles = css({
+  // Make button square by using equal padding
+  p: 'inset.tight',
+  aspectRatio: '1',
+  minWidth: 'sizes.touch.min',
+  minHeight: 'sizes.touch.min',
+})
+
 // ============================================================================
 // SUB-COMPONENTS
 // ============================================================================
@@ -98,13 +119,14 @@ function ControlPanelHeader() {
         <h1 className={titleStyles}>Logo Designer</h1>
       </div>
       <Button
-        className={buttonRecipe({ variant: 'ghost', size: 'sm' })}
+        className={cx(buttonRecipe({ variant: 'ghost', size: 'sm' }), themeToggleStyles)}
         onClick={() => {
           const toggleWorldTheme = useUIStore.getState().toggleWorldTheme
           toggleWorldTheme()
         }}
+        aria-label={`Switch to ${worldTheme === 'dark' ? 'light' : 'dark'} theme`}
       >
-        <ThemeIcon size={16} />
+        <ThemeIcon size={20} />
       </Button>
     </div>
   )
@@ -118,13 +140,17 @@ function TabNavigation() {
 
   return (
     <Tabs.List className={classes.list}>
-      <Tabs.Tab value='color' className={classes.trigger}>
+      <Tabs.Tab className={classes.trigger} value='color'>
         <Palette size={20} />
         Color
       </Tabs.Tab>
-      <Tabs.Tab value='layout' className={classes.trigger}>
+      <Tabs.Tab className={classes.trigger} value='layout'>
         <Grid2X2 size={20} />
         Layout
+      </Tabs.Tab>
+      <Tabs.Tab className={classes.trigger} value='gallery'>
+        <Folder size={20} />
+        Gallery
       </Tabs.Tab>
     </Tabs.List>
   )
@@ -138,12 +164,16 @@ function TabPanels() {
 
   return (
     <div className={tabContentContainerStyles}>
-      <Tabs.Panel value='color' className={classes.panel}>
+      <Tabs.Panel className={classes.panel} value='color'>
         <ColorTab />
       </Tabs.Panel>
 
-      <Tabs.Panel value='layout' className={classes.panel}>
+      <Tabs.Panel className={classes.panel} value='layout'>
         <LayoutTab />
+      </Tabs.Panel>
+
+      <Tabs.Panel className={classes.panel} value='gallery'>
+        <GalleryTab />
       </Tabs.Panel>
     </div>
   )
@@ -157,7 +187,7 @@ function TabPanels() {
  * ControlPanel - Main control panel for logo design
  *
  * Features:
- * - Tabbed interface (Color, Layout) using Base UI
+ * - Tabbed interface (Color, Layout, Gallery) using Base UI
  * - Theme toggle for world background
  * - Responsive sizing (mobile/tablet/desktop)
  * - Auto-overflow handling
@@ -182,9 +212,9 @@ export function ControlPanel() {
         <ControlPanelHeader />
 
         <Tabs.Root
-          value={activeTab}
-          onValueChange={(value) => setActiveTab(value as 'color' | 'layout')}
           className={classes.root}
+          value={activeTab}
+          onValueChange={(value) => setActiveTab(value as 'color' | 'layout' | 'gallery')}
         >
           <TabNavigation />
           <TabPanels />

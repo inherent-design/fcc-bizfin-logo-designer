@@ -38,15 +38,6 @@ export const zIndex = {
 
   /** 25 - Maximum UI layer */
   zIndex25: { value: zIndexScale.zIndex25 },
-
-  /** 30 */
-  zIndex30: { value: zIndexScale.zIndex30 },
-
-  /** 50 */
-  zIndex50: { value: zIndexScale.zIndex50 },
-
-  /** 80 */
-  zIndex80: { value: zIndexScale.zIndex80 },
 } as const
 
 // ============================================================================

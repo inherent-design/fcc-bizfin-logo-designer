@@ -39,9 +39,35 @@ const zIndex = {
 } as const
 
 // ============================================================================
+// ASPECT RATIOS
+// ============================================================================
+
+/**
+ * Aspect ratio semantic tokens
+ * Common aspect ratios for responsive layouts and media
+ */
+const aspectRatio = {
+  /** Square (1:1) */
+  square: { value: '{aspectRatios.square}' },
+
+  /** Video standard (4:3) */
+  video: { value: '{aspectRatios.traditional}' },
+
+  /** Wide video (16:9) */
+  widescreen: { value: '{aspectRatios.video}' },
+
+  /** Ultra wide (5:3) */
+  ultrawide: { value: '{aspectRatios.majorSixth}' },
+
+  /** Portrait (3:2) */
+  portrait: { value: '{aspectRatios.perfectFifth}' },
+} as const
+
+// ============================================================================
 // ALL SEMANTIC LAYOUT TOKENS
 // ============================================================================
 
 export const layout = {
   zIndex,
+  aspectRatio,
 } as const

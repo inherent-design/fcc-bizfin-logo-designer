@@ -14,7 +14,7 @@
 /**
  * Semantic border widths by intent
  */
-const borderWidth = {
+export const borderWidths = {
   /** Default border width for standard UI elements */
   default: { value: '{borderWidths.border4}' },
 
@@ -30,40 +30,13 @@ const borderWidth = {
 } as const
 
 // ============================================================================
-// BORDER RADII
-// ============================================================================
-
-/**
- * Semantic border radii by intent
- */
-const borderRadius = {
-  /** No rounding for brutalist aesthetic */
-  none: { value: '{radii.radius0}' },
-
-  /** Small radius for subtle rounding (4px) */
-  small: { value: '{radii.radius4}' },
-
-  /** Medium radius for standard controls (8px) */
-  medium: { value: '{radii.radius8}' },
-
-  /** Large radius for emphasized controls (12px) */
-  large: { value: '{radii.radius12}' },
-
-  /** Extra large radius (16px) */
-  xlarge: { value: '{radii.radius16}' },
-
-  /** Full radius for pill shapes */
-  full: { value: '{radii.radiusFull}' },
-} as const
-
-// ============================================================================
 // OUTLINE TOKENS
 // ============================================================================
 
 /**
  * Semantic outline tokens for focus states
  */
-const outline = {
+export const outline = {
   /** Outline widths */
   width: {
     focus: { value: '{borderWidths.border2}' },
@@ -74,14 +47,4 @@ const outline = {
   offset: {
     normal: { value: '{borderWidths.border2}' },
   },
-} as const
-
-// ============================================================================
-// ALL SEMANTIC BORDERS
-// ============================================================================
-
-export const borders = {
-  borderWidth,
-  borderRadius,
-  outline,
 } as const

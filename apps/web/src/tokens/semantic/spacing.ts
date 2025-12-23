@@ -152,6 +152,53 @@ const overlap = {
 } as const
 
 // ============================================================================
+// MICRO (Fine-grained Spacing)
+// ============================================================================
+
+/**
+ * Fine-grained spacing using musical ratios
+ * For subtle adjustments and precise control
+ */
+const micro = {
+  /** Major Second (9px) - Fine spacing step */
+  majorSecond: { value: '{spacing.majorSecond}' },
+
+  /** Perfect Fourth (10.67px) - Fine spacing step */
+  perfectFourth: { value: '{spacing.perfectFourth}' },
+
+  /** Minor Sixth (12.8px) - Fine spacing step */
+  minorSixth: { value: '{spacing.minorSixth}' },
+
+  /** Major Sixth (13.33px) - Fine spacing step */
+  majorSixth: { value: '{spacing.majorSixth}' },
+
+  /** Negative major third (-10px) - Overlap adjustment */
+  negMajorThird: { value: '{spacing.negMajorThird}' },
+} as const
+
+// ============================================================================
+// STRUCTURAL (Large Spacing)
+// ============================================================================
+
+/**
+ * Large structural spacing for major divisions
+ * Uses harmonic series for consistent relationships
+ */
+const structural = {
+  /** 5th harmonic (40px) - Large structural spacing */
+  harmonic5: { value: '{spacing.harmonic5}' },
+
+  /** 10th harmonic (80px) - XL structural spacing */
+  harmonic10: { value: '{spacing.harmonic10}' },
+
+  /** 12th harmonic (96px) - XXL structural spacing */
+  harmonic12: { value: '{spacing.harmonic12}' },
+
+  /** 16th harmonic (128px) - XXXL structural spacing */
+  harmonic16: { value: '{spacing.harmonic16}' },
+} as const
+
+// ============================================================================
 // ALL SEMANTIC SPACING
 // ============================================================================
 
@@ -161,4 +208,6 @@ export const spacing = {
   stack,
   inline,
   overlap,
+  micro,
+  structural,
 } as const

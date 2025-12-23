@@ -15,20 +15,20 @@
  * Dialog/Modal component sizes
  */
 const dialog = {
-  /** Minimum dialog width (300px) */
-  min: { value: '18.75rem' },
+  /** Minimum dialog width (320px) */
+  min: { value: '{sizes.container4}' },
 
   /** Small dialog (400px) */
-  sm: { value: '25rem' },
+  sm: { value: '{sizes.container5}' },
 
-  /** Default/medium dialog (500px) */
-  default: { value: '31.25rem' },
+  /** Default/medium dialog (480px) */
+  default: { value: '{sizes.container6}' },
 
   /** Large dialog (640px) */
-  lg: { value: '40rem' },
+  lg: { value: '{sizes.container8}' },
 
   /** Extra large dialog (800px) */
-  xl: { value: '50rem' },
+  xl: { value: '{sizes.container10}' },
 } as const
 
 /**
@@ -36,21 +36,21 @@ const dialog = {
  */
 const drawer = {
   /** Standard drawer width (400px) */
-  width: { value: '25rem' },
+  width: { value: '{sizes.container5}' },
 
-  /** Standard drawer height (500px) */
-  height: { value: '31.25rem' },
+  /** Standard drawer height (480px) */
+  height: { value: '{sizes.container6}' },
 } as const
 
 /**
  * Popover component sizes
  */
 const popover = {
-  /** Minimum popover width (200px) */
-  min: { value: '12.5rem' },
+  /** Minimum popover width (160px) */
+  min: { value: '{sizes.container2}' },
 
   /** Maximum popover width (400px) */
-  max: { value: '25rem' },
+  max: { value: '{sizes.container5}' },
 } as const
 
 /**

@@ -25,9 +25,11 @@
  * ```
  */
 
-import { sva } from 'styled-system/css'
+import { defineSlotRecipe } from '@pandacss/dev'
+import { neoTextBase } from './shared/base'
 
-export const sectionHeaderRecipe = sva({
+export const sectionHeaderRecipe = defineSlotRecipe({
+  className: 'sectionHeader',
   slots: ['root', 'title', 'actions'],
 
   base: {
@@ -41,8 +43,8 @@ export const sectionHeaderRecipe = sva({
     },
 
     title: {
+      ...neoTextBase,
       fontSize: 'xs',
-      fontFamily: 'brutalist',
       fontWeight: 'bold',
       textTransform: 'uppercase',
       letterSpacing: 'wider',
@@ -82,8 +84,3 @@ export const sectionHeaderRecipe = sva({
     size: 'md',
   },
 })
-
-/**
- * TypeScript types for section header recipe variants
- */
-export type SectionHeaderRecipeVariants = Parameters<typeof sectionHeaderRecipe>[0]

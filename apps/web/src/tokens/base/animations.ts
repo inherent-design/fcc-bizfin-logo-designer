@@ -31,9 +31,6 @@ export const durations = {
 // ============================================================================
 
 export const easings = {
-  /** Ease (browser default) */
-  easingDefault: { value: 'ease' },
-
   /** Smooth cubic-bezier (0.4, 0, 0.2, 1) */
   easingSmooth: { value: 'cubic-bezier(0.4, 0, 0.2, 1)' },
 
@@ -52,15 +49,6 @@ export const easings = {
 // ============================================================================
 
 export const transitions = {
-  /** 100ms transition - all properties */
-  transitionFast100: { value: `all ${Math.round(durationBase * durationRatios.ratio67)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
-
-  /** 150ms transition - all properties */
-  transitionBase150: { value: `all ${Math.round(durationBase * durationRatios.ratio100)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
-
-  /** 225ms transition - all properties */
-  transitionSlow225: { value: `all ${Math.round(durationBase * durationRatios.ratio150)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
-
   /** Colors-only 100ms transition */
   transitionColors100: { value: `color, background-color, border-color ${Math.round(durationBase * durationRatios.ratio67)}ms cubic-bezier(0.4, 0, 0.2, 1)` },
 

@@ -227,11 +227,17 @@ export const containerPrimitives = {
   /** 4th harmonic × 10 - 320px (tablet) */
   container4: harmonicSeries.fourth * 10 * BASES.rhythm * 2, // 320px
 
+  /** 5th harmonic × 10 - 400px (medium modal) */
+  container5: harmonicSeries.fifth * 10 * BASES.rhythm * 2, // 400px
+
   /** 6th harmonic × 10 - 480px (desktop) */
   container6: harmonicSeries.sixth * 10 * BASES.rhythm * 2, // 480px
 
   /** 8th harmonic × 10 - 640px (large desktop) */
   container8: harmonicSeries.eighth * 10 * BASES.rhythm * 2, // 640px
+
+  /** 10th harmonic × 10 - 800px (extra large modal) */
+  container10: harmonicSeries.tenth * 10 * BASES.rhythm * 2, // 800px
 
   /** 12th harmonic × 10 - 960px (XL desktop) */
   container12: harmonicSeries.twelfth * 10 * BASES.rhythm * 2, // 960px

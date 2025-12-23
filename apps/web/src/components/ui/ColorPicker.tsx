@@ -13,9 +13,7 @@ import { Button } from '@base-ui/react/button'
 import { css, cx } from 'styled-system/css'
 
 // Recipes
-import { buttonRecipe } from '@/recipes/button.recipe'
-import { colorPickerRecipe } from '@/recipes/colorPicker.recipe'
-import { inputRecipe } from '@/recipes/input.recipe'
+import { buttonRecipe, colorPickerRecipe, inputRecipe } from 'styled-system/recipes'
 
 // Types
 import type { HSLColor } from '../../schemas/logoState.schema'

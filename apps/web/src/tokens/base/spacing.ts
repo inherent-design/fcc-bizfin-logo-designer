@@ -135,11 +135,17 @@ export const sizes = {
   /** 20rem (320px) - 4th harmonic × 10 */
   container4: { value: pxToRem(containerPrimitives.container4) },
 
+  /** 25rem (400px) - 5th harmonic × 10 */
+  container5: { value: pxToRem(containerPrimitives.container5) },
+
   /** 30rem (480px) - 6th harmonic × 10 */
   container6: { value: pxToRem(containerPrimitives.container6) },
 
   /** 40rem (640px) - 8th harmonic × 10 */
   container8: { value: pxToRem(containerPrimitives.container8) },
+
+  /** 50rem (800px) - 10th harmonic × 10 */
+  container10: { value: pxToRem(containerPrimitives.container10) },
 
   /** 60rem (960px) - 12th harmonic × 10 */
   container12: { value: pxToRem(containerPrimitives.container12) },

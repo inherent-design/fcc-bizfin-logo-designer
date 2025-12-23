@@ -6,18 +6,17 @@
 import { css } from 'styled-system/css'
 
 // Types
-import type { Vec2 } from '@/schemas/logoState.schema'
+import type { Vec2, Quadrant } from '@/schemas/logoState.schema'
 
 // Utils
 import { componentLogger } from '@/utils/logger'
 
 // Components
 import { Button } from '@base-ui/react/button'
+import { DraggableElementList } from './DraggableElementList'
 
 // Recipes
-import { buttonRecipe } from '@/recipes/button.recipe'
-import { sectionHeaderRecipe } from '@/recipes/sectionHeader.recipe'
-import { sliderControlRecipe } from '@/recipes/sliderControl.recipe'
+import { buttonRecipe, sliderControlRecipe, sectionHeaderRecipe } from 'styled-system/recipes'
 
 // Zustand
 import { useLogoStore } from '@/stores/logoStore'
@@ -35,8 +34,11 @@ interface LayoutSettingsProps {
     centerOffset: Vec2
     elementScale: number
   }>
+  /** Full quadrants array for drag-and-drop element swapping */
+  fullQuadrants: [Quadrant, Quadrant, Quadrant, Quadrant]
   /** Actions for updating quadrant settings */
   actions: {
+    swapElements: (fromPosition: number, toPosition: number) => void
     setCenterOffset: (position: number, offset: Vec2) => void
     setElementScale: (position: number, scale: number) => void
   }
@@ -102,8 +104,8 @@ function SliderControl({
         <div className={classes.valueContainer}>
           <span className={classes.value}>{value.toFixed(1)}</span>
           <Button
-            onClick={onReset}
             className={buttonRecipe({ variant: 'ghost', size: 'sm' })}
+            onClick={onReset}
             aria-label={`Reset ${label}`}
           >
             ↺
@@ -129,6 +131,7 @@ function SliderControl({
  * LayoutSettings - Internal quadrant-based layout adjustment controls
  *
  * Features:
+ * - Drag-and-drop element reordering
  * - Per-quadrant offset controls (X/Y)
  * - Per-quadrant scale controls
  * - Individual reset buttons
@@ -140,7 +143,7 @@ function SliderControl({
  * - 2: Bottom-Left
  * - 3: Bottom-Right
  */
-function LayoutSettings({ quadrants, actions }: LayoutSettingsProps) {
+function LayoutSettings({ quadrants, fullQuadrants, actions }: LayoutSettingsProps) {
   const sectionClasses = sectionHeaderRecipe()
 
   const handleOffsetChange = (position: number, axis: 'x' | 'y', value: number) => {
@@ -185,6 +188,37 @@ function LayoutSettings({ quadrants, actions }: LayoutSettingsProps) {
         gap: 'stack.loose',
       })}
     >
+      {/* Element Reordering Section */}
+      <div>
+        <h3
+          className={css({
+            fontSize: 'sm',
+            fontFamily: 'brutalist',
+            fontWeight: 'bold',
+            color: 'text.primary',
+            mb: 'stack.tight',
+          })}
+        >
+          Element Order
+        </h3>
+        <DraggableElementList quadrants={fullQuadrants} onSwapElements={actions.swapElements} />
+      </div>
+
+      {/* Per-Quadrant Transforms */}
+      <div>
+        <h3
+          className={css({
+            fontSize: 'sm',
+            fontFamily: 'brutalist',
+            fontWeight: 'bold',
+            color: 'text.primary',
+            mb: 'stack.tight',
+          })}
+        >
+          Element Transforms
+        </h3>
+      </div>
+
       {quadrants.map((quadrant, i) => {
         const { centerOffset, elementScale } = quadrant
 
@@ -196,8 +230,8 @@ function LayoutSettings({ quadrants, actions }: LayoutSettingsProps) {
               </h3>
               <div className={sectionClasses.actions}>
                 <Button
-                  onClick={() => handleResetAllForQuadrant(i)}
                   className={buttonRecipe({ variant: 'ghost', size: 'sm' })}
+                  onClick={() => handleResetAllForQuadrant(i)}
                   aria-label={`Reset all for ${QUADRANT_LABELS[i]}`}
                 >
                   Reset All
@@ -262,6 +296,11 @@ function LayoutSettings({ quadrants, actions }: LayoutSettingsProps) {
  * Connects to Zustand logoStore for state management.
  * Renders LayoutSettings with store data and actions.
  *
+ * Features:
+ * - Element reordering via drag-and-drop
+ * - Per-quadrant transforms (offset X/Y, scale)
+ * - Persisted state via Zustand
+ *
  * @example
  * ```tsx
  * <LayoutTab />
@@ -273,9 +312,10 @@ export function LayoutTab() {
 
   // Actions
   const actions = {
+    swapElements: useLogoStore((state) => state.swapElements),
     setCenterOffset: useLogoStore((state) => state.setCenterOffset),
     setElementScale: useLogoStore((state) => state.setElementScale),
   }
 
-  return <LayoutSettings quadrants={quadrants} actions={actions} />
+  return <LayoutSettings quadrants={quadrants} fullQuadrants={quadrants} actions={actions} />
 }

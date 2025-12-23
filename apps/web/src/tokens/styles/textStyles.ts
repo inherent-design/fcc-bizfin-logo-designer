@@ -1,29 +1,30 @@
-import { defineTextStyles } from '@pandacss/dev'
-
-export const textStyles = defineTextStyles({
+export const textStyles = {
   brutalistLabel: {
+    description: 'Bold uppercase labels for neo-brutalist UI',
     value: {
-      fontFamily: '{fonts.brutalist}',
-      fontWeight: '{fontWeights.brutal}',
-      fontSize: '{fontSizes.typeMinus1}',
+      fontFamily: 'brutalist',
+      fontWeight: 'brutal',
+      fontSize: 'typeMinus1',
       textTransform: 'uppercase',
-      letterSpacing: '{letterSpacings.wide}',
+      letterSpacing: 'wide',
     }
   },
   sectionHeader: {
+    description: 'Section heading with emphasized spacing',
     value: {
-      fontFamily: '{fonts.brutalist}',
-      fontWeight: '{fontWeights.bold}',
-      fontSize: '{fontSizes.typeMinus1}',
+      fontFamily: 'brutalist',
+      fontWeight: 'bold',
+      fontSize: 'typeMinus1',
       textTransform: 'uppercase',
-      letterSpacing: '{letterSpacings.wider}',
+      letterSpacing: 'wider',
     }
   },
   formLabel: {
+    description: 'Standard form field labels',
     value: {
-      fontFamily: '{fonts.brutalist}',
-      fontSize: '{fontSizes.typeMinus1}',
-      fontWeight: '{fontWeights.semibold}',
+      fontFamily: 'brutalist',
+      fontSize: 'typeMinus1',
+      fontWeight: 'medium',
     }
   },
-})
+}

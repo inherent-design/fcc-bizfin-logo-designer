@@ -9,13 +9,13 @@ import { Button } from '@base-ui/react/button'
 import { css } from 'styled-system/css'
 
 // Recipes
-import { buttonRecipe } from '@/recipes/button.recipe'
+import { buttonRecipe } from 'styled-system/recipes'
 
 // Store
 import { useLogoStore } from '@/stores/logoStore'
 
 // Components
-import { ColorPicker } from '../../ui/ColorPicker'
+import { ColorPicker } from '@/components/ui/ColorPicker'
 
 // ============================================================================
 // STYLES

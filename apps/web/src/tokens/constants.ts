@@ -312,9 +312,6 @@ export const zIndexScale = {
   zIndex20: 20,
   zIndex22: 22,
   zIndex25: 25,
-  zIndex30: 30,
-  zIndex50: 50,
-  zIndex80: 80,
 } as const
 
 // ============================================================================

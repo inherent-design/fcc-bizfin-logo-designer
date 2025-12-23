@@ -15,7 +15,7 @@ import { componentLogger } from '@/utils/logger'
 import { ColorPicker } from '@/components/ui/ColorPicker'
 
 // Recipes
-import { sectionHeaderRecipe } from '@/recipes/sectionHeader.recipe'
+import { sectionHeaderRecipe } from 'styled-system/recipes'
 
 // Zustand
 import { useLogoStore } from '@/stores/logoStore'
@@ -100,12 +100,7 @@ const colorPickerGroupStyles = css({
  * - 2-tone: Two fill colors (TL/BR quadrants), 2-3 element colors
  * - 2-tone + unique: Two fill colors, 3 element colors (per quadrant)
  */
-function ColorSettings({
-  baseColor,
-  baseDesign,
-  twoToneDesign,
-  actions,
-}: ColorSettingsProps) {
+function ColorSettings({ baseColor, baseDesign, twoToneDesign, actions }: ColorSettingsProps) {
   const isTwoTone = !!twoToneDesign
   const hasUniqueElementColors = !!twoToneDesign?.uniqueElementColors
   const sectionClasses = sectionHeaderRecipe()

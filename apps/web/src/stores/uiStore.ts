@@ -3,7 +3,7 @@ import { storeLogger } from '../utils/logger'
 
 interface UIStore {
   // Control panel
-  activeTab: 'color' | 'layout'
+  activeTab: 'color' | 'layout' | 'gallery'
   isPanelCollapsed: boolean
 
   // Design gallery drawer
@@ -18,7 +18,7 @@ interface UIStore {
   isImporting: boolean
 
   // Actions
-  setActiveTab: (tab: 'color' | 'layout') => void
+  setActiveTab: (tab: 'color' | 'layout' | 'gallery') => void
   togglePanel: () => void
   toggleGallery: () => void
   setGalleryFilter: (filter: 'all' | 'favorites' | 'recent') => void

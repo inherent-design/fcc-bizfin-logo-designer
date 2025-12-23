@@ -32,9 +32,11 @@
  * ```
  */
 
-import { sva } from 'styled-system/css'
+import { defineSlotRecipe } from '@pandacss/dev'
+import { neoInteractiveBase, neoTextBase } from './shared/base'
 
-export const sliderControlRecipe = sva({
+export const sliderControlRecipe = defineSlotRecipe({
+  className: 'sliderControl',
   slots: ['container', 'header', 'label', 'valueContainer', 'value', 'slider'],
 
   base: {
@@ -51,8 +53,8 @@ export const sliderControlRecipe = sva({
     },
 
     label: {
+      ...neoTextBase,
       fontSize: 'sm',
-      fontFamily: 'brutalist',
       color: 'text.primary',
       opacity: 'medium',
     },
@@ -83,46 +85,34 @@ export const sliderControlRecipe = sva({
 
       // Track styling
       '&::-webkit-slider-runnable-track': {
+        ...neoInteractiveBase,
         width: '100%',
         height: '8px',
         bg: 'bg.subtle',
-        borderWidth: 'borders.borderWidth.brutal',
-        borderStyle: 'solid',
-        borderColor: 'border.default',
-        borderRadius: 'none',
       },
       '&::-moz-range-track': {
+        ...neoInteractiveBase,
         width: '100%',
         height: '8px',
         bg: 'bg.subtle',
-        borderWidth: 'borders.borderWidth.brutal',
-        borderStyle: 'solid',
-        borderColor: 'border.default',
-        borderRadius: 'none',
       },
 
       // Thumb styling
       '&::-webkit-slider-thumb': {
+        ...neoInteractiveBase,
         WebkitAppearance: 'none',
         appearance: 'none',
         width: '20px',
         height: '20px',
         bg: 'bg.interactive.default',
-        borderWidth: 'borders.borderWidth.brutal',
-        borderStyle: 'solid',
-        borderColor: 'border.default',
-        borderRadius: 'none',
         cursor: 'pointer',
         marginTop: '-7px', // Center on track
       },
       '&::-moz-range-thumb': {
+        ...neoInteractiveBase,
         width: '20px',
         height: '20px',
         bg: 'bg.interactive.default',
-        borderWidth: 'borders.borderWidth.brutal',
-        borderStyle: 'solid',
-        borderColor: 'border.default',
-        borderRadius: 'none',
         cursor: 'pointer',
       },
 
@@ -174,8 +164,3 @@ export const sliderControlRecipe = sva({
     size: 'md',
   },
 })
-
-/**
- * TypeScript types for slider control recipe variants
- */
-export type SliderControlRecipeVariants = Parameters<typeof sliderControlRecipe>[0]

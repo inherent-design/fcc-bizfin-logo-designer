@@ -9,24 +9,24 @@ import { type ReactNode } from 'react'
 import { css } from 'styled-system/css'
 
 // Types
-import type { Vec2 } from '../../schemas/logoState.schema'
+import type { Vec2 } from '@/schemas/logoState.schema'
 
 // Utils
-import { applyElementColors, extractGroupContent } from '../../utils'
+import { applyElementColors, extractGroupContent } from '@/utils'
 
 // Store
-import { useLogoStore } from '../../stores/logoStore'
-import { useWorldStore } from '../../stores/worldStore'
+import { useLogoStore } from '@/stores/logoStore'
+import { useWorldStore } from '@/stores/worldStore'
 
 // Assets
-import baseShieldSvg from '../../assets/svg/base.svg?raw'
-import briefcaseSvg from '../../assets/svg/briefcase.svg?raw'
-import dollarSvg from '../../assets/svg/dollar-sign.svg?raw'
-import leafSvg from '../../assets/svg/grape-leaf.svg?raw'
-import handshakeSvg from '../../assets/svg/handshake.svg?raw'
-import quadrantBRSvg from '../../assets/svg/quadrant-br.svg?raw'
-import quadrantTLSvg from '../../assets/svg/quadrant-tl.svg?raw'
-import mountainsSvg from '../../assets/svg/sierra-nevada.svg?raw'
+import baseShieldSvg from '@/assets/svg/base.svg?raw'
+import briefcaseSvg from '@/assets/svg/briefcase.svg?raw'
+import dollarSvg from '@/assets/svg/dollar-sign.svg?raw'
+import leafSvg from '@/assets/svg/grape-leaf.svg?raw'
+import handshakeSvg from '@/assets/svg/handshake.svg?raw'
+import quadrantBRSvg from '@/assets/svg/quadrant-br.svg?raw'
+import quadrantTLSvg from '@/assets/svg/quadrant-tl.svg?raw'
+import mountainsSvg from '@/assets/svg/sierra-nevada.svg?raw'
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -96,8 +96,8 @@ const containerStyles = css({
   height: { base: '60%', tablet: '100%' },
   // Tablet+: 60% width (row layout)
   width: { base: '100%', tablet: '60%' },
-  // Flex grow to fill remaining space
-  flex: 1,
+  // Flex shrink to maintain size (removed flex: 1 to respect explicit sizes)
+  flexShrink: 0,
   position: 'relative',
 })
 
@@ -223,9 +223,9 @@ export function LogoPreviewWorld() {
             />
           ) : null
         })()}
-      {quadrants[2].isFilled &&
+      {quadrants[3].isFilled &&
         (() => {
-          const color = getFillColor(2)
+          const color = getFillColor(3)
           return color ? (
             <g
               dangerouslySetInnerHTML={{
@@ -307,7 +307,7 @@ export function LogoPreviewWorld() {
         >
           <ParallaxLayer depth={layerDepths.base}>{baseLayer}</ParallaxLayer>
 
-          <ParallaxLayer depth={layerDepths.base + 20}>{quadrantFillsLayer}</ParallaxLayer>
+          <ParallaxLayer depth={layerDepths.quadrants}>{quadrantFillsLayer}</ParallaxLayer>
 
           <ParallaxLayer depth={layerDepths.handshake}>{handshakeLayer}</ParallaxLayer>
 

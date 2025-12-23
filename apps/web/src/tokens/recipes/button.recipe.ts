@@ -19,10 +19,11 @@
  * ```
  */
 
-import { cva } from 'styled-system/css'
+import { defineRecipe } from '@pandacss/dev'
 import { neoInteractiveBase, neoTextBase, focusState } from './shared/base'
 
-export const buttonRecipe = cva({
+export const buttonRecipe = defineRecipe({
+  className: 'button',
   base: {
     ...neoInteractiveBase,
     ...neoTextBase,
@@ -112,7 +113,3 @@ export const buttonRecipe = cva({
   },
 })
 
-/**
- * TypeScript types for button recipe variants
- */
-export type ButtonRecipeVariants = Parameters<typeof buttonRecipe>[0]

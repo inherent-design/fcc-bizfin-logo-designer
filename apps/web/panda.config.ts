@@ -1,8 +1,13 @@
-import { defineConfig, defineTextStyles } from '@pandacss/dev'
+import { defineConfig, defineLayerStyles, defineTextStyles } from '@pandacss/dev'
 
-// Import base tokens from baseTokens.ts
-import { baseTokens, breakpoints, semanticTokens } from './src/tokens'
-import { textStyles } from './src/tokens/styles/textStyles'
+import {
+  baseTokens,
+  breakpoints,
+  layerStyles,
+  recipes,
+  semanticTokens,
+  textStyles,
+} from './src/tokens'
 
 export default defineConfig({
   // ============================================================================
@@ -31,14 +36,67 @@ export default defineConfig({
       semanticTokens,
 
       textStyles: defineTextStyles(textStyles),
+      layerStyles: defineLayerStyles(layerStyles),
 
-      // layerStyles: defineLayerStyles(layerStyles),
-
-      // animationStyles: defineAnimationStyles(animationStyles),
+      recipes: recipes.baseRecipes,
+      slotRecipes: recipes.slotRecipes,
     },
   },
 
   // patterns,
+
+  // ============================================================================
+  // GLOBAL CSS - Third-party library styling
+  // ============================================================================
+  // Style sub-elements of third-party libraries that don't accept className
+  // Uses semantic tokens for theme-aware styling
+
+  globalCss: {
+    // react-colorful component styling
+    '.react-colorful': {
+      width: '100%',
+      height: '200px',
+    },
+    '.react-colorful__saturation': {
+      borderRadius: 'none',
+      borderWidth: 'brutal',
+      borderStyle: 'solid',
+      borderColor: 'border.default',
+      marginBottom: 'stack.tight',
+    },
+    '.react-colorful__hue': {
+      borderRadius: 'none',
+      height: 'sizes.touch.min',
+      borderWidth: 'brutal',
+      borderStyle: 'solid',
+      borderColor: 'border.default',
+    },
+    '.react-colorful__pointer': {
+      width: '24px',
+      height: '24px',
+      borderWidth: 'brutal',
+      borderStyle: 'solid',
+      borderColor: 'border.default',
+      borderRadius: 'none',
+    },
+
+    // dnd-kit drag overlay styling
+    '[data-dnd-dragging="true"]': {
+      bg: 'drag.active',
+    },
+  },
+
+  // ============================================================================
+  // STATIC CSS - Force recipe class generation (workaround for detection issues)
+  // ============================================================================
+  // See: recipe-solution-comparison-2025-12-23.md
+  // This generates ALL variant combinations for recipes, bypassing static analysis.
+  // Trade-off: ~6-8KB bundle size for guaranteed CSS generation.
+  // TODO: Investigate cva/sva migration for better tree-shaking.
+
+  staticCss: {
+    recipes: '*',
+  },
 
   // ============================================================================
   // CONDITIONS - Theme switching support

@@ -29,12 +29,12 @@
  * - Solid border style
  */
 export const neoInteractiveBase = {
-  borderWidth: 'brutal' as const,
-  borderStyle: 'solid' as const,
-  borderColor: 'border.default' as const,
-  borderRadius: 'none' as const,
-  transitionDuration: 'fast' as const,
-  transitionProperty: 'all' as const,
+  borderWidth: 'brutal',
+  borderStyle: 'solid',
+  borderColor: 'border.default',
+  borderRadius: 'none',
+  transitionDuration: 'fast',
+  transitionProperty: 'all',
 }
 
 /**
@@ -65,6 +65,17 @@ export const interactiveStates = {
     opacity: 'disabled',
     cursor: 'not-allowed',
   },
+}
+
+/**
+ * Transition base
+ *
+ * Common fast transitions for interactive elements
+ * Use when you need ONLY transitions without full neoInteractiveBase
+ */
+export const transitionBase = {
+  transitionDuration: 'fast',
+  transitionProperty: 'all',
 }
 
 /**

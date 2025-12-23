@@ -20,7 +20,7 @@ const emptyStateStyles = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  minHeight: '200px',
+  minHeight: 'container2',
   textStyle: 'brutalistText',
   color: 'surface.fg',
   opacity: 'muted',
@@ -34,7 +34,6 @@ const gridStyles = css({
   gridTemplateColumns: {
     base: 'repeat(2, 1fr)',
     tablet: 'repeat(3, 1fr)',
-    desktop: 'repeat(auto-fill, minmax(150px, 1fr))',
   },
 })
 

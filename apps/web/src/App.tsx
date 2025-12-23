@@ -1,6 +1,4 @@
-import { CameraSpaceOverlay } from './components/camera/CameraSpaceOverlay'
 import { ControlPanel } from './components/camera/ControlPanel'
-import { DesignGalleryDrawer } from './components/camera/DesignGalleryDrawer'
 import { LogoPreviewWorld } from './components/world/LogoPreviewWorld'
 import { WorldSpace } from './components/world/WorldSpace'
 
@@ -13,12 +11,8 @@ function App() {
 
   return (
     <WorldSpace>
+      <ControlPanel />
       <LogoPreviewWorld />
-
-      <CameraSpaceOverlay>
-        <ControlPanel />
-        <DesignGalleryDrawer />
-      </CameraSpaceOverlay>
     </WorldSpace>
   )
 }

@@ -20,10 +20,10 @@ import { useUIStore } from '@/stores/uiStore'
 import { Button } from '@base-ui/react/button'
 
 // Recipes
-import { buttonRecipe } from '@/recipes/button.recipe'
+import { buttonRecipe } from 'styled-system/recipes'
 
 // Icons
-import { Plus, Download, Upload } from 'lucide-react'
+import { Download, Plus, Upload } from 'lucide-react'
 
 // ============================================================================
 // STYLES

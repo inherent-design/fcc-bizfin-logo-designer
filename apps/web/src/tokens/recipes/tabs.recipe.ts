@@ -28,9 +28,11 @@
  * ```
  */
 
-import { sva } from 'styled-system/css'
+import { defineSlotRecipe } from '@pandacss/dev'
+import { neoInteractiveBase, neoTextBase } from './shared/base'
 
-export const tabsRecipe = sva({
+export const tabsRecipe = defineSlotRecipe({
+  className: 'tabs',
   slots: ['root', 'list', 'trigger', 'panel'],
 
   base: {
@@ -50,24 +52,19 @@ export const tabsRecipe = sva({
     },
 
     trigger: {
+      ...neoInteractiveBase,
+      ...neoTextBase,
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',
       gap: 'inline.tight',
       px: 'inset.normal',
       py: 'inset.tight',
-      borderWidth: 'borders.borderWidth.brutal',
-      borderStyle: 'solid',
-      borderColor: 'border.default',
       borderBottomWidth: 0,
-      borderRadius: 'none',
       bg: 'bg.interactive.default',
       color: 'text.primary',
       cursor: 'pointer',
-      textStyle: 'brutalistLabel',
       fontSize: 'sm',
-      transitionDuration: 'animations.transition.fast.duration',
-      transitionProperty: 'all',
       marginBottom: '-3px', // Overlap with list border (brutal = 3px)
 
       '&:hover:not([data-selected])': {
@@ -147,8 +144,3 @@ export const tabsRecipe = sva({
     orientation: 'horizontal',
   },
 })
-
-/**
- * TypeScript types for tabs recipe variants
- */
-export type TabsRecipeVariants = Parameters<typeof tabsRecipe>[0]

@@ -38,6 +38,27 @@ const heading = {
   h6: { value: '{fontSizes.typePlus1}' },
 } as const
 
+/**
+ * Display typography sizes
+ * Extra-large text for hero sections and impact statements
+ */
+const display = {
+  /** Base display (4rem / 64px) */
+  base: { value: '{fontSizes.displayBase}' },
+
+  /** Display Plus 1 (5rem / 80px) */
+  plus1: { value: '{fontSizes.displayPlus1}' },
+
+  /** Display Plus 2 (6rem / 96px) */
+  plus2: { value: '{fontSizes.displayPlus2}' },
+
+  /** Display Plus 3 (8rem / 128px) */
+  plus3: { value: '{fontSizes.displayPlus3}' },
+
+  /** Display Plus 4 (10rem / 160px) */
+  plus4: { value: '{fontSizes.displayPlus4}' },
+} as const
+
 // ============================================================================
 // BODY TYPOGRAPHY
 // ============================================================================
@@ -119,14 +140,59 @@ const fontWeight = {
 } as const
 
 // ============================================================================
+// LETTER SPACING
+// ============================================================================
+
+/**
+ * Semantic letter spacing by intent
+ */
+const letterSpacing = {
+  /** Negative tracking (-0.05em) */
+  tight: { value: '{letterSpacings.letterSpacingNeg0_05}' },
+
+  /** No tracking (0em) */
+  normal: { value: '{letterSpacings.letterSpacing0}' },
+
+  /** Subtle tracking (0.025em) */
+  relaxed: { value: '{letterSpacings.letterSpacing0_025}' },
+
+  /** Wide tracking (0.05em) for labels and UI text */
+  wide: { value: '{letterSpacings.letterSpacing0_05}' },
+
+  /** Wider tracking (0.1em) for neo-brutalist headers */
+  wider: { value: '{letterSpacings.letterSpacing0_1}' },
+} as const
+
+// ============================================================================
+// LINE HEIGHT
+// ============================================================================
+
+/**
+ * Semantic line heights by intent
+ */
+const lineHeight = {
+  /** Tight line height (1.2) */
+  tight: { value: '{lineHeights.lineHeight1_2}' },
+
+  /** Normal line height (1.5) */
+  normal: { value: '{lineHeights.lineHeight1_5}' },
+
+  /** Relaxed line height (1.778) */
+  relaxed: { value: '{lineHeights.lineHeight1_778}' },
+} as const
+
+// ============================================================================
 // ALL SEMANTIC TYPOGRAPHY
 // ============================================================================
 
 export const typography = {
   heading,
+  display,
   body,
   label,
   caption,
   fontFamily,
   fontWeight,
+  letterSpacing,
+  lineHeight,
 } as const

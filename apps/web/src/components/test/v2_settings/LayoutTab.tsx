@@ -6,9 +6,7 @@
 import { css } from 'styled-system/css'
 
 // Recipes
-import { badgeRecipe } from '@/recipes/badge.recipe'
-import { sliderRecipe } from '@/recipes/slider.recipe'
-import { inputRecipe } from '@/recipes/input.recipe'
+import { badgeRecipe, inputRecipe, sliderControlRecipe } from 'styled-system/recipes'
 
 // Store
 import { useLogoStore } from '@/stores/logoStore'
@@ -78,7 +76,13 @@ const offsetGridStyles = css({
 /**
  * Badge component for fill status
  */
-function Badge({ variant, children }: { variant: 'filled' | 'unfilled'; children: React.ReactNode }) {
+function Badge({
+  variant,
+  children,
+}: {
+  variant: 'filled' | 'unfilled'
+  children: React.ReactNode
+}) {
   return <span className={badgeRecipe({ variant, size: 'sm' })}>{children}</span>
 }
 
@@ -100,23 +104,23 @@ function Slider({
   step: number
   onChange: (value: number) => void
 }) {
-  const classes = sliderRecipe()
+  const classes = sliderControlRecipe()
 
   return (
     <div className={classes.container}>
-      <label className={classes.label}>{label}</label>
-      <div className={classes.wrapper}>
-        <input
-          type='range'
-          min={min}
-          max={max}
-          step={step}
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
-          className={classes.track}
-        />
+      <div className={classes.header}>
+        <label className={classes.label}>{label}</label>
         <span className={classes.value}>{value.toFixed(1)}</span>
       </div>
+      <input
+        type='range'
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className={classes.slider}
+      />
     </div>
   )
 }

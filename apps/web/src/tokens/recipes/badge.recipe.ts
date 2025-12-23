@@ -19,25 +19,22 @@
  * ```
  */
 
-import { cva } from 'styled-system/css'
+import { defineRecipe } from '@pandacss/dev'
+import { neoInteractiveBase, neoTextBase } from './shared/base'
 
-export const badgeRecipe = cva({
+export const badgeRecipe = defineRecipe({
+  className: 'badge',
   base: {
+    ...neoInteractiveBase,
+    ...neoTextBase,
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
     px: 'inset.tight',
     py: 'micro2',
-    borderWidth: 'borders.borderWidth.brutal',
-    borderStyle: 'solid',
-    borderColor: 'border.default',
-    borderRadius: 'none',
-    textStyle: 'brutalistLabel',
     fontSize: 'xs',
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    transitionDuration: 'animations.transition.fast.duration',
-    transitionProperty: 'all',
   },
 
   variants: {
@@ -93,8 +90,3 @@ export const badgeRecipe = cva({
     size: 'sm',
   },
 })
-
-/**
- * TypeScript types for badge recipe variants
- */
-export type BadgeRecipeVariants = Parameters<typeof badgeRecipe>[0]

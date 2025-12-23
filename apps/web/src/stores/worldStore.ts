@@ -11,6 +11,7 @@ interface WorldStore {
   // Layer depth (for parallax)
   layerDepths: {
     base: number // z-index or translateZ value
+    quadrants: number
     handshake: number
     elements: number
   }
@@ -30,8 +31,9 @@ export const useWorldStore = create<WorldStore>()((set) => ({
   logoRotation: { x: 0, y: 0 },
   layerDepths: {
     base: 0,
-    handshake: 10,
-    elements: 20,
+    quadrants: 1,
+    handshake: 2,
+    elements: 3,
   },
   zoom: 1,
 

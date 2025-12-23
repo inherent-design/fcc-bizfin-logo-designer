@@ -22,15 +22,17 @@
  * ```
  */
 
-import { sva } from 'styled-system/css'
+import { defineSlotRecipe } from '@pandacss/dev'
+import { neoInteractiveBase, neoTextBase } from './shared/base'
 
-export const inputRecipe = sva({
+export const inputRecipe = defineSlotRecipe({
+  className: 'input',
   slots: ['label', 'input'],
 
   base: {
     label: {
+      ...neoTextBase,
       display: 'block',
-      textStyle: 'brutalistLabel',
       fontSize: 'xs',
       color: 'text.primary',
       mb: 'micro2',
@@ -38,18 +40,13 @@ export const inputRecipe = sva({
     },
 
     input: {
+      ...neoInteractiveBase,
       width: '100%',
       px: 'inset.tight',
       py: 'inset.tight',
-      borderWidth: 'borders.borderWidth.brutal',
-      borderStyle: 'solid',
-      borderColor: 'border.default',
-      borderRadius: 'none',
       bg: 'bg.input',
       color: 'text.primary',
       fontSize: 'sm',
-      transitionDuration: 'animations.transition.fast.duration',
-      transitionProperty: 'all',
 
       '&:focus': {
         outline: '2px solid',
@@ -113,7 +110,6 @@ export const inputRecipe = sva({
           fontFamily: 'mono',
         },
       },
-      email: {},
       color: {
         input: {
           height: '12',
@@ -128,8 +124,3 @@ export const inputRecipe = sva({
     type: 'text',
   },
 })
-
-/**
- * TypeScript types for input recipe variants
- */
-export type InputRecipeVariants = Parameters<typeof inputRecipe>[0]

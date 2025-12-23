@@ -30,6 +30,7 @@ interface LogoStore extends LogoState {
   setBaseColor: (color: HSLColor) => void
 
   swapElements: (fromPosition: number, toPosition: number) => void
+  reorderQuadrants: (newOrder: [number, number, number, number]) => void
   setElementScale: (position: number, scale: number) => void
   setCenterOffset: (position: number, offset: Vec2) => void
 
@@ -78,6 +79,19 @@ export const useLogoStore = create<LogoStore>()(
           const tempElementId = newQuadrants[fromPosition].elementId
           newQuadrants[fromPosition].elementId = newQuadrants[toPosition].elementId
           newQuadrants[toPosition].elementId = tempElementId
+          return { quadrants: newQuadrants }
+        })
+      },
+
+      reorderQuadrants: (newOrder) => {
+        storeLogger.debug({ newOrder }, 'Reordering quadrants')
+        set((state) => {
+          const newQuadrants = newOrder.map((index) => state.quadrants[index]) as [
+            Quadrant,
+            Quadrant,
+            Quadrant,
+            Quadrant,
+          ]
           return { quadrants: newQuadrants }
         })
       },

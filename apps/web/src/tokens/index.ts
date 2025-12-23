@@ -38,3 +38,10 @@ export { baseTokens } from './base'
 
 // Layer 3: Semantic tokens (token references)
 export { semanticTokens } from './semantic'
+
+// Layer 4: Styles (text styles, layer styles)
+export { layerStyles } from './styles/layerStyles'
+export { textStyles } from './styles/textStyles'
+
+// Layer 5: Recipes (component styling patterns)
+export { recipes } from './recipes'
